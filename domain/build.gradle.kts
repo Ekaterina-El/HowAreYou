@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,7 +38,12 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
+    // DI
+    implementation(libs.dagger)
+    ksp(libs.dagger.compile)
+
     implementation(project(":core"))
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

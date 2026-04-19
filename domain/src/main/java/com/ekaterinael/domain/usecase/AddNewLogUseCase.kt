@@ -3,9 +3,12 @@ package com.ekaterinael.domain.usecase
 import com.ekaterinael.domain.model.MoodLogDTO
 import com.ekaterinael.domain.repository.MoodRepository
 import com.ekaterinael.core.Result
+import com.ekaterinael.core.di.AppScope
+import javax.inject.Inject
 
 /** Use case for adding a new mood log entry */
-class AddNewLogUseCase(private val repository: MoodRepository) {
+@AppScope
+class AddNewLogUseCase @Inject constructor(private val repository: MoodRepository) {
     suspend operator fun invoke(log: MoodLogDTO): Result<Unit> {
         try {
             repository.addNewLog(log = log)
