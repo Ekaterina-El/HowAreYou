@@ -24,4 +24,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "HowAreYou"
 include(":app")
- 
+include(":core")
+include(":core:utils")
+include(":core:resources")
+include(":data")
+include(":domain")
+include(":feature")
