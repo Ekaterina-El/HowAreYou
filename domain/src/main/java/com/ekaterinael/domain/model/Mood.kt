@@ -15,5 +15,11 @@ enum class Mood(val scope: Int) {
     BAD(2),
 
     /** Very poot condition: severe discomfort, low spirits */
-    AWFUL(1)
+    AWFUL(1),
+
+    UNKNOWN(-1);
+
+    companion object {
+        fun Int.toMood() = entries.firstOrNull { it.scope == this } ?: UNKNOWN
+    }
 }

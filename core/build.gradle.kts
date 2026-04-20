@@ -40,7 +40,7 @@ dependencies {
 
     // DI
     implementation(libs.dagger)
-    ksp(libs.dagger.compile)
+    ksp(libs.dagger.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

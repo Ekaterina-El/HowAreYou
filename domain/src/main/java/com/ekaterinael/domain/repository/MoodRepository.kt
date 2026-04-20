@@ -17,6 +17,9 @@ interface MoodRepository {
      */
     suspend fun editLog(log: MoodLogDTO)
 
+    /** Delete an existing log entry by ID */
+    suspend fun removeLog(id: Long)
+
     /** Returns a reactive stream of mood logs */
     suspend fun getLogs(): Flow<List<MoodLogDTO>>
 

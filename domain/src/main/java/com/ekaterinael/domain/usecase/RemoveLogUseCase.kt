@@ -2,15 +2,16 @@ package com.ekaterinael.domain.usecase
 
 import com.ekaterinael.core.Result
 import com.ekaterinael.core.di.AppScope
+import com.ekaterinael.domain.model.MoodLogDTO
 import com.ekaterinael.domain.repository.MoodRepository
 import javax.inject.Inject
 
 /** Use case for update an existing mood log */
 @AppScope
-class EditLogUseCase @Inject constructor(private val repository: MoodRepository) {
-    suspend operator fun invoke(id: Long): Result<Unit> {
+class RemoveLogUseCase @Inject constructor(private val repository: MoodRepository) {
+    suspend operator fun invoke(log: MoodLogDTO): Result<Unit> {
         try {
-            repository.removeLog(id = id)
+            repository.editLog(log = log)
             return Result.Success(Unit)
         } catch (e: Exception) {
             return Result.Error(e)
