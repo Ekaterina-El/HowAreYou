@@ -1,5 +1,7 @@
 package com.ekaterinael.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.util.Date
 
 /**
@@ -11,10 +13,11 @@ import java.util.Date
  * @property description a detailed description: what happened, thoughts, events
  * @property mood the user's current mood, represented as [Mood]
  */
+@Parcelize
 data class MoodLogDTO(
     val id: Long? = null,
-    val date: Date,
-    val title: String,
-    val description: String,
-    val mood: Mood
-)
+    val date: Date? = null,
+    val title: String = "",
+    val description: String = "",
+    val mood: Mood = Mood.UNKNOWN
+): Parcelable

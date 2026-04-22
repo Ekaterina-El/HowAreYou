@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -54,9 +55,16 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
+    // Decompose
+    implementation(libs.decompose)
+    implementation(libs.decompose.extensions.compose.jetpack)
+
     implementation(project(":core"))
     implementation(project(":core:resources"))
     implementation(project(":data"))
+    implementation(project(":feature:add_edit_mood_log"))
+    implementation(project(":feature:mood_list"))
+    implementation(project(":feature:mood_statistic"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.ekaterinael.domain"
+    namespace = "com.ekaterinael.mood_list"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -32,19 +31,30 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
 
-    // DI
-    implementation(libs.dagger)
-    ksp(libs.dagger.compiler)
+    // MVI
+//    implementation(libs.mvikotlin)
+//    implementation(libs.mvikotlin.main)
+//    implementation(libs.mvikotlin.extensions.coroutines)
+    implementation(libs.decompose)
 
-    implementation(project(":core"))
-
+    // Project
+    implementation(project(":domain"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
