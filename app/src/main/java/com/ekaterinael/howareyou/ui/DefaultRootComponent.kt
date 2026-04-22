@@ -12,7 +12,7 @@ import com.ekaterinael.add_edit_mood_log.DefaultAddEditMoodLogComponent
 import com.ekaterinael.domain.model.Mood
 import com.ekaterinael.domain.model.MoodLogDTO
 import com.ekaterinael.mode_statistic.DefaultMoodStatisticComponent
-import com.ekaterinael.mood_list.DefaultMoodListComponent
+import com.ekaterinael.mood_list.DefaultMoodLogComponent
 import kotlinx.parcelize.Parcelize
 
 class DefaultRootComponent(
@@ -47,12 +47,12 @@ class DefaultRootComponent(
     }
 
     private fun createMoodLogChild(componentContext: ComponentContext): RootComponent.Child.MoodLog {
-        val component = DefaultMoodListComponent(
+        val component = DefaultMoodLogComponent(
             componentContext = componentContext,
-            onMoodLogSelected = { moodLog ->
+            onOpenLogToEdit = { moodLog ->
                 navigation.push(Config.AddEditMoodLog(moodLog = moodLog))
             },
-            onAddNewLogClicked = { selectedMood ->
+            goToCreateNewLog = { selectedMood ->
                 navigation.push(
                     Config.AddEditMoodLog(
                         moodLog = MoodLogDTO(

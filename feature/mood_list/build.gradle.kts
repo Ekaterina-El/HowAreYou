@@ -48,13 +48,14 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     // MVI
-//    implementation(libs.mvikotlin)
-//    implementation(libs.mvikotlin.main)
-//    implementation(libs.mvikotlin.extensions.coroutines)
+    implementation(libs.mvikotlin)
+    implementation(libs.mvikotlin.main)
+    implementation(libs.mvikotlin.extensions.coroutines)
     implementation(libs.decompose)
 
     // Project
     implementation(project(":domain"))
+    implementation(project(":feature:core"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

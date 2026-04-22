@@ -1,15 +1,15 @@
 package com.ekaterinael.mode_statistic
 
 import com.arkivanov.decompose.ComponentContext
-import com.ekaterinael.mode_statistic.MoodStatisticComponent.Companion.Model
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
+import com.ekaterinael.mode_statistic.MoodStatisticStore.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class DefaultMoodStatisticComponent(
     private val componentContext: ComponentContext
 ) : MoodStatisticComponent, ComponentContext by componentContext {
-    private val _model = MutableStateFlow(Model())
-    override val model: StateFlow<Model> = _model.asStateFlow()
-
+    private lateinit var store: MoodStatisticStore
+    override val model: StateFlow<State> = store.stateFlow
 }
