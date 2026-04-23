@@ -12,8 +12,9 @@ import com.ekaterinael.mood_list.MoodLogStore.Label
 import com.ekaterinael.mood_list.MoodLogStore.State
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MoodLogStoreFactory(
+class MoodLogStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory,
     private val getLogsUseCase: GetLogsUseCase
 ) {
@@ -45,16 +46,22 @@ class MoodLogStoreFactory(
     }
 
     private class ExecutorImpl: CoroutineExecutor<Intent, Action, State, Message, Label>() {
-        override fun executeIntent(intent: Intent) {
-            when (intent) {
-                is Intent.OnClickAddNewLog -> publish(Label.GoToCreateNewLog(intent.selectedMood))
-                is Intent.OnClickByLog -> publish(Label.OpenLogToEdit(intent.log))
+        override fun executeAction(
+            action: Action,
+            getState: () -> State
+        ) {
+            when (action) {
+                is Action.MoodLogUpdated -> dispatch(Message.MoodLogUpdated(action.logs))
             }
         }
 
-        override fun executeAction(action: Action) {
-            when (action) {
-                is Action.MoodLogUpdated -> dispatch(Message.MoodLogUpdated(action.logs))
+        override fun executeIntent(
+            intent: Intent,
+            getState: () -> State
+        ) {
+            when (intent) {
+                is Intent.OnClickAddNewLog -> publish(Label.GoToCreateNewLog(intent.selectedMood))
+                is Intent.OnClickByLog -> publish(Label.OpenLogToEdit(intent.log))
             }
         }
     }

@@ -59,6 +59,10 @@ dependencies {
     implementation(libs.decompose)
     implementation(libs.decompose.extensions.compose.jetpack)
 
+    // MVI
+    implementation(libs.mvikotlin)
+    implementation(libs.mvikotlin.main)
+
     implementation(project(":core"))
     implementation(project(":core:resources"))
     implementation(project(":data"))

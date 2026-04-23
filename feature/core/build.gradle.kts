@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ekaterinael.core"
+    namespace = "com.ekaterinael.feature.core"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1

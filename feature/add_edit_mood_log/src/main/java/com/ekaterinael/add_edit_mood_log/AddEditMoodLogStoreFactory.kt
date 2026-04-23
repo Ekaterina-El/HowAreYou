@@ -10,8 +10,9 @@ import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.State
 import com.ekaterinael.domain.model.Mood
 import com.ekaterinael.domain.model.MoodLogDTO
 import java.util.Date
+import javax.inject.Inject
 
-class AddEditMoodLogStoreFactory(
+class AddEditMoodLogStoreFactory @Inject constructor(
     private val storeFactory: StoreFactory
 ) {
     fun create(moodLog: MoodLogDTO): AddEditMoodLogStore =
@@ -38,7 +39,7 @@ class AddEditMoodLogStoreFactory(
     }
 
     private class ExecutorImpl: CoroutineExecutor<Intent, Action, State, Message, Label>() {
-        override fun executeIntent(intent: Intent) {
+        override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
                 is Intent.OnChangeDate -> dispatch(Message.OnChangeDate(intent.date))
                 is Intent.OnChangeDescription -> dispatch(Message.OnChangeDescription(intent.description))

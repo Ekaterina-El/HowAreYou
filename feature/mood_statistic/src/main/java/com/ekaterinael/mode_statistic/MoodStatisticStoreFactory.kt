@@ -5,8 +5,9 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.ekaterinael.mode_statistic.MoodStatisticStore.State
+import javax.inject.Inject
 
-class MoodStatisticStoreFactory(private val storeFactory: StoreFactory) {
+class MoodStatisticStoreFactory @Inject constructor(private val storeFactory: StoreFactory) {
     fun create(): MoodStatisticStore =
         object : MoodStatisticStore, Store<Nothing, State, Nothing> by storeFactory.create(
             name = MoodStatisticStore::class.simpleName,

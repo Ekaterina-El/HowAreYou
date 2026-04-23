@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -52,6 +53,10 @@ dependencies {
     implementation(libs.mvikotlin.main)
     implementation(libs.mvikotlin.extensions.coroutines)
     implementation(libs.decompose)
+
+    // Dagger 2
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
 
     // Project
     implementation(project(":domain"))

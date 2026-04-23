@@ -13,16 +13,22 @@ import com.ekaterinael.domain.model.Mood
 import com.ekaterinael.domain.model.MoodLogDTO
 import com.ekaterinael.mode_statistic.DefaultMoodStatisticComponent
 import com.ekaterinael.mood_list.DefaultMoodLogComponent
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.parcelize.Parcelize
 
-class DefaultRootComponent(
-    private val componentContext: ComponentContext
+class DefaultRootComponent @AssistedInject constructor(
+    private val moodLogComponentFactory: DefaultMoodLogComponent.Factory,
+    private val moodStatisticComponentFactory: DefaultMoodStatisticComponent.Factory,
+    private val addEditMoodLogComponentFactory: DefaultAddEditMoodLogComponent.Factory,
+    @Assisted("componentContext") private val componentContext: ComponentContext
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()
 
     override val childStack: Value<ChildStack<Config, RootComponent.Child>> = childStack(
-        navigation,
+        source = navigation,
         initialConfiguration = Config.MoodLogList,
         handleBackButton = true,
         childFactory = ::child,
@@ -40,14 +46,12 @@ class DefaultRootComponent(
     }
 
     private fun createMoodLogStatisticChild(componentContext: ComponentContext): RootComponent.Child.MoodStatistic {
-        val component = DefaultMoodStatisticComponent(
-            componentContext = componentContext
-        )
+        val component = moodStatisticComponentFactory.create(componentContext = componentContext)
         return RootComponent.Child.MoodStatistic(component)
     }
 
     private fun createMoodLogChild(componentContext: ComponentContext): RootComponent.Child.MoodLog {
-        val component = DefaultMoodLogComponent(
+        val component = moodLogComponentFactory.create(
             componentContext = componentContext,
             onOpenLogToEdit = { moodLog ->
                 navigation.push(Config.AddEditMoodLog(moodLog = moodLog))
@@ -69,7 +73,7 @@ class DefaultRootComponent(
         componentContext: ComponentContext,
         config: Config.AddEditMoodLog
     ): RootComponent.Child.AddEditMoodLog {
-        val component = DefaultAddEditMoodLogComponent(
+        val component = addEditMoodLogComponentFactory.create(
             componentContext = componentContext,
             moodLog = config.moodLog,
             onGoBackCallback = { navigation.pop() }
@@ -87,5 +91,12 @@ class DefaultRootComponent(
 
         @Parcelize
         data class AddEditMoodLog(val moodLog: MoodLogDTO): Config
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted("componentContext") componentContext: ComponentContext
+        ): DefaultRootComponent
     }
 }
