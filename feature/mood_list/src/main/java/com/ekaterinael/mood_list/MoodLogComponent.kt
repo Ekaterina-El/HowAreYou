@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface MoodLogComponent {
     val model: StateFlow<MoodLogStore.State>
 
-    fun onClickAddNewLog(selectedMood: Mood?)
+    fun onClickAddNewLog(selectedMood: Mood)
 
     fun onClickByLog(log: MoodLogDTO)
 }

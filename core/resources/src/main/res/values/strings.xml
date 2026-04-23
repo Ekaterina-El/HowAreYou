@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">HowAreYou</string>
+
+    <string name="how_are_you">Как вы себя чувствуете?</string>
+
+    <string name="great_mood">Супер</string>
+    <string name="good_mood">Хорошо</string>
+    <string name="so_so_mood">Так себе</string>
+    <string name="bad_mood">Плохо</string>
+    <string name="awful_mood">Ужасно</string>
+
+    <string name="unknown_mood">Неизвестно</string>
 </resources>

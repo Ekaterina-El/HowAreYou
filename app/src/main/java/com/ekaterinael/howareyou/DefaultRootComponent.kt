@@ -1,4 +1,4 @@
-package com.ekaterinael.howareyou.ui
+package com.ekaterinael.howareyou
 
 import android.os.Parcelable
 import com.arkivanov.decompose.ComponentContext

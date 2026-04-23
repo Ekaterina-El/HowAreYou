@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":core:resources"))
     implementation(project(":data"))
+    implementation(project(":feature:core"))
     implementation(project(":feature:add_edit_mood_log"))
     implementation(project(":feature:mood_list"))
     implementation(project(":feature:mood_statistic"))

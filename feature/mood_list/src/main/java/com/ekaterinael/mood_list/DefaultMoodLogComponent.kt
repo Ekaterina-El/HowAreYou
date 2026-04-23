@@ -42,7 +42,7 @@ class DefaultMoodLogComponent @AssistedInject constructor(
         }
     }
 
-    override fun onClickAddNewLog(selectedMood: Mood?) {
+    override fun onClickAddNewLog(selectedMood: Mood) {
         store.accept(MoodLogStore.Intent.OnClickAddNewLog(selectedMood))
     }
 

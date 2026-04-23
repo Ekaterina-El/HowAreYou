@@ -61,8 +61,11 @@ dependencies {
     // Project
     implementation(project(":domain"))
     implementation(project(":feature:core"))
+    implementation(project(":core:resources"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

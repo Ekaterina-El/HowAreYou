@@ -1,4 +1,4 @@
-package com.ekaterinael.howareyou.ui
+package com.ekaterinael.howareyou
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value

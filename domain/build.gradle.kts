@@ -44,6 +44,7 @@ dependencies {
     ksp(libs.dagger.compiler)
 
     implementation(project(":core"))
+    implementation(project(":core:resources"))
 
 
     testImplementation(libs.junit)
