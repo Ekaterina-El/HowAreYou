@@ -41,7 +41,7 @@ fun MoodLogNewState(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            moods.forEach { mood -> MoodLogItem(mood, onSelectMood) }
+            moods.forEach { mood -> MoodLogStateItem(mood, onSelectMood) }
         }
     }
 }

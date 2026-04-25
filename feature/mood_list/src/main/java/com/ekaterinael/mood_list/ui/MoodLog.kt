@@ -1,7 +1,9 @@
 package com.ekaterinael.mood_list.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,8 +18,13 @@ fun MoodLog(component: MoodLogComponent) {
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(horizontal = 14.dp)
+        .padding(horizontal = 12.dp)
     ) {
         MoodLogNewState(onSelectMood = component::onClickAddNewLog)
+        Spacer(Modifier.height(12.dp))
+        MoodLogsList(
+            logs = model.logs,
+            onSelectLog = component::onClickByLog
+        )
     }
 }

@@ -52,6 +52,7 @@ dependencies {
 
     implementation(project(":domain"))
     implementation(project(":core:resources"))
+    implementation(project(":core:utils"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

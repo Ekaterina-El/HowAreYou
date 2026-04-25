@@ -1,0 +1,84 @@
+package com.ekaterinael.mood_list.ui
+
+import android.icu.util.Calendar
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.ekaterinael.core.ui.theme.HowAreYouTheme
+import com.ekaterinael.domain.model.Mood
+import com.ekaterinael.domain.model.MoodLogDTO
+
+@Composable
+fun MoodLogsList(logs: List<MoodLogDTO>, onSelectLog: (MoodLogDTO) -> Unit = {}) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        items(logs, key = { it.id }) { moodLog ->
+            MoodLogItem(moodLog = moodLog, onSelect = {
+                onSelectLog(moodLog)
+            })
+        }
+    }
+}
+
+
+@Preview
+@Composable
+private fun MoodLogItemPreview() {
+    HowAreYouTheme(darkTheme = true) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(10.dp)
+        ) {
+            MoodLogsList(
+                logs = listOf(
+                    MoodLogDTO(
+                        id = 1,
+                        date = Calendar.getInstance().time,
+                        title = "",
+                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+                        mood = Mood.GREAT
+                    ),
+
+                    MoodLogDTO(
+                        id = 1,
+                        date = Calendar.getInstance().time,
+                        title = "",
+                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+                        mood = Mood.GOOD
+                    ),
+
+                    MoodLogDTO(
+                        id = 1,
+                        date = Calendar.getInstance().time,
+                        title = "",
+                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+                        mood = Mood.AWFUL
+                    ),
+
+                    MoodLogDTO(
+                        id = 1,
+                        date = Calendar.getInstance().time,
+                        title = "",
+                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+                        mood = Mood.SO_SO
+                    )
+                ),
+            )
+        }
+    }
+}

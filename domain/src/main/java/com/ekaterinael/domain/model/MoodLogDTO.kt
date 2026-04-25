@@ -15,9 +15,15 @@ import java.util.Date
  */
 @Parcelize
 data class MoodLogDTO(
-    val id: Long? = null,
-    val date: Date? = null,
+    val id: Long = UNKNOWN_ID,
+    val date: Date,
     val title: String = "",
     val description: String = "",
     val mood: Mood = Mood.UNKNOWN
-): Parcelable
+): Parcelable {
+
+    companion object {
+        const val UNKNOWN_ID = -1L
+    }
+
+}

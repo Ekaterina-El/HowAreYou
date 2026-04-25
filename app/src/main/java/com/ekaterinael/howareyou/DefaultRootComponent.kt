@@ -17,6 +17,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.parcelize.Parcelize
+import java.util.Calendar
 
 class DefaultRootComponent @AssistedInject constructor(
     private val moodLogComponentFactory: DefaultMoodLogComponent.Factory,
@@ -60,7 +61,8 @@ class DefaultRootComponent @AssistedInject constructor(
                 navigation.push(
                     Config.AddEditMoodLog(
                         moodLog = MoodLogDTO(
-                            mood = selectedMood ?: Mood.UNKNOWN
+                            mood = selectedMood ?: Mood.UNKNOWN,
+                            date = Calendar.getInstance().time
                         )
                     )
                 )
