@@ -12,6 +12,7 @@ import com.ekaterinael.mood_list.MoodLogStore.Label
 import com.ekaterinael.mood_list.MoodLogStore.State
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 class MoodLogStoreFactory @Inject constructor(
@@ -21,7 +22,7 @@ class MoodLogStoreFactory @Inject constructor(
     fun create(): MoodLogStore =
         object : MoodLogStore, Store<Intent, State, Label> by storeFactory.create(
             name = MoodLogStore::class.simpleName,
-            initialState = State(),
+            initialState = State(selectedMonth = Calendar.getInstance().time),
             bootstrapper = BootstrapperImpl(),
             executorFactory = ::ExecutorImpl,
             reducer = ReducerImpl

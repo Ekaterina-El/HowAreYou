@@ -18,13 +18,19 @@ import com.ekaterinael.domain.model.Mood
 import com.ekaterinael.domain.model.MoodLogDTO
 
 @Composable
-fun MoodLogsList(logs: List<MoodLogDTO>, onSelectLog: (MoodLogDTO) -> Unit = {}) {
+fun MoodLogsList(
+    logs: List<MoodLogDTO>,
+    onClickAddNewLog: (Mood) -> Unit = {},
+    onSelectLog: (MoodLogDTO) -> Unit = {}
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        item { MoodLogNewState(onSelectMood = onClickAddNewLog) }
+
         items(logs, key = { it.id }) { moodLog ->
             MoodLogItem(moodLog = moodLog, onSelect = {
                 onSelectLog(moodLog)

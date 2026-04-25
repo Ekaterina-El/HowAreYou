@@ -34,6 +34,7 @@ fun MoodLogStateItem(mood: Mood, onSelectMood: (Mood) -> Unit) {
             targetValue = if (isPressed) 0.8f else 1f,
             label = "tintAlpha"
         )
+        val colorWithAlpha = color.copy(alpha = alpha)
 
         Image(
             modifier = Modifier
@@ -46,13 +47,13 @@ fun MoodLogStateItem(mood: Mood, onSelectMood: (Mood) -> Unit) {
                 },
             painter = painterResource(mood.imageResId),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(color.copy(alpha = alpha))
+            colorFilter = ColorFilter.tint(colorWithAlpha)
         )
         Spacer(Modifier.height(5.dp))
         Text(
             text = stringResource(mood.titleResId).lowercase(),
             style = MaterialTheme.typography.labelSmall,
-            color = color
+            color = colorWithAlpha
         )
     }
 }
