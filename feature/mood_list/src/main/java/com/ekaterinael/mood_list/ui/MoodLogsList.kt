@@ -29,7 +29,12 @@ fun MoodLogsList(
             .background(MaterialTheme.colorScheme.background),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        item { MoodLogNewState(onSelectMood = onClickAddNewLog) }
+        item {
+            MoodLogNewState(
+                modifier = Modifier.padding(10.dp),
+                onSelectMood = onClickAddNewLog
+            )
+        }
 
         items(logs, key = { it.id }) { moodLog ->
             MoodLogItem(moodLog = moodLog, onSelect = {

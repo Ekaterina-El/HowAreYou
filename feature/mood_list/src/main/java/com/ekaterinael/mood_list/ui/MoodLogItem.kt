@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.ekaterinael.core.dateUserString
 import com.ekaterinael.core.ui.Container
 import com.ekaterinael.core.ui.helper.getLocale
-import com.ekaterinael.core.ui.mood.color
 import com.ekaterinael.core.ui.theme.HowAreYouTheme
 import com.ekaterinael.domain.model.Mood
 import com.ekaterinael.domain.model.MoodLogDTO
@@ -36,13 +34,11 @@ fun MoodLogItem(moodLog: MoodLogDTO, onSelect: () -> Unit = {}) {
     Container(onSelect) {
         Row(modifier = Modifier.fillMaxWidth()) {
             val mood = moodLog.mood
-            val color = mood.color()
 
             Image(
                 modifier = Modifier.size(40.dp),
                 painter = painterResource(mood.imageResId),
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(color)
             )
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -56,7 +52,6 @@ fun MoodLogItem(moodLog: MoodLogDTO, onSelect: () -> Unit = {}) {
                 Text(
                     text = stringResource(mood.titleResId).lowercase(),
                     style = MaterialTheme.typography.titleMedium,
-                    color = color
                 )
 
                 Spacer(Modifier.height(5.dp))
