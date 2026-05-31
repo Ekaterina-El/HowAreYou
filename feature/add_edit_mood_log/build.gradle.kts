@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // MVI
     implementation(libs.mvikotlin)
@@ -62,6 +63,7 @@ dependencies {
     // Project
     implementation(project(":domain"))
     implementation(project(":feature:core"))
+    implementation(project(":core:resources"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

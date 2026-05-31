@@ -56,4 +56,18 @@ val Typography = Typography(
         fontSize = 11.sp,
         lineHeight = 16.sp,
     ),
+
+    headlineSmall = TextStyle(
+        fontFamily = Nunito,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+    ),
+
+    displaySmall = TextStyle(
+        fontFamily = Nunito,
+        fontWeight = FontWeight.Bold,
+        fontSize = 36.sp,
+        lineHeight = 44.sp,
+    )
 )

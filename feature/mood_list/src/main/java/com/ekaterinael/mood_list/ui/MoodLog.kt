@@ -3,6 +3,7 @@ package com.ekaterinael.mood_list.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,20 +17,24 @@ import com.ekaterinael.mood_list.MoodLogComponent
 fun MoodLog(component: MoodLogComponent) {
     val model by component.model.collectAsState()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(horizontal = 12.dp)
-    ) {
-        TopBarWithSearch(
-            title = model.selectedMonthUserString(getLocale()),
-            modifier = Modifier.padding(top = 20.dp, bottom = 14.dp),
-            onClickForward = {},
-            onClickSearch = {}
-        )
-        MoodLogsList(
-            logs = model.logs,
-            onClickAddNewLog = component::onClickAddNewLog,
-            onSelectLog = component::onClickByLog
-        )
+    Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .padding(horizontal = 12.dp)
+        ) {
+            TopBarWithSearch(
+                title = model.selectedMonthUserString(getLocale()),
+                modifier = Modifier.padding(top = 20.dp, bottom = 14.dp),
+                onClickForward = {},
+                onClickSearch = {}
+            )
+            MoodLogsList(
+                logs = model.logs,
+                onClickAddNewLog = component::onClickAddNewLog,
+                onSelectLog = component::onClickByLog
+            )
+        }
     }
 }
