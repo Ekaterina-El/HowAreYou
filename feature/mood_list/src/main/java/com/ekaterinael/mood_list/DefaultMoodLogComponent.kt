@@ -6,8 +6,9 @@ import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.ekaterinael.core.componentScope
 import com.ekaterinael.domain.model.Mood
-import com.ekaterinael.domain.model.MoodLogDTO
+import com.ekaterinael.domain.model.MoodLog
 import com.ekaterinael.mood_list.MoodLogStore.State
+import com.ekaterinael.mood_list.di.MoodListScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,10 +17,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@MoodListScope
 class DefaultMoodLogComponent @AssistedInject constructor(
     moodLogStoreFactory: MoodLogStoreFactory,
     @Assisted("componentContext") private val componentContext: ComponentContext,
-    @Assisted("onOpenLogToEdit") private val onOpenLogToEdit: (MoodLogDTO) -> Unit,
+    @Assisted("onOpenLogToEdit") private val onOpenLogToEdit: (MoodLog) -> Unit,
     @Assisted("goToCreateNewLog") private val goToCreateNewLog: (selectedMood: Mood?) -> Unit
 ) : MoodLogComponent, ComponentContext by componentContext {
     private val store = instanceKeeper.getStore { moodLogStoreFactory.create() }
@@ -31,7 +33,7 @@ class DefaultMoodLogComponent @AssistedInject constructor(
             store.labels.collect {
                 when (it) {
                     is MoodLogStore.Label.OpenLogToEdit -> {
-                        onOpenLogToEdit(it.log)
+//                        onOpenLogToEdit(it.log)
                     }
 
                     is MoodLogStore.Label.GoToCreateNewLog -> {
@@ -46,14 +48,14 @@ class DefaultMoodLogComponent @AssistedInject constructor(
         store.accept(MoodLogStore.Intent.OnClickAddNewLog(selectedMood))
     }
 
-    override fun onClickByLog(log: MoodLogDTO) {
+    override fun onClickByLog(log: MoodListItemUI) {
         store.accept(MoodLogStore.Intent.OnClickByLog(log))
     }
 
-    @AssistedFactory
+    @[AssistedFactory MoodListScope]
     interface Factory {
         fun create(
-            @Assisted("onOpenLogToEdit") onOpenLogToEdit: (MoodLogDTO) -> Unit,
+            @Assisted("onOpenLogToEdit") onOpenLogToEdit: (MoodLog) -> Unit,
             @Assisted("componentContext") componentContext: ComponentContext,
             @Assisted("goToCreateNewLog") goToCreateNewLog: (selectedMood: Mood?) -> Unit
         ): DefaultMoodLogComponent

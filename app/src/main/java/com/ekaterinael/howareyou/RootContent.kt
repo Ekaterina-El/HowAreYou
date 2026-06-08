@@ -8,7 +8,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.ekaterinael.add_edit_mood_log.ui.AddEditMoodLog
 import com.ekaterinael.core.ui.theme.HowAreYouTheme
 import com.ekaterinael.mode_statistic.ui.MoodStatistic
-import com.ekaterinael.mood_list.ui.MoodLog
+import com.ekaterinael.mood_list.ui.MoodLogScreen
 
 @Composable
 fun RootContent(component: RootComponent) {
@@ -17,7 +17,7 @@ fun RootContent(component: RootComponent) {
             Children(stack = component.childStack) {
                 when (val child = it.instance) {
                     is RootComponent.Child.AddEditMoodLog -> AddEditMoodLog(child.component)
-                    is RootComponent.Child.MoodLog -> MoodLog(child.component)
+                    is RootComponent.Child.MoodLog -> MoodLogScreen(child.component)
                     is RootComponent.Child.MoodStatistic -> MoodStatistic(child.component)
                 }
             }

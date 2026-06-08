@@ -8,7 +8,7 @@ import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.Intent
 import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.State
 import com.ekaterinael.core.componentScope
 import com.ekaterinael.domain.model.Mood
-import com.ekaterinael.domain.model.MoodLogDTO
+import com.ekaterinael.domain.model.MoodLog
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class DefaultAddEditMoodLogComponent @AssistedInject constructor(
     addEditMoodLogStoreFactory: AddEditMoodLogStoreFactory,
     @Assisted("componentContext") private val componentContext: ComponentContext,
-    @Assisted("moodLog") moodLog: MoodLogDTO,
+    @Assisted("moodLog") moodLog: MoodLog,
     @Assisted("onGoBackCallback") private val onGoBackCallback: () -> Unit
 ) : AddEditMoodLogComponent, ComponentContext by componentContext {
 
@@ -56,7 +56,7 @@ class DefaultAddEditMoodLogComponent @AssistedInject constructor(
     interface Factory {
         fun create(
             @Assisted("componentContext") componentContext: ComponentContext,
-            @Assisted("moodLog") moodLog: MoodLogDTO,
+            @Assisted("moodLog") moodLog: MoodLog,
             @Assisted("onGoBackCallback") onGoBackCallback: () -> Unit
         ): DefaultAddEditMoodLogComponent
     }

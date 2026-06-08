@@ -1,6 +1,5 @@
 package com.ekaterinael.mood_list.ui
 
-import android.icu.util.Calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,13 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekaterinael.core.ui.theme.HowAreYouTheme
 import com.ekaterinael.domain.model.Mood
-import com.ekaterinael.domain.model.MoodLogDTO
+import com.ekaterinael.mood_list.MoodListItemUI
+import java.util.Calendar
 
 @Composable
 fun MoodLogsList(
-    logs: List<MoodLogDTO>,
+    logs: List<MoodListItemUI>,
     onClickAddNewLog: (Mood) -> Unit = {},
-    onSelectLog: (MoodLogDTO) -> Unit = {}
+    onSelectLog: (MoodListItemUI) -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -57,32 +57,36 @@ private fun MoodLogItemPreview() {
         ) {
             MoodLogsList(
                 logs = listOf(
-                    MoodLogDTO(
+                    MoodListItemUI(
                         id = 1,
                         date = Calendar.getInstance().time,
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = Mood.GREAT
+                        moodTitleId = Mood.GREAT.titleResId,
+                        moodImageResId = Mood.GREAT.imageResId
                     ),
 
-                    MoodLogDTO(
+                    MoodListItemUI(
                         id = 1,
                         date = Calendar.getInstance().time,
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = Mood.GOOD
+                        moodTitleId = Mood.GOOD.titleResId,
+                        moodImageResId = Mood.GOOD.imageResId
                     ),
 
-                    MoodLogDTO(
+                    MoodListItemUI(
                         id = 1,
                         date = Calendar.getInstance().time,
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = Mood.AWFUL
+                        moodTitleId = Mood.AWFUL.titleResId,
+                        moodImageResId = Mood.AWFUL.imageResId
                     ),
 
-                    MoodLogDTO(
+                    MoodListItemUI(
                         id = 1,
                         date = Calendar.getInstance().time,
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = Mood.SO_SO
+                        moodTitleId = Mood.SO_SO.titleResId,
+                        moodImageResId = Mood.SO_SO.imageResId
                     )
                 ),
             )

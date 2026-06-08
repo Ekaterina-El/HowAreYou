@@ -4,12 +4,17 @@ import android.content.Context
 import com.ekaterinael.core.di.AppScope
 import com.ekaterinael.data.di.RoomModule
 import com.ekaterinael.howareyou.MainActivity
+import com.ekaterinael.mood_list.di.MoodListModule
 import dagger.BindsInstance
 import dagger.Component
 
 @AppScope
 @Component(
-    modules = [RoomModule::class, PresentationModule::class]
+    modules = [
+        RoomModule::class,
+        PresentationModule::class,
+        MoodListModule::class
+    ]
 )
 interface ApplicationComponent {
     fun inject(activity: MainActivity)

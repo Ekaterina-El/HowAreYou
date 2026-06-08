@@ -9,7 +9,7 @@ import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.Label
 import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.State
 import com.ekaterinael.core.Result
 import com.ekaterinael.domain.model.Mood
-import com.ekaterinael.domain.model.MoodLogDTO
+import com.ekaterinael.domain.model.MoodLog
 import com.ekaterinael.domain.usecase.SaveMoodLogUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class AddEditMoodLogStoreFactory @Inject constructor(
     private val saveMoodLogUseCase: SaveMoodLogUseCase,
     private val storeFactory: StoreFactory
 ) {
-    fun create(moodLog: MoodLogDTO): AddEditMoodLogStore =
+    fun create(moodLog: MoodLog): AddEditMoodLogStore =
         object : AddEditMoodLogStore, Store<Intent, State, Label> by storeFactory.create(
             name = AddEditMoodLogStore::class.simpleName,
             initialState = State(
@@ -54,7 +54,7 @@ class AddEditMoodLogStoreFactory @Inject constructor(
 
         private fun saveMoodLogLog(state: State) {
             scope.launch {
-                val moodLog = MoodLogDTO(
+                val moodLog = MoodLog(
                     id = state.id,
                     date = state.date ?: getCurrentDate(),
                     description = state.description,

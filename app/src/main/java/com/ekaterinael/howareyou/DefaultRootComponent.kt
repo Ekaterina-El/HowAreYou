@@ -10,7 +10,7 @@ import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import com.ekaterinael.add_edit_mood_log.DefaultAddEditMoodLogComponent
 import com.ekaterinael.domain.model.Mood
-import com.ekaterinael.domain.model.MoodLogDTO
+import com.ekaterinael.domain.model.MoodLog
 import com.ekaterinael.mode_statistic.DefaultMoodStatisticComponent
 import com.ekaterinael.mood_list.DefaultMoodLogComponent
 import dagger.assisted.Assisted
@@ -60,7 +60,7 @@ class DefaultRootComponent @AssistedInject constructor(
             goToCreateNewLog = { selectedMood ->
                 navigation.push(
                     Config.AddEditMoodLog(
-                        moodLog = MoodLogDTO(
+                        moodLog = MoodLog(
                             mood = selectedMood ?: Mood.UNKNOWN,
                             date = Calendar.getInstance().time
                         )
@@ -94,7 +94,7 @@ class DefaultRootComponent @AssistedInject constructor(
         data object MoodLogStatistic: Config
 
         @Parcelize
-        data class AddEditMoodLog(val moodLog: MoodLogDTO): Config
+        data class AddEditMoodLog(val moodLog: MoodLog): Config
     }
 
     @AssistedFactory

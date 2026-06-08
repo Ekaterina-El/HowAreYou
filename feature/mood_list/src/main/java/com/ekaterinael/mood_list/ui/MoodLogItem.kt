@@ -1,6 +1,5 @@
 package com.ekaterinael.mood_list.ui
 
-import android.icu.util.Calendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,22 +21,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ekaterinael.core.dateUserString
 import com.ekaterinael.core.ui.Container
-import com.ekaterinael.core.ui.helper.getLocale
+import com.ekaterinael.core.ui.helper.rememberFormatedDate
 import com.ekaterinael.core.ui.theme.HowAreYouTheme
 import com.ekaterinael.domain.model.Mood
-import com.ekaterinael.domain.model.MoodLogDTO
+import com.ekaterinael.mood_list.MoodListItemUI
+import java.util.Calendar
 
 @Composable
-fun MoodLogItem(moodLog: MoodLogDTO, onSelect: () -> Unit = {}) {
-    Container(onSelect) {
+fun MoodLogItem(moodLog: MoodListItemUI, onSelect: () -> Unit = {}) {
+    Container(onSelect = onSelect) {
         Row(modifier = Modifier.fillMaxWidth()) {
-            val mood = moodLog.mood
-
             Image(
                 modifier = Modifier.size(40.dp),
-                painter = painterResource(mood.imageResId),
+                painter = painterResource(moodLog.moodImageResId),
                 contentDescription = null,
             )
 
@@ -45,12 +42,12 @@ fun MoodLogItem(moodLog: MoodLogDTO, onSelect: () -> Unit = {}) {
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = moodLog.dateUserString(getLocale()).uppercase(),
+                    text = rememberFormatedDate(moodLog.date),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    text = stringResource(mood.titleResId).lowercase(),
+                    text = stringResource(moodLog.moodTitleId).lowercase(),
                     style = MaterialTheme.typography.titleMedium,
                 )
 
@@ -68,8 +65,6 @@ fun MoodLogItem(moodLog: MoodLogDTO, onSelect: () -> Unit = {}) {
     }
 }
 
-
-
 @Preview
 @Composable
 private fun MoodLogItemPreview() {
@@ -80,13 +75,12 @@ private fun MoodLogItemPreview() {
                 .background(MaterialTheme.colorScheme.background)
                 .padding(10.dp),
         ) {
-            MoodLogItem(
-                moodLog = MoodLogDTO(
-                    id = 1,
-                    date = Calendar.getInstance().time,
-                    description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                    mood = Mood.GREAT
-                ),
+            MoodListItemUI(
+                id = 1,
+                date = Calendar.getInstance().time,
+                description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+                moodTitleId = Mood.GREAT.titleResId,
+                moodImageResId = Mood.GREAT.imageResId
             )
         }
     }

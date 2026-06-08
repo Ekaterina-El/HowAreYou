@@ -14,7 +14,7 @@ import com.ekaterinael.core.ui.navgiation.TopBarWithSearch
 import com.ekaterinael.mood_list.MoodLogComponent
 
 @Composable
-fun MoodLog(component: MoodLogComponent) {
+fun MoodLogScreen(component: MoodLogComponent) {
     val model by component.model.collectAsState()
 
     Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->

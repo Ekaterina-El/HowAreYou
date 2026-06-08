@@ -13,7 +13,7 @@ import java.util.Date
  * @property mood the user's current mood, represented as [Mood]
  */
 @Parcelize
-data class MoodLogDTO(
+data class MoodLog(
     val id: Long? = null,
     val date: Date,
     val description: String = "",
