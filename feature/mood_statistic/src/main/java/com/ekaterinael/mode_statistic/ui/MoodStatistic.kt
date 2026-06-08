@@ -10,5 +10,5 @@ import com.ekaterinael.mode_statistic.MoodStatisticComponent
 fun MoodStatistic(component: MoodStatisticComponent) {
     val model by component.model.collectAsState()
 
-    Text("[Mood statistic in development]")
+    Text(model.data.data)
 }

@@ -5,13 +5,19 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.ekaterinael.mode_statistic.MoodStatisticStore.State
+import com.ekaterinael.mode_statistic.di.MoodStatisticScope
+import com.ekaterinael.mode_statistic.mapper.MoodStatisticUIMapper
 import javax.inject.Inject
 
-class MoodStatisticStoreFactory @Inject constructor(private val storeFactory: StoreFactory) {
+@MoodStatisticScope
+class MoodStatisticStoreFactory @Inject constructor(
+    private val storeFactory: StoreFactory,
+    private val mapper: MoodStatisticUIMapper
+) {
     fun create(): MoodStatisticStore =
         object : MoodStatisticStore, Store<Nothing, State, Nothing> by storeFactory.create(
             name = MoodStatisticStore::class.simpleName,
-            initialState = State(),
+            initialState = State(data = mapper.map("[In development]")),
             executorFactory = ::ExecutorImpl,
             reducer = ReducerImpl,
         ) {}
@@ -24,9 +30,6 @@ class MoodStatisticStoreFactory @Inject constructor(private val storeFactory: St
 
     private object ReducerImpl: Reducer<State, Message> {
         override fun State.reduce(msg: Message): State {
-            /*when (msg) {
-
-            }*/
             return this
         }
 
