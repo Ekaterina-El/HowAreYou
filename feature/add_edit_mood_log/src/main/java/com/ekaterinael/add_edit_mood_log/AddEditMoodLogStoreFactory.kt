@@ -10,8 +10,7 @@ import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.State
 import com.ekaterinael.core.Result
 import com.ekaterinael.domain.model.Mood
 import com.ekaterinael.domain.model.MoodLogDTO
-import com.ekaterinael.domain.usecase.AddNewLogUseCase
-import com.ekaterinael.domain.usecase.EditLogUseCase
+import com.ekaterinael.domain.usecase.SaveMoodLogUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,8 +19,7 @@ import java.util.Date
 import javax.inject.Inject
 
 class AddEditMoodLogStoreFactory @Inject constructor(
-    private val addNewLogUseCase: AddNewLogUseCase,
-    private val editLogUseCase: EditLogUseCase,
+    private val saveMoodLogUseCase: SaveMoodLogUseCase,
     private val storeFactory: StoreFactory
 ) {
     fun create(moodLog: MoodLogDTO): AddEditMoodLogStore =
@@ -56,25 +54,22 @@ class AddEditMoodLogStoreFactory @Inject constructor(
 
         private fun saveMoodLogLog(state: State) {
             scope.launch {
-                with(state) {
-                    val moodLog = MoodLogDTO(
-                        id = id,
-                        date = date ?: getCurrentDate(),
-                        description = description,
-                        mood = mood
-                    )
+                val moodLog = MoodLogDTO(
+                    id = state.id,
+                    date = state.date ?: getCurrentDate(),
+                    description = state.description,
+                    mood = state.mood
+                )
 
-
-                    val result = withContext(Dispatchers.IO) {
-                        id?.let { editLogUseCase(moodLog = moodLog) } ?: addNewLogUseCase(moodLog)
-                    }
-
-                    if (result is Result.Success) {
-                        publish(Label.AfterSave)
-                        return@launch
-                    }
-                    // TODO: добавить обработку ошибок
+                val result = withContext(Dispatchers.IO) {
+                    saveMoodLogUseCase(moodLog = moodLog)
                 }
+
+                if (result is Result.Success) {
+                    publish(Label.AfterSave)
+                    return@launch
+                }
+                // TODO: добавить обработку ошибок
             }
         }
 
