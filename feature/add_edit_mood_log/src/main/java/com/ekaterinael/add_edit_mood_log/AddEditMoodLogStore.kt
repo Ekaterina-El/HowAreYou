@@ -9,14 +9,11 @@ interface AddEditMoodLogStore :
     data class State(
         val id: Long?,
         val date: Date?,
-        val title: String,
         val description: String,
         val mood: Mood
     )
 
     sealed interface Intent {
-        data class OnChangeDate(val date: Date): Intent
-        data class OnChangeTitle(val title: String): Intent
         data class OnChangeDescription(val description: String): Intent
         data class OnChangeMood(val mood: Mood): Intent
         data object OnGoBack: Intent

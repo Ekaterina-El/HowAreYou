@@ -84,7 +84,6 @@ private fun MoodLogItemPreview() {
                 moodLog = MoodLogDTO(
                     id = 1,
                     date = Calendar.getInstance().time,
-                    title = "",
                     description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
                     mood = Mood.GREAT
                 ),

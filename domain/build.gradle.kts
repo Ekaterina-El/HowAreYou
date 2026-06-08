@@ -43,7 +43,7 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
-    implementation(project(":core"))
+    api(project(":core"))
     implementation(project(":core:resources"))
 
 

@@ -35,12 +35,12 @@ fun AddEditMoodLog(component: AddEditMoodLogComponent) {
         AddEditMoodForm(
             modifier = Modifier.padding(paddingValues),
             moods = Mood.all,
-            selectedMood = null,
-            description = "",
-            onChangeDescription = {},
-            onSelectMood = {},
-            onSave = {},
-            onGoBack = {},
+            selectedMood = model.mood,
+            description = model.description,
+            onChangeDescription = component::onChangeDescription,
+            onSelectMood = component::onChangeMood,
+            onSave = component::onClickSave,
+            onGoBack = component::onGoBack,
         )
     }
 }

@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.Flow
 interface MoodRepository {
     /**
      * Adds a new mood log entry.
-     * @param log the mood log to be inserted
+     * @param moodLog the mood log to be inserted
      */
-    suspend fun addNewLog(log: MoodLogDTO)
+    suspend fun addNewLog(moodLog: MoodLogDTO)
 
     /**
      * Update an existing log entry.

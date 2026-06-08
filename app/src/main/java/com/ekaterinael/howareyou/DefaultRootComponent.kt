@@ -78,7 +78,9 @@ class DefaultRootComponent @AssistedInject constructor(
         val component = addEditMoodLogComponentFactory.create(
             componentContext = componentContext,
             moodLog = config.moodLog,
-            onGoBackCallback = { navigation.pop() }
+            onGoBackCallback = {
+                navigation.pop()
+            }
         )
         return RootComponent.Child.AddEditMoodLog(component)
     }

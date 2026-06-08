@@ -15,7 +15,7 @@ class DBMoodRepository @Inject constructor(
     private val mapper: Mapper<MoodLogDTO, MoodLogEntity>,
     private val dao: MoodLogDao
 ): MoodRepository {
-    override suspend fun addNewLog(log: MoodLogDTO) = dao.add(mapper.fromDTO(log))
+    override suspend fun addNewLog(moodLog: MoodLogDTO) = dao.add(mapper.fromDTO(moodLog))
     override suspend fun editLog(log: MoodLogDTO) = dao.update(mapper.fromDTO(log))
     override suspend fun removeLog(id: Long) = dao.removeById(id = id)
 

@@ -7,12 +7,21 @@ import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
 import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.Intent
 import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.Label
 import com.ekaterinael.add_edit_mood_log.AddEditMoodLogStore.State
+import com.ekaterinael.core.Result
 import com.ekaterinael.domain.model.Mood
 import com.ekaterinael.domain.model.MoodLogDTO
+import com.ekaterinael.domain.usecase.AddNewLogUseCase
+import com.ekaterinael.domain.usecase.EditLogUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
 class AddEditMoodLogStoreFactory @Inject constructor(
+    private val addNewLogUseCase: AddNewLogUseCase,
+    private val editLogUseCase: EditLogUseCase,
     private val storeFactory: StoreFactory
 ) {
     fun create(moodLog: MoodLogDTO): AddEditMoodLogStore =
@@ -21,7 +30,6 @@ class AddEditMoodLogStoreFactory @Inject constructor(
             initialState = State(
                 id = moodLog.id,
                 date = moodLog.date,
-                title = moodLog.title,
                 description = moodLog.description,
                 mood = moodLog.mood
             ),
@@ -29,38 +37,55 @@ class AddEditMoodLogStoreFactory @Inject constructor(
             reducer = ReducerImpl
         ) {}
 
-    private sealed interface Action
+    sealed interface Action
 
     private sealed interface Message {
-        data class OnChangeDate(val date: Date): Message
-        data class OnChangeTitle(val title: String): Message
-        data class OnChangeDescription(val description: String): Message
-        data class OnChangeMood(val mood: Mood): Message
+        data class OnChangeDescription(val description: String) : Message
+        data class OnChangeMood(val mood: Mood) : Message
     }
 
-    private class ExecutorImpl: CoroutineExecutor<Intent, Action, State, Message, Label>() {
+    private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Message, Label>() {
         override fun executeIntent(intent: Intent, getState: () -> State) {
             when (intent) {
-                is Intent.OnChangeDate -> dispatch(Message.OnChangeDate(intent.date))
                 is Intent.OnChangeDescription -> dispatch(Message.OnChangeDescription(intent.description))
                 is Intent.OnChangeMood -> dispatch(Message.OnChangeMood(intent.mood))
-                is Intent.OnChangeTitle -> dispatch(Message.OnChangeTitle(intent.title))
                 Intent.OnGoBack -> publish(Label.OnGoBack)
-                Intent.OnSave -> {
-                    // todo: Save to db
-                    publish(Label.AfterSave)
+                Intent.OnSave -> saveMoodLogLog(state = getState())
+            }
+        }
+
+        private fun saveMoodLogLog(state: State) {
+            scope.launch {
+                with(state) {
+                    val moodLog = MoodLogDTO(
+                        id = id,
+                        date = date ?: getCurrentDate(),
+                        description = description,
+                        mood = mood
+                    )
+
+
+                    val result = withContext(Dispatchers.IO) {
+                        id?.let { editLogUseCase(moodLog = moodLog) } ?: addNewLogUseCase(moodLog)
+                    }
+
+                    if (result is Result.Success) {
+                        publish(Label.AfterSave)
+                        return@launch
+                    }
+                    // TODO: добавить обработку ошибок
                 }
             }
         }
+
+        private fun getCurrentDate(): Date = Calendar.getInstance().time
     }
 
-    private object ReducerImpl: Reducer<State, Message> {
+    private object ReducerImpl : Reducer<State, Message> {
         override fun State.reduce(msg: Message): State {
             return when (msg) {
-                is Message.OnChangeDate -> copy(date = msg.date)
                 is Message.OnChangeDescription -> copy(description = msg.description)
                 is Message.OnChangeMood -> copy(mood = msg.mood)
-                is Message.OnChangeTitle -> copy(title = msg.title)
             }
         }
     }

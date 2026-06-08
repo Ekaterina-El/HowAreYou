@@ -36,7 +36,7 @@ fun MoodLogsList(
             )
         }
 
-        items(logs, key = { it.id }) { moodLog ->
+        items(logs, key = { it.id ?: it.date }) { moodLog ->
             MoodLogItem(moodLog = moodLog, onSelect = {
                 onSelectLog(moodLog)
             })
@@ -60,7 +60,6 @@ private fun MoodLogItemPreview() {
                     MoodLogDTO(
                         id = 1,
                         date = Calendar.getInstance().time,
-                        title = "",
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
                         mood = Mood.GREAT
                     ),
@@ -68,7 +67,6 @@ private fun MoodLogItemPreview() {
                     MoodLogDTO(
                         id = 1,
                         date = Calendar.getInstance().time,
-                        title = "",
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
                         mood = Mood.GOOD
                     ),
@@ -76,7 +74,6 @@ private fun MoodLogItemPreview() {
                     MoodLogDTO(
                         id = 1,
                         date = Calendar.getInstance().time,
-                        title = "",
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
                         mood = Mood.AWFUL
                     ),
@@ -84,7 +81,6 @@ private fun MoodLogItemPreview() {
                     MoodLogDTO(
                         id = 1,
                         date = Calendar.getInstance().time,
-                        title = "",
                         description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
                         mood = Mood.SO_SO
                     )

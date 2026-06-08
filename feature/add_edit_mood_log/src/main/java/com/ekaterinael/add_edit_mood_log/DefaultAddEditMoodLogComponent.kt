@@ -15,7 +15,6 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.util.Date
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DefaultAddEditMoodLogComponent @AssistedInject constructor(
@@ -35,14 +34,11 @@ class DefaultAddEditMoodLogComponent @AssistedInject constructor(
             store.labels.collect {
                 when (it) {
                     AddEditMoodLogStore.Label.AfterSave,
-                    AddEditMoodLogStore.Label.OnGoBack -> onGoBackCallback
+                    AddEditMoodLogStore.Label.OnGoBack -> onGoBackCallback()
                 }
             }
         }
     }
-
-    override fun onChangeDate(value: Date) = store.accept(Intent.OnChangeDate(date = value))
-    override fun onChangeTitle(value: String) = store.accept(Intent.OnChangeTitle(title = value))
 
     override fun onChangeDescription(value: String) {
         store.accept(Intent.OnChangeDescription(description = value))
