@@ -52,7 +52,6 @@ dependencies {
     ksp(libs.dagger.compiler)
 
     // Modules
-    api(project(":domain"))
     implementation(project(":core"))
 
     // Testings

@@ -2,7 +2,6 @@ package com.ekaterinael.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ekaterinael.domain.model.Mood
 import java.util.Date
 
 /**
@@ -11,7 +10,7 @@ import java.util.Date
  * @property id the record's unique identifier
  * @property date the record's creation date
  * @property description a detailed description: what happened, thoughts, events
- * @property mood the user's current mood, represented as [Mood]
+ * @property mood the user's current mood
  */
 @Entity(tableName = "mood_log")
 data class MoodLogEntity(

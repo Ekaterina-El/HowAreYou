@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
-import com.ekaterinael.add_edit_mood_log.ui.AddEditMoodLog
-import com.ekaterinael.core.ui.theme.HowAreYouTheme
-import com.ekaterinael.mode_statistic.ui.MoodStatistic
-import com.ekaterinael.mood_list.ui.MoodLogScreen
+import com.ekaterinael.mood.add_edit_mood_log.presentation.ui.AddEditMoodLog
+import com.ekaterinael.mood.mood_list.ui.MoodLogScreen
+import com.ekaterinael.mood.mood_statistic.ui.MoodStatistic
+import com.ekaterinael.ui.theme.HowAreYouTheme
 
 @Composable
 fun RootContent(component: RootComponent) {

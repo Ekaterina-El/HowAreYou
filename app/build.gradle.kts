@@ -64,12 +64,12 @@ dependencies {
     implementation(libs.mvikotlin.main)
 
     implementation(project(":core"))
-    implementation(project(":core:resources"))
     implementation(project(":data"))
-    implementation(project(":feature:core"))
-    implementation(project(":feature:add_edit_mood_log"))
-    implementation(project(":feature:mood_list"))
-    implementation(project(":feature:mood_statistic"))
+    implementation(project(":ui"))
+    implementation(project(":feature:mood:add_edit_mood_log"))
+    implementation(project(":feature:mood:mood_list"))
+    implementation(project(":feature:mood:mood_statistic"))
+    implementation(project(":feature:mood:data"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

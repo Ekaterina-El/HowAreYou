@@ -12,8 +12,8 @@ interface MoodLogDao: BaseDao<MoodLogEntity> {
     fun getLog(): Flow<List<MoodLogEntity>>
 
     @Query("SELECT * FROM mood_log WHERE id = :id")
-    fun getById(id: Long): MoodLogEntity?
+    suspend fun getById(id: Long): MoodLogEntity?
 
     @Query("DELETE FROM mood_log WHERE id = :id")
-    fun removeById(id: Long)
+    suspend fun removeById(id: Long)
 }

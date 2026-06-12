@@ -8,11 +8,11 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
-import com.ekaterinael.add_edit_mood_log.DefaultAddEditMoodLogComponent
-import com.ekaterinael.domain.model.Mood
-import com.ekaterinael.domain.model.MoodLog
-import com.ekaterinael.mode_statistic.DefaultMoodStatisticComponent
-import com.ekaterinael.mood_list.DefaultMoodLogComponent
+import com.ekaterinael.mood.add_edit_mood_log.presentation.DefaultAddEditMoodLogComponent
+import com.ekaterinael.mood.domain.model.Mood
+import com.ekaterinael.mood.domain.model.MoodLog
+import com.ekaterinael.mood.mood_list.DefaultMoodLogComponent
+import com.ekaterinael.mood.mood_statistic.DefaultMoodStatisticComponent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
