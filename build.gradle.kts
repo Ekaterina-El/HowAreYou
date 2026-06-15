@@ -5,4 +5,23 @@ plugins {
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.dependency.analysis)
+}
+
+dependencyAnalysis {
+    issues {
+        all {
+            onAny {
+                severity("warn")
+            }
+        }
+    }
+
+    structure {
+        ignoreKtx(true)
+    }
+}
+
+subprojects {
+    apply(plugin = "com.autonomousapps.dependency-analysis")
 }
