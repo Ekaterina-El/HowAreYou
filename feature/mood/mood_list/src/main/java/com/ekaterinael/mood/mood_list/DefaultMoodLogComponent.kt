@@ -7,7 +7,6 @@ import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.ekaterinael.core.ext.componentScope
 import com.ekaterinael.mood.core.MoodUI
 import com.ekaterinael.mood.domain.model.Mood
-import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.mood_list.di.MoodListScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -21,8 +20,8 @@ import kotlinx.coroutines.launch
 class DefaultMoodLogComponent @AssistedInject constructor(
     moodLogStoreFactory: MoodLogStoreFactory,
     @Assisted("componentContext") private val componentContext: ComponentContext,
-    @Assisted("onOpenLogToEdit") private val onOpenLogToEdit: (MoodLog) -> Unit,
-    @Assisted("goToCreateNewLog") private val goToCreateNewLog: (selectedMood: MoodUI?) -> Unit
+    @Assisted("onOpenLogToEdit") private val onOpenLogToEdit: (moodId: Long) -> Unit,
+    @Assisted("goToCreateNewLog") private val goToCreateNewLog: (selectedMood: Mood) -> Unit
 ) : MoodLogComponent, ComponentContext by componentContext {
     private val store = instanceKeeper.getStore { moodLogStoreFactory.create() }
 
@@ -37,7 +36,7 @@ class DefaultMoodLogComponent @AssistedInject constructor(
                     }
 
                     is MoodLogStore.Label.GoToCreateNewLog -> {
-                        goToCreateNewLog(it.selectedMood)
+                        goToCreateNewLog(it.selectedMood.mood)
                     }
                 }
             }
@@ -55,9 +54,9 @@ class DefaultMoodLogComponent @AssistedInject constructor(
     @[AssistedFactory MoodListScope]
     interface Factory {
         fun create(
-            @Assisted("onOpenLogToEdit") onOpenLogToEdit: (MoodLog) -> Unit,
             @Assisted("componentContext") componentContext: ComponentContext,
-            @Assisted("goToCreateNewLog") goToCreateNewLog: (selectedMood: Mood?) -> Unit
+            @Assisted("onOpenLogToEdit") onOpenLogToEdit: (moodId: Long) -> Unit,
+            @Assisted("goToCreateNewLog") goToCreateNewLog: (selectedMood: Mood) -> Unit
         ): DefaultMoodLogComponent
     }
 }

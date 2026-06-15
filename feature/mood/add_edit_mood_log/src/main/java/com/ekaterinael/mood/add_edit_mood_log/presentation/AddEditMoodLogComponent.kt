@@ -6,7 +6,7 @@ import com.ekaterinael.mood.core.MoodUI
 import kotlinx.coroutines.flow.StateFlow
 
 interface AddEditMoodLogComponent {
-    val model: StateFlow<AddEditMoodLogStore.State>
+    val state: StateFlow<AddEditMoodLogStore.State>
 
     fun onChangeDescription(value: String)
 

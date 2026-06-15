@@ -16,7 +16,7 @@ import java.util.Date
 data class MoodLogEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long?,
-    val date: Date,
+    val date: Date?,
     val description: String,
     val mood: Int
 )

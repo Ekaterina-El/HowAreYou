@@ -19,11 +19,11 @@ interface MoodLogStore: Store<MoodLogStore.Intent, MoodLogStore.State, MoodLogSt
 
     sealed interface Intent {
         data class OnClickByLog(val log: MoodListItemUI): Intent
-        data class OnClickAddNewLog(val selectedMood: MoodUI?): Intent
+        data class OnClickAddNewLog(val selectedMood: MoodUI): Intent
     }
 
     sealed interface Label {
         data class OpenLogToEdit(val log: MoodListItemUI): Label
-        data class GoToCreateNewLog(val selectedMood: MoodUI?): Label
+        data class GoToCreateNewLog(val selectedMood: MoodUI): Label
     }
 }

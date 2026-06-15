@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4dc2e889b46dc1738fa76c987b67258e",
+    "identityHash": "171067117e6f14e8fad777761181e88b",
     "entities": [
       {
         "tableName": "mood_log",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER NOT NULL, `description` TEXT NOT NULL, `mood` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `date` INTEGER, `description` TEXT NOT NULL, `mood` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -16,8 +16,7 @@
           {
             "fieldPath": "date",
             "columnName": "date",
-            "affinity": "INTEGER",
-            "notNull": true
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "description",
@@ -42,7 +41,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4dc2e889b46dc1738fa76c987b67258e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '171067117e6f14e8fad777761181e88b')"
     ]
   }
 }

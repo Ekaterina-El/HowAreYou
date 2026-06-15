@@ -17,7 +17,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.parcelize.Parcelize
-import java.util.Calendar
 
 class DefaultRootComponent @AssistedInject constructor(
     private val moodLogComponentFactory: DefaultMoodLogComponent.Factory,
@@ -40,9 +39,11 @@ class DefaultRootComponent @AssistedInject constructor(
         componentContext: ComponentContext
     ): RootComponent.Child {
         return when (config) {
-            is Config.AddEditMoodLog -> createAddEditMoodLogChild(componentContext, config)
             Config.MoodLogList -> createMoodLogChild(componentContext)
             Config.MoodLogStatistic -> createMoodLogStatisticChild(componentContext)
+
+            is Config.AddMoodLog -> createAddMoodLogChild(componentContext, config)
+            is Config.EditMoodLog -> createEditMoodLogChild(componentContext, config)
         }
     }
 
@@ -54,47 +55,67 @@ class DefaultRootComponent @AssistedInject constructor(
     private fun createMoodLogChild(componentContext: ComponentContext): RootComponent.Child.MoodLog {
         val component = moodLogComponentFactory.create(
             componentContext = componentContext,
-            onOpenLogToEdit = { moodLog ->
-                navigation.push(Config.AddEditMoodLog(moodLog = moodLog))
+            onOpenLogToEdit = { moodLogId ->
+                navigation.push(Config.EditMoodLog(moodId = moodLogId))
             },
             goToCreateNewLog = { selectedMood ->
                 navigation.push(
-                    Config.AddEditMoodLog(
-                        moodLog = MoodLog(
-                            mood = selectedMood ?: Mood.UNKNOWN,
-                            date = Calendar.getInstance().time
-                        )
-                    )
+                    Config.AddMoodLog(mood = selectedMood)
                 )
             }
         )
         return RootComponent.Child.MoodLog(component)
     }
 
+    private fun createAddMoodLogChild(
+        componentContext: ComponentContext,
+        config: Config.AddMoodLog
+    ): RootComponent.Child.AddEditMoodLog {
+        return createAddEditMoodLogChild(
+            componentContext = componentContext,
+            moodLog = MoodLog(mood = config.mood)
+        )
+    }
+
+    private fun createEditMoodLogChild(
+        componentContext: ComponentContext,
+        config: Config.EditMoodLog
+    ): RootComponent.Child.AddEditMoodLog {
+        return createAddEditMoodLogChild(
+            componentContext = componentContext,
+            moodLog = MoodLog(id = config.moodId)
+        )
+    }
+
     private fun createAddEditMoodLogChild(
         componentContext: ComponentContext,
-        config: Config.AddEditMoodLog
+        moodLog: MoodLog
     ): RootComponent.Child.AddEditMoodLog {
         val component = addEditMoodLogComponentFactory.create(
             componentContext = componentContext,
-            moodLog = config.moodLog,
-            onGoBackCallback = {
-                navigation.pop()
-            }
+            moodLog = moodLog,
+            onGoBackCallback = { navigation.pop() }
         )
+
         return RootComponent.Child.AddEditMoodLog(component)
     }
 
 
-    sealed interface Config: Parcelable {
+    sealed interface Config : Parcelable {
         @Parcelize
-        data object MoodLogList: Config
+        data object MoodLogList : Config
 
         @Parcelize
-        data object MoodLogStatistic: Config
+        data object MoodLogStatistic : Config
 
         @Parcelize
-        data class AddEditMoodLog(val moodLog: MoodLog): Config
+        data class AddMoodLog(val mood: Mood) : Config
+
+        @Parcelize
+        data class EditMoodLog(val moodId: Long) : Config
+        /*
+               @Parcelize
+               data class AddEditMoodLog(val moodLog: MoodLog): Config*/
     }
 
     @AssistedFactory

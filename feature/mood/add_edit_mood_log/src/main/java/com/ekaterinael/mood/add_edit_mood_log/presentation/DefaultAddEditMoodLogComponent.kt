@@ -25,7 +25,7 @@ class DefaultAddEditMoodLogComponent @AssistedInject constructor(
     private val store: AddEditMoodLogStore = instanceKeeper.getStore {
         addEditMoodLogStoreFactory.create(moodLog)
     }
-    override val model: StateFlow<AddEditMoodLogStore.State> = store.stateFlow
+    override val state: StateFlow<AddEditMoodLogStore.State> = store.stateFlow
 
     init {
         componentScope().launch {

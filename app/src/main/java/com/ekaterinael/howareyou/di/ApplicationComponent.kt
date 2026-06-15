@@ -17,7 +17,7 @@ import dagger.Component
         PresentationModule::class,
         MoodListModule::class,
         MoodStatisticModule::class,
-        MoodDataModule::class,
+        MoodDataModule::class
     ]
 )
 interface ApplicationComponent {

@@ -12,7 +12,7 @@ import java.util.Date
  */
 data class MoodLog(
     val id: Long? = null,
-    val date: Date,
+    val date: Date? = null,
     val description: String = "",
     val mood: Mood = Mood.UNKNOWN
 )

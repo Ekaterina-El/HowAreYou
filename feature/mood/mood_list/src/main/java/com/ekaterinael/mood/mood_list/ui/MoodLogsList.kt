@@ -38,7 +38,7 @@ fun MoodLogsList(
             )
         }
 
-        items(logs, key = { it.id ?: it.date }) { moodLog ->
+        items(logs, key = { it.id ?: it.date ?: it.description }) { moodLog ->
             MoodLogItem(moodLog = moodLog, onSelect = {
                 onSelectLog(moodLog)
             })

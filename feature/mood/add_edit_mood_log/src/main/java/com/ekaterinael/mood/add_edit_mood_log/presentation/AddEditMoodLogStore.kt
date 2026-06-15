@@ -6,13 +6,18 @@ import java.util.Date
 
 interface AddEditMoodLogStore :
     Store<AddEditMoodLogStore.Intent, AddEditMoodLogStore.State, AddEditMoodLogStore.Label> {
-    data class State(
-        val id: Long?,
-        val date: Date?,
-        val description: String,
-        val selectedMood: MoodUI,
-        val moods: List<MoodUI>
-    )
+    sealed class State {
+        data object Initial: State()
+        data object Loading: State()
+        data object LoadingException: State()
+        data class Editing(
+            val id: Long?,
+            val date: Date?,
+            val description: String,
+            val selectedMood: MoodUI,
+            val moods: List<MoodUI>,
+        ): State()
+    }
 
     sealed interface Intent {
         data class OnChangeDescription(val description: String): Intent

@@ -8,6 +8,7 @@ import com.ekaterinael.mood.data.repository.MoodRepositoryImpl
 import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.domain.repository.MoodRepository
 import com.ekaterinael.mood.domain.usecase.GetLogsUseCase
+import com.ekaterinael.mood.domain.usecase.GetMoodLogByIdUseCase
 import com.ekaterinael.mood.domain.usecase.SaveMoodLogUseCase
 import dagger.Binds
 import dagger.Module
@@ -19,7 +20,7 @@ interface MoodDataModule {
     fun bindMoodRepository(impl: MoodRepositoryImpl): MoodRepository
 
     @[Binds AppScope]
-    fun bindMoodRepository(impl: MoodLogMapper): Mapper<MoodLog, MoodLogEntity>
+    fun bindMoodLogMapper(impl: MoodLogMapper): Mapper<MoodLog, MoodLogEntity>
 
     companion object {
         @[Provides AppScope]
@@ -27,5 +28,8 @@ interface MoodDataModule {
 
         @[Provides AppScope]
         fun provideSaveMoodLogUseCase(repository: MoodRepository) = SaveMoodLogUseCase(repository)
+
+        @[Provides AppScope]
+        fun provideGetMoodLogByIdUseCase(repository: MoodRepository) = GetMoodLogByIdUseCase(repository)
     }
 }
