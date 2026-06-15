@@ -29,10 +29,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
@@ -41,7 +37,6 @@ dependencies {
 
     // MVI
     implementation(libs.mvikotlin)
-    implementation(libs.mvikotlin.main)
     implementation(libs.mvikotlin.extensions.coroutines)
     implementation(libs.decompose)
 

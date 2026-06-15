@@ -30,34 +30,24 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
 
     // MVI
-    implementation(libs.mvikotlin)
-    implementation(libs.mvikotlin.main)
+    api(libs.mvikotlin)
     implementation(libs.mvikotlin.extensions.coroutines)
-    implementation(libs.decompose)
+    api(libs.decompose)
 
     // Dagger 2
-    implementation(libs.dagger)
+    api(libs.dagger)
     ksp(libs.dagger.compiler)
 
     // Project
     implementation(project(":ui"))
     implementation(project(":core"))
-    implementation(project(":feature:mood:core"))
-    implementation(project(":feature:mood:domain"))
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    api(project(":feature:mood:core"))
+    api(project(":feature:mood:domain"))
 }
