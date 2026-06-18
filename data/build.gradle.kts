@@ -1,54 +1,22 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.library.convention)
+    alias(libs.plugins.android.dagger.convention)
     alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.ekaterinael.data"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
-
-    defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
 
     ksp {
         arg("room.schemaLocation", "$projectDir/schemas")
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-
     // Room
     api(libs.androidx.room.runtime)
     api(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-
-    // DI
-    implementation(libs.dagger)
-    ksp(libs.dagger.compiler)
 
     // Modules
     implementation(project(":core"))

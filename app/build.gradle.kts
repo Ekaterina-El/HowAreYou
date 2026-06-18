@@ -1,7 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.android.dagger.convention)
+    alias(libs.plugins.jetpack.compose.convention)
+    alias(libs.plugins.decompose.convention)
+    alias(libs.plugins.mvi.convention)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.parcelize)
 }
 
@@ -30,35 +33,24 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose = true
     }
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-
-    // DI
-    implementation(libs.dagger)
-    ksp(libs.dagger.compiler)
 
     // Decompose
-    implementation(libs.decompose)
     implementation(libs.decompose.extensions.compose.jetpack)
 
     // MVI
-    implementation(libs.mvikotlin)
     implementation(libs.mvikotlin.main)
 
     implementation(project(":core"))
