@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -54,19 +55,21 @@ fun MoodLogItem(
                 .background(MaterialTheme.colorScheme.background)
                 .padding(horizontal = 20.dp, vertical = 12.dp)
             ) {
-                Image(
-                    modifier = Modifier.size(50.dp),
-                    painter = painterResource(moodLog.mood.imageResId),
-                    contentDescription = null,
-                )
-
-                Spacer(modifier = Modifier.width(16.dp))
-
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = stringResource(moodLog.mood.titleResId),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
+                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            modifier = Modifier.size(30.dp),
+                            painter = painterResource(moodLog.mood.imageResId),
+                            contentDescription = null,
+                        )
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        Text(
+                            text = stringResource(moodLog.mood.titleResId),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                    }
 
                     Spacer(Modifier.height(5.dp))
 
