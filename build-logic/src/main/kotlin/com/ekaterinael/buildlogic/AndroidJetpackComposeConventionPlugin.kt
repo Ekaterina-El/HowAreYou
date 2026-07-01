@@ -9,6 +9,8 @@ import org.gradle.kotlin.dsl.dependencies
 abstract class AndroidJetpackComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+            pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
+
             extensions.configure<CommonExtension>("android") {
                 buildFeatures.compose = true
             }
@@ -20,6 +22,9 @@ abstract class AndroidJetpackComposeConventionPlugin : Plugin<Project> {
                 add("implementation", findLib("androidx.compose.ui.tooling.preview"))
                 add("implementation", findLib("androidx.compose.material3"))
                 add("implementation", platform(findLib("androidx.compose.bom")))
+
+                add("debugImplementation", findLib("androidx.compose.ui.tooling"))
+                add("debugImplementation", findLib("androidx.compose.ui.test.manifest"))
             }
         }
     }

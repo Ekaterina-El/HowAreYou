@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.jetpack.compose.convention)
     alias(libs.plugins.decompose.convention)
     alias(libs.plugins.mvi.convention)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.parcelize)
 }
 

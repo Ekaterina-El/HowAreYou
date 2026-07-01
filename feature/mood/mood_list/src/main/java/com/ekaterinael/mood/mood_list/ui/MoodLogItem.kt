@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -29,37 +30,55 @@ import com.ekaterinael.ui.viewGroups.Container
 import java.util.Calendar
 
 @Composable
-fun MoodLogItem(moodLog: MoodListItemUI, onSelect: () -> Unit = {}) {
-    Container(onSelect = onSelect) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Image(
-                modifier = Modifier.size(40.dp),
-                painter = painterResource(moodLog.mood.imageResId),
-                contentDescription = null,
-            )
+fun MoodLogItem(
+    modifier: Modifier = Modifier,
+    moodLog: MoodListItemUI,
+    onSelect: () -> Unit = {}
+) {
+    Column(modifier = modifier) {
+        Text(
+            modifier = Modifier.padding(start = 12.dp, bottom = 5.dp),
+            text = rememberFormatedDate(moodLog.date),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onPrimaryContainer
+        )
 
-            Spacer(modifier = Modifier.width(16.dp))
+        Container(
+            modifier = Modifier.background(moodLog.mood.color),
+            onSelect = onSelect
+        ) {
+            Row(modifier = Modifier
+                .padding(start = 4.dp)
+                .clip(MaterialTheme.shapes.small)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 20.dp, vertical = 12.dp)
+            ) {
+                Image(
+                    modifier = Modifier.size(50.dp),
+                    painter = painterResource(moodLog.mood.imageResId),
+                    contentDescription = null,
+                )
 
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = rememberFormatedDate(moodLog.date),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-                Text(
-                    text = stringResource(moodLog.mood.titleResId).lowercase(),
-                    style = MaterialTheme.typography.titleMedium,
-                )
+                Spacer(modifier = Modifier.width(16.dp))
 
-                Spacer(Modifier.height(5.dp))
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = moodLog.description,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = stringResource(moodLog.mood.titleResId),
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+
+                    Spacer(Modifier.height(5.dp))
+
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = moodLog.description,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 3,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
             }
         }
     }
@@ -68,19 +87,23 @@ fun MoodLogItem(moodLog: MoodListItemUI, onSelect: () -> Unit = {}) {
 @Preview
 @Composable
 private fun MoodLogItemPreview() {
-    HowAreYouTheme(darkTheme = true) {
+    HowAreYouTheme(darkTheme = false) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(10.dp),
+                .padding(10.dp)
         ) {
-            MoodListItemUI(
-                id = 1,
-                date = Calendar.getInstance().time,
-                description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                mood = MoodUI.Great
+            MoodLogItem(
+                modifier = Modifier.fillMaxWidth(),
+                moodLog = MoodListItemUI(
+                    id = 1,
+                    date = Calendar.getInstance().time,
+                    description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+                    mood = MoodUI.Great
+                )
             )
+
         }
     }
 }

@@ -11,6 +11,6 @@ fun rememberFormatedDate(date: Date?): String {
     val locale = getLocale()
 
     return remember(date, locale) {
-        date.toFullUserString(locale).uppercase(locale)
+        date.toFullUserString(locale)
     }
 }

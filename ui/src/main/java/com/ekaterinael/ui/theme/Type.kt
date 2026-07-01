@@ -42,19 +42,12 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     ),
 
-    labelMedium = TextStyle(
+    labelSmall = TextStyle(
         fontFamily = Nunito,
-        fontWeight = FontWeight.ExtraLight,
+        fontWeight = FontWeight.Light,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
-    ),
-
-    labelSmall = TextStyle(
-        fontFamily = Nunito,
-        fontWeight = FontWeight.Bold,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
     ),
 
     headlineSmall = TextStyle(

@@ -3,7 +3,9 @@ package com.ekaterinael.mood.mood_list.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,7 +30,8 @@ fun MoodLogsList(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        contentPadding = PaddingValues(bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         item {
             MoodLogNewState(
@@ -39,9 +42,13 @@ fun MoodLogsList(
         }
 
         items(logs, key = { it.id ?: it.date ?: it.description }) { moodLog ->
-            MoodLogItem(moodLog = moodLog, onSelect = {
-                onSelectLog(moodLog)
-            })
+            MoodLogItem(
+                modifier = Modifier.fillMaxWidth(),
+                moodLog = moodLog,
+                onSelect = {
+                    onSelectLog(moodLog)
+                }
+            )
         }
     }
 }

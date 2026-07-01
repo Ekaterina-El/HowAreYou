@@ -20,7 +20,7 @@
     android:viewportHeight="100">
   <path
       android:pathData="M50,50m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0"
-      android:fillColor="#FD7276"/>
+      android:fillColor="#F2E0BA"/>
   <path
       android:pathData="M28,55m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0"
       android:fillColor="#000000"/>
@@ -29,10 +29,10 @@
       android:fillColor="#000000"/>
   <path
       android:pathData="M24,52m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"
-      android:fillColor="#FD7276"/>
+      android:fillColor="#F2E0BA"/>
   <path
       android:pathData="M67,52m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"
-      android:fillColor="#FD7276"/>
+      android:fillColor="#F2E0BA"/>
   <path
       android:pathData="M41,76C41,73.67 42.7,69 49.5,69C56.3,69 58.33,73.67 58.5,76"
       android:strokeWidth="3"

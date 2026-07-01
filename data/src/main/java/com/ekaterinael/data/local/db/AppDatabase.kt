@@ -5,6 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.SQLiteConnection
+import androidx.sqlite.execSQL
+import com.ekaterinael.data.BuildConfig
 import com.ekaterinael.data.local.dao.MoodLogDao
 import com.ekaterinael.data.local.entity.MoodLogEntity
 import com.ekaterinael.data.local.typeConverter.DateTypeConverter
@@ -15,7 +18,7 @@ import com.ekaterinael.data.local.typeConverter.DateTypeConverter
     exportSchema = true
 )
 @TypeConverters(DateTypeConverter::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract val moodLogDto: MoodLogDao
 
     companion object {
@@ -31,7 +34,29 @@ abstract class AppDatabase: RoomDatabase() {
                     context = context,
                     name = APP_DATABASE_NAME,
                     klass = AppDatabase::class.java
-                ).build()
+                )
+                    .addCallback(databaseCallback)
+                    .build()
+            }
+        }
+
+        private val databaseCallback = object : Callback() {
+            override fun onCreate(connection: SQLiteConnection) {
+                super.onCreate(connection)
+                if (BuildConfig.DEBUG) mockLogs(connection)
+            }
+        }
+
+        private fun mockLogs(connection: SQLiteConnection) {
+            MockData.mockLogs.forEach {
+                connection.execSQL(
+                    "INSERT INTO mood_log(date, description, mood) " +
+                            "VALUES(" +
+                            "${it.date?.time}, " +
+                            "'${it.description}', " +
+                            "${it.mood}" +
+                            ");"
+                )
             }
         }
     }
