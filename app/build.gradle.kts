@@ -45,6 +45,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     // Decompose
     implementation(libs.decompose.extensions.compose.jetpack)

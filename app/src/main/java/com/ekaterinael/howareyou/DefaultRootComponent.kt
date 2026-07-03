@@ -4,10 +4,12 @@ import android.os.Parcelable
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import com.ekaterinael.howareyou.navigation.BottomTab
 import com.ekaterinael.mood.add_edit_mood_log.presentation.DefaultAddEditMoodLogComponent
 import com.ekaterinael.mood.domain.model.Mood
 import com.ekaterinael.mood.domain.model.MoodLog
@@ -33,6 +35,19 @@ class DefaultRootComponent @AssistedInject constructor(
         handleBackButton = true,
         childFactory = ::child,
     )
+    override val bottomTabs: List<BottomTab> by lazy { BottomTab.default }
+
+    override fun onBottomTabSelected(tab: BottomTab) {
+        when (tab) {
+            BottomTab.MoodLog -> {
+                navigation.bringToFront(Config.MoodLogList)
+            }
+
+            BottomTab.Statistic -> {
+                navigation.bringToFront(Config.MoodLogStatistic)
+            }
+        }
+    }
 
     private fun child(
         config: Config,

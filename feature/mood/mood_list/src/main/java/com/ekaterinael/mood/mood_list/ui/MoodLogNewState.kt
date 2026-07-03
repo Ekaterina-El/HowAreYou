@@ -2,7 +2,6 @@ package com.ekaterinael.mood.mood_list.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,10 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ekaterinael.mood.core.R
 import com.ekaterinael.mood.core.MoodSelector
 import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.R
 import com.ekaterinael.ui.theme.HowAreYouTheme
+import com.ekaterinael.ui.viewGroups.Container
 
 @Composable
 fun MoodLogNewState(
@@ -27,7 +27,13 @@ fun MoodLogNewState(
     moods: List<MoodUI>,
     onSelectMood: (MoodUI) -> Unit
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Container(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .fillMaxWidth()
+            .padding(16.dp)
+            .then(modifier)
+    ) {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = stringResource(R.string.how_are_you),
@@ -43,7 +49,7 @@ fun MoodLogNewState(
 @Preview
 @Composable
 private fun MoodLogNewStatePreview() {
-    HowAreYouTheme(darkTheme = true) {
+    HowAreYouTheme {
         Box(
             modifier = Modifier
                 .fillMaxSize()

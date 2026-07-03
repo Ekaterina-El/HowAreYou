@@ -52,7 +52,7 @@ fun MoodLogItem(
                 .padding(start = 4.dp)
                 .clip(MaterialTheme.shapes.small)
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background)
+                .background(MaterialTheme.colorScheme.secondaryContainer)
                 .padding(horizontal = 20.dp, vertical = 12.dp)
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {

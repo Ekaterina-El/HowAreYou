@@ -31,11 +31,10 @@ fun MoodLogsList(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
         contentPadding = PaddingValues(bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
+        verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         item {
             MoodLogNewState(
-                modifier = Modifier.padding(10.dp),
                 moods = moods,
                 onSelectMood = onClickAddNewLog
             )
