@@ -24,7 +24,7 @@ fun MoodLogsList(
     logs: List<MoodListItemUI>,
     moods: List<MoodUI>,
     onClickAddNewLog: (MoodUI) -> Unit = {},
-    onSelectLog: (MoodListItemUI) -> Unit = {}
+    onSelectLog: (logId: Long?) -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -45,7 +45,7 @@ fun MoodLogsList(
                 modifier = Modifier.fillMaxWidth(),
                 moodLog = moodLog,
                 onSelect = {
-                    onSelectLog(moodLog)
+                    onSelectLog(moodLog.id)
                 }
             )
         }

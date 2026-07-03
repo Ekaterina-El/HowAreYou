@@ -19,24 +19,28 @@ import com.ekaterinael.data.local.typeConverter.DateTypeConverter
 )
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract val moodLogDto: MoodLogDao
+    abstract val moodLogDao: MoodLogDao
 
     companion object {
         private const val APP_DATABASE_NAME = "mood_log_db"
 
-        private val INSTANCE: AppDatabase? = null
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             INSTANCE?.run { return this }
 
             synchronized(this) {
                 INSTANCE?.run { return this }
-                return Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context = context,
                     name = APP_DATABASE_NAME,
                     klass = AppDatabase::class.java
                 )
                     .addCallback(databaseCallback)
                     .build()
+
+                INSTANCE = instance
+                return instance
             }
         }
 

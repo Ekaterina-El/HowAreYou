@@ -1,5 +1,6 @@
 package com.ekaterinael.mood.mood_list
 
+import android.util.Log
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
@@ -32,7 +33,7 @@ class DefaultMoodLogComponent @AssistedInject constructor(
             store.labels.collect {
                 when (it) {
                     is MoodLogStore.Label.OpenLogToEdit -> {
-//                        onOpenLogToEdit(it.log) TODO: поправить
+                        onOpenLogToEdit(it.logId)
                     }
 
                     is MoodLogStore.Label.GoToCreateNewLog -> {
@@ -47,8 +48,13 @@ class DefaultMoodLogComponent @AssistedInject constructor(
         store.accept(MoodLogStore.Intent.OnClickAddNewLog(selectedMood))
     }
 
-    override fun onClickByLog(log: MoodListItemUI) {
-        store.accept(MoodLogStore.Intent.OnClickByLog(log))
+    override fun onClickByLog(logId: Long?) {
+        if (logId == null) {
+            Log.w(TAG, "Can`t open log - id is null")
+            return
+        }
+
+        store.accept(MoodLogStore.Intent.OnClickByLog(logId))
     }
 
     @[AssistedFactory MoodListScope]
@@ -58,5 +64,9 @@ class DefaultMoodLogComponent @AssistedInject constructor(
             @Assisted("onOpenLogToEdit") onOpenLogToEdit: (moodId: Long) -> Unit,
             @Assisted("goToCreateNewLog") goToCreateNewLog: (selectedMood: Mood) -> Unit
         ): DefaultMoodLogComponent
+    }
+
+    companion object {
+        private const val TAG = "DefaultMoodLogComponent"
     }
 }

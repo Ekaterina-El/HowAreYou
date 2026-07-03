@@ -128,9 +128,6 @@ class DefaultRootComponent @AssistedInject constructor(
 
         @Parcelize
         data class EditMoodLog(val moodId: Long) : Config
-        /*
-               @Parcelize
-               data class AddEditMoodLog(val moodLog: MoodLog): Config*/
     }
 
     @AssistedFactory

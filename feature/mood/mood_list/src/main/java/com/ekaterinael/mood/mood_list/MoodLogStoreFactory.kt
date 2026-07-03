@@ -1,5 +1,6 @@
 package com.ekaterinael.mood.mood_list
 
+import android.util.Log
 import com.arkivanov.mvikotlin.core.store.Reducer
 import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
@@ -13,7 +14,6 @@ import com.ekaterinael.mood.mood_list.MoodLogStore.Label
 import com.ekaterinael.mood.mood_list.MoodLogStore.State
 import com.ekaterinael.mood.mood_list.di.MoodListScope
 import com.ekaterinael.mood.mood_list.mapper.MoodListUiMapper
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
@@ -47,11 +47,12 @@ class MoodLogStoreFactory @Inject constructor(
     private inner class BootstrapperImpl: CoroutineBootstrapper<Action>() {
         override fun invoke() {
             scope.launch {
-                getLogsUseCase().collectLatest { onNewListOfLogs(it) }
+                getLogsUseCase().collect { onNewListOfLogs(it) }
             }
         }
 
         private fun onNewListOfLogs(logs: List<MoodLog>) {
+            Log.d("MoodLogStoreFactory", "New List of logs in MoodLogStoreFactory")
             dispatch(Action.MoodLogUpdated(logs = mapper.map(logs)))
         }
     }
@@ -72,7 +73,7 @@ class MoodLogStoreFactory @Inject constructor(
         ) {
             when (intent) {
                 is Intent.OnClickAddNewLog -> publish(Label.GoToCreateNewLog(intent.selectedMood))
-                is Intent.OnClickByLog -> publish(Label.OpenLogToEdit(intent.log))
+                is Intent.OnClickByLog -> publish(Label.OpenLogToEdit(intent.logId))
             }
         }
     }

@@ -8,5 +8,5 @@ interface MoodLogComponent {
 
     fun onClickAddNewLog(selectedMood: MoodUI)
 
-    fun onClickByLog(log: MoodListItemUI)
+    fun onClickByLog(logId: Long?)
 }

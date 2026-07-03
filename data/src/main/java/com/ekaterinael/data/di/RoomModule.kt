@@ -11,7 +11,7 @@ import dagger.Provides
 interface RoomModule {
     companion object {
         @[Provides AppScope]
-        fun providesMoodLogDao(db: AppDatabase): MoodLogDao = db.moodLogDto
+        fun providesMoodLogDao(db: AppDatabase): MoodLogDao = db.moodLogDao
 
         @[Provides AppScope]
         fun providesAppDatabase(context: Context): AppDatabase = AppDatabase.getInstance(context = context)
