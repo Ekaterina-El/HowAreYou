@@ -1,6 +1,6 @@
-package com.ekaterinael.howareyou.navigation
+package com.ekaterinael.ui.navgiation.bottom
 
-import com.ekaterinael.howareyou.R
+import com.ekaterinael.ui.R
 
 enum class BottomTab(val iconResId: Int, val textResId: Int) {
     MoodLog(iconResId = R.drawable.note, textResId = R.string.diary),

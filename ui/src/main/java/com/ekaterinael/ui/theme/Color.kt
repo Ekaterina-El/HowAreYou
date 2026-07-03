@@ -2,15 +2,6 @@ package com.ekaterinael.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
-
-val Red = Color(0xFFff5a5f)
-
 val GreatMood = Color(0xFF5CB9B5)
 val GoodMood = Color(0xFFC2E3D9)
 val SoSoMood = Color(0xFFBBD7E8)
@@ -21,3 +12,15 @@ val UnknownMood = Color(0xFFC0C0C0)
 val lightBlue = Color(0xFFDAF7FF)
 val lightPink = Color(0xFFEDE1FF)
 val lightOrange = Color(0xFFFFE7D9)
+
+val WarmIvoryBackground = Color(0xFFFAF9F6)
+val GraphiteText = Color(0xFF4D4D53)
+val SoftIvorySurface = Color(0xFFFBFAF6)
+val WarmWhiteContainer = Color(0xFFFCFBF9)
+val DeepTealPrimary = Color(0xFF135862)
+
+val DarkCharcoal = Color(0xFF111313)
+val ElevatedCharcoal = Color(0xFF202424)
+val DarkGraphite = Color(0xFF252929)
+val WarmLightText = Color(0xFFE9E6DF)
+val SoftTeal = Color(0xFF2ED5B5)

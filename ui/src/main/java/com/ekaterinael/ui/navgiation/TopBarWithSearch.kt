@@ -42,7 +42,7 @@ fun TopBarWithSearch(
             modifier = Modifier.weight(1f),
             text = title,
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.width(5.dp))
@@ -63,7 +63,7 @@ fun TopBarWithSearch(
 @Preview
 @Composable
 private fun TopBarWithSearchPreview() {
-    HowAreYouTheme(darkTheme = true) {
+    HowAreYouTheme {
         Box(Modifier.background(MaterialTheme.colorScheme.background)) {
             TopBarWithSearch(
                 title = "Январь 2026",

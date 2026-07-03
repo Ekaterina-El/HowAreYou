@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">HowAreYou</string>
-
-    <string name="diary">Дневник</string>
-    <string name="statistic">Статистика</string>
 </resources>

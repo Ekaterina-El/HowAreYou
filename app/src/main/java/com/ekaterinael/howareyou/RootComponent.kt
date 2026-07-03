@@ -2,10 +2,10 @@ package com.ekaterinael.howareyou
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.value.Value
-import com.ekaterinael.howareyou.navigation.BottomTab
 import com.ekaterinael.mood.add_edit_mood_log.presentation.AddEditMoodLogComponent
 import com.ekaterinael.mood.mood_list.MoodLogComponent
 import com.ekaterinael.mood.mood_statistic.MoodStatisticComponent
+import com.ekaterinael.ui.navgiation.bottom.BottomTab
 
 interface RootComponent {
     val childStack: Value<ChildStack<*, Child>>
