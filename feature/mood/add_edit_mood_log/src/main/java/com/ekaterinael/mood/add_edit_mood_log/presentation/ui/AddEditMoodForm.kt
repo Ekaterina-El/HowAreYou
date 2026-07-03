@@ -48,7 +48,7 @@ internal fun AddEditMoodForm(
             text = stringResource(CoreR.string.how_are_you),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.displaySmall,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.primary
         )
 
         Spacer(Modifier.height(30.dp))

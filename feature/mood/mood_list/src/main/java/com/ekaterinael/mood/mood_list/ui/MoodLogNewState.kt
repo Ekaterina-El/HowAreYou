@@ -38,7 +38,7 @@ fun MoodLogNewState(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = stringResource(R.string.how_are_you),
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.primary
         )
 
         Spacer(Modifier.height(14.dp))

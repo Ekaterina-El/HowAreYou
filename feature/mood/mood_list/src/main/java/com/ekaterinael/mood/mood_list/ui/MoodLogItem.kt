@@ -41,7 +41,7 @@ fun MoodLogItem(
             modifier = Modifier.padding(start = 12.dp, bottom = 5.dp),
             text = rememberFormatedDate(moodLog.date),
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.onBackground
         )
 
         Container(
@@ -79,7 +79,7 @@ fun MoodLogItem(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 3,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
