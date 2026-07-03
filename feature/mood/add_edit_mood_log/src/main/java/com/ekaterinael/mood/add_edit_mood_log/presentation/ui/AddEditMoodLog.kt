@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ekaterinael.mood.add_edit_mood_log.presentation.AddEditMoodLogComponent
 import com.ekaterinael.mood.add_edit_mood_log.presentation.AddEditMoodLogStore
-import com.ekaterinael.ui.effects.triangleGradient
+import com.ekaterinael.ui.effects.gradient.triangleGradient
 import com.ekaterinael.ui.theme.lightBlue
 import com.ekaterinael.ui.theme.lightOrange
 import com.ekaterinael.ui.theme.lightPink

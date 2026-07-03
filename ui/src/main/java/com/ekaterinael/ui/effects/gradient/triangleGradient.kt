@@ -1,4 +1,4 @@
-package com.ekaterinael.ui.effects
+package com.ekaterinael.ui.effects.gradient
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
