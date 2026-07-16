@@ -14,8 +14,11 @@ jobs:
         - name: Checkout the code
           uses: actions/checkout@v4
 
+        - name: Grant execute permission for Gradle
+          run: chmod +x ./gradlew
+
         - name: Run lint
-          uses: ./gradlew lintDebug
+          run: ./gradlew lintDebug
 
         - name: Upload lint test report
           uses: actions/upload-artifact@v4
@@ -28,6 +31,9 @@ jobs:
       steps:
         - name: Checkout the code
           uses: actions/checkout@v4
+
+        - name: Grant execute permission for Gradle
+          run: chmod +x ./gradlew
 
         - name: Run unit tests
           uses: ./gradlew test
@@ -49,9 +55,13 @@ jobs:
           with:
             distribution: temurin
             java-version: '17'
+            cache: gradle
+
+        - name: Grant execute permission for Gradle
+          run: chmod +x ./gradlew
 
         - name: Assemble apk
-          uses: ./gradlew assembleDebug --stacktrace
+          run: ./gradlew assembleDebug --stacktrace
 
         - name: Upload apk
           uses: actions/upload-artifact@v4
