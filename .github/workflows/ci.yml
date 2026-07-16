@@ -36,7 +36,7 @@ jobs:
           run: chmod +x ./gradlew
 
         - name: Run unit tests
-          uses: ./gradlew test
+          run: ./gradlew test
 
         - name: Upload unit test report
           uses: actions/upload-artifact@v4
@@ -50,7 +50,7 @@ jobs:
         - name: Checkout the code
           uses: actions/checkout@v4
 
-        - name: Set up Java
+        - name: Set up JDK
           uses: actions/setup-java@v3
           with:
             distribution: temurin
@@ -68,3 +68,41 @@ jobs:
           with:
             name: debug.apk
             path: app/build/outputs/apk/debug/app-debug.apk
+            if-no-files-found: error
+
+    build-signed-apk:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Set up JDK
+          uses: actions/setup-java@v3
+          with:
+            distribution: temurin
+            java-version: '17'
+            cache: gradle
+
+        - name: Grant execute permission for Gradle
+          run: chmod +x ./gradlew
+
+        - name: Build Release APK
+          run: ./gradlew assembleRelease
+
+        - name: Sign APK
+          uses: r0adkll/sign-android-release@v1
+          id: sign_app
+          with:
+            releaseDirectory: app/build/outputs/apk/release
+            signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+            alias: ${{ secrets.KEY_ALIAS }}
+            keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+            keyPassword: ${{ secrets.KEY_PASSWORD }}
+          env:
+            BUILD_TOOLS_VERSION: "30.0.2"
+
+        - name: Upload Signed APK
+          uses: actions/upload-artifact@v4
+          with:
+            name: app-signed
+            path: app/build/outputs/apk/release/*.apk
