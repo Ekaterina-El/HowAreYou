@@ -49,21 +49,21 @@ subprojects {
 
         kotlin {
             target("**/src/**/*.kt")
-            targetExclude("spotless/copyright.kt")
+            targetExclude("spotless/copyright-header.txt")
             ktfmt(ktfmtVersion).googleStyle()
-            licenseHeaderFile(rootProject.file("spotless/copyright.kt"))
+            licenseHeaderFile(rootProject.file("spotless/copyright-header.txt"),  "(package|@file:)")
             trimTrailingWhitespace()
             endWithNewline()
         }
 
         kotlinGradle {
             target("*.kts")
-            targetExclude("spotless/copyright.kt")
+            targetExclude("spotless/copyright-header.txt")
             ktfmt(ktfmtVersion).googleStyle()
             trimTrailingWhitespace()
             endWithNewline()
             licenseHeaderFile(
-                rootProject.file("spotless/copyright.kt"),
+                rootProject.file("spotless/copyright-header.txt"),
                 "(import|plugins|buildscript|dependencies|pluginManagement|dependencyResolutionManagement)",
             )
         }

@@ -1,13 +1,20 @@
 #!/usr/bin/env sh
 
-echo "Running Spotless..."
+echo "Running Spotless check..."
 
-./gradlew spotlessApply
+./gradlew spotlessCheck
 RESULT=$?
 
-if [ $RESULT -ne 0 ]; then
-    echo "Spotless failed. Commit cancelled."
-    exit $RESULT
+if [ "$RESULT" -ne 0 ]; then
+    echo ""
+    echo "Spotless found formatting violations."
+    echo "Commit has been cancelled."
+    echo ""
+    echo "Fix formatting with:"
+    echo "  ./gradlew spotlessApply"
+    echo ""
+    exit "$RESULT"
 fi
 
-echo "Spotless completed."
+echo "Spotless check passed."
+exit 0
