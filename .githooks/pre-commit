@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+echo "Running Spotless..."
+
+./gradlew spotlessApply
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+    echo "Spotless failed. Commit cancelled."
+    exit $RESULT
+fi
+
+echo "Spotless completed."

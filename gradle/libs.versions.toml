@@ -17,7 +17,8 @@ mvikotlin = "3.3.0"
 room = "2.8.4"
 jetbrainsKotlinJvm = "2.4.0"
 dependencyAnalysis = "3.16.0"
-
+spotless = "8.8.0"
+ktfmt = "0.47"
 
 [libraries]
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
@@ -63,6 +64,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "dependencyAnalysis" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 android-library-convention = { id = "com.ekaterinael.application" }
 android-dagger-convention = { id = "com.ekaterinael.dagger" }
