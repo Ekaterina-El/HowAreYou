@@ -7,6 +7,7 @@ dagger = "2.60"
 decompose = "2.2.3"
 decompose-jetpack-compose = "2.2.3"
 kotlinxCoroutines = "1.11.0"
+leakcanaryAndroid = "2.14"
 lifecycleRuntimeKtx = "2.11.0"
 activityCompose = "1.13.0"
 kotlin = "2.4.0"
@@ -32,6 +33,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 kotlinx-coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
 mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mvikotlin" }
 
 # Dependencies of the included build-logic
