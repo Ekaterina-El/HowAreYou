@@ -1,19 +1,32 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 plugins {
-    alias(libs.plugins.android.library.convention)
-    alias(libs.plugins.android.dagger.convention)
-    alias(libs.plugins.decompose.convention)
-    alias(libs.plugins.jetpack.compose.convention)
-    alias(libs.plugins.mvi.convention)
+  alias(libs.plugins.android.library.convention)
+  alias(libs.plugins.android.dagger.convention)
+  alias(libs.plugins.decompose.convention)
+  alias(libs.plugins.jetpack.compose.convention)
+  alias(libs.plugins.mvi.convention)
 }
 
-android {
-    namespace = "com.ekaterinael.mood.mood_list"
-}
+android { namespace = "com.ekaterinael.mood.mood_list" }
 
 dependencies {
-    // Project
-    implementation(project(":core"))
-    implementation(project(":feature:mood:core"))
-    implementation(project(":feature:mood:domain"))
-    implementation(project(":ui"))
+  // Project
+  implementation(project(":core"))
+  implementation(project(":feature:mood:core"))
+  implementation(project(":feature:mood:domain"))
+  implementation(project(":ui"))
 }

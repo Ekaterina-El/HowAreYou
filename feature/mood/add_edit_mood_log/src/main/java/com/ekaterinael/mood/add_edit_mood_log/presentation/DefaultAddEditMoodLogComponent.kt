@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ekaterinael.mood.add_edit_mood_log.presentation
 
 import com.arkivanov.decompose.ComponentContext
@@ -15,47 +30,48 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DefaultAddEditMoodLogComponent @AssistedInject constructor(
-    addEditMoodLogStoreFactory: AddEditMoodLogStoreFactory,
-    @Assisted("componentContext") private val componentContext: ComponentContext,
-    @Assisted("moodLog") moodLog: MoodLog,
-    @Assisted("onGoBackCallback") private val onGoBackCallback: () -> Unit
+class DefaultAddEditMoodLogComponent
+@AssistedInject
+constructor(
+  addEditMoodLogStoreFactory: AddEditMoodLogStoreFactory,
+  @Assisted("componentContext") private val componentContext: ComponentContext,
+  @Assisted("moodLog") moodLog: MoodLog,
+  @Assisted("onGoBackCallback") private val onGoBackCallback: () -> Unit,
 ) : AddEditMoodLogComponent, ComponentContext by componentContext {
 
-    private val store: AddEditMoodLogStore = instanceKeeper.getStore {
-        addEditMoodLogStoreFactory.create(moodLog)
-    }
-    override val state: StateFlow<AddEditMoodLogStore.State> = store.stateFlow
+  private val store: AddEditMoodLogStore =
+    instanceKeeper.getStore { addEditMoodLogStoreFactory.create(moodLog) }
+  override val state: StateFlow<AddEditMoodLogStore.State> = store.stateFlow
 
-    init {
-        componentScope().launch {
-            store.labels.collect {
-                when (it) {
-                    AddEditMoodLogStore.Label.AfterSave,
-                    AddEditMoodLogStore.Label.OnGoBack -> onGoBackCallback()
-                }
-            }
+  init {
+    componentScope().launch {
+      store.labels.collect {
+        when (it) {
+          AddEditMoodLogStore.Label.AfterSave,
+          AddEditMoodLogStore.Label.OnGoBack -> onGoBackCallback()
         }
+      }
     }
+  }
 
-    override fun onChangeDescription(value: String) {
-        store.accept(AddEditMoodLogStore.Intent.OnChangeDescription(description = value))
-    }
+  override fun onChangeDescription(value: String) {
+    store.accept(AddEditMoodLogStore.Intent.OnChangeDescription(description = value))
+  }
 
-    override fun onChangeMood(value: MoodUI) {
-        store.accept(AddEditMoodLogStore.Intent.OnChangeMood(mood = value))
-    }
+  override fun onChangeMood(value: MoodUI) {
+    store.accept(AddEditMoodLogStore.Intent.OnChangeMood(mood = value))
+  }
 
-    override fun onGoBack() = store.accept(AddEditMoodLogStore.Intent.OnGoBack)
+  override fun onGoBack() = store.accept(AddEditMoodLogStore.Intent.OnGoBack)
 
-    override fun onClickSave() = store.accept(AddEditMoodLogStore.Intent.OnSave)
+  override fun onClickSave() = store.accept(AddEditMoodLogStore.Intent.OnSave)
 
-    @AssistedFactory
-    interface Factory {
-        fun create(
-            @Assisted("componentContext") componentContext: ComponentContext,
-            @Assisted("moodLog") moodLog: MoodLog,
-            @Assisted("onGoBackCallback") onGoBackCallback: () -> Unit
-        ): DefaultAddEditMoodLogComponent
-    }
+  @AssistedFactory
+  interface Factory {
+    fun create(
+      @Assisted("componentContext") componentContext: ComponentContext,
+      @Assisted("moodLog") moodLog: MoodLog,
+      @Assisted("onGoBackCallback") onGoBackCallback: () -> Unit,
+    ): DefaultAddEditMoodLogComponent
+  }
 }

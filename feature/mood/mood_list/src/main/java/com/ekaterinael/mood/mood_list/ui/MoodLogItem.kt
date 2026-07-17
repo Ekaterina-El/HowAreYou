@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ekaterinael.mood.mood_list.ui
 
 import androidx.compose.foundation.Image
@@ -31,82 +46,74 @@ import com.ekaterinael.ui.viewGroups.Container
 import java.util.Calendar
 
 @Composable
-fun MoodLogItem(
-    modifier: Modifier = Modifier,
-    moodLog: MoodListItemUI,
-    onSelect: () -> Unit = {}
-) {
-    Column(modifier = modifier) {
-        Text(
-            modifier = Modifier.padding(start = 12.dp, bottom = 5.dp),
-            text = rememberFormatedDate(moodLog.date),
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onBackground
-        )
+fun MoodLogItem(modifier: Modifier = Modifier, moodLog: MoodListItemUI, onSelect: () -> Unit = {}) {
+  Column(modifier = modifier) {
+    Text(
+      modifier = Modifier.padding(start = 12.dp, bottom = 5.dp),
+      text = rememberFormatedDate(moodLog.date),
+      style = MaterialTheme.typography.labelSmall,
+      color = MaterialTheme.colorScheme.onBackground,
+    )
 
-        Container(
-            modifier = Modifier.background(moodLog.mood.color),
-            onSelect = onSelect
-        ) {
-            Row(modifier = Modifier
-                .padding(start = 4.dp)
-                .clip(MaterialTheme.shapes.small)
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.secondaryContainer)
-                .padding(horizontal = 20.dp, vertical = 12.dp)
-            ) {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            modifier = Modifier.size(30.dp),
-                            painter = painterResource(moodLog.mood.imageResId),
-                            contentDescription = null,
-                        )
+    Container(modifier = Modifier.background(moodLog.mood.color), onSelect = onSelect) {
+      Row(
+        modifier =
+          Modifier.padding(start = 4.dp)
+            .clip(MaterialTheme.shapes.small)
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .padding(horizontal = 20.dp, vertical = 12.dp)
+      ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+          Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Image(
+              modifier = Modifier.size(30.dp),
+              painter = painterResource(moodLog.mood.imageResId),
+              contentDescription = null,
+            )
 
-                        Spacer(modifier = Modifier.width(10.dp))
+            Spacer(modifier = Modifier.width(10.dp))
 
-                        Text(
-                            text = stringResource(moodLog.mood.titleResId),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                    }
+            Text(
+              text = stringResource(moodLog.mood.titleResId),
+              style = MaterialTheme.typography.titleMedium,
+            )
+          }
 
-                    Spacer(Modifier.height(5.dp))
+          Spacer(Modifier.height(5.dp))
 
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = moodLog.description,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 3,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
+          Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = moodLog.description,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 3,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+          )
         }
+      }
     }
+  }
 }
 
 @Preview
 @Composable
 private fun MoodLogItemPreview() {
-    HowAreYouTheme(darkTheme = false) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(10.dp)
-        ) {
-            MoodLogItem(
-                modifier = Modifier.fillMaxWidth(),
-                moodLog = MoodListItemUI(
-                    id = 1,
-                    date = Calendar.getInstance().time,
-                    description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                    mood = MoodUI.Great
-                )
-            )
-
-        }
+  HowAreYouTheme(darkTheme = false) {
+    Box(
+      modifier =
+        Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(10.dp)
+    ) {
+      MoodLogItem(
+        modifier = Modifier.fillMaxWidth(),
+        moodLog =
+          MoodListItemUI(
+            id = 1,
+            date = Calendar.getInstance().time,
+            description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+            mood = MoodUI.Great,
+          ),
+      )
     }
+  }
 }

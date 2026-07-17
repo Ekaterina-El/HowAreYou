@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ekaterinael.howareyou.navigation
 
 import androidx.compose.animation.animateColorAsState
@@ -30,84 +45,74 @@ import com.ekaterinael.ui.theme.HowAreYouTheme
 
 @Composable
 fun BottomNavigationBar(
-    modifier: Modifier = Modifier,
-    tabs: List<BottomTab>,
-    selectedTab: BottomTab,
-    onTabSelected: (BottomTab) -> Unit
+  modifier: Modifier = Modifier,
+  tabs: List<BottomTab>,
+  selectedTab: BottomTab,
+  onTabSelected: (BottomTab) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        HorizontalDivider(
-            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f)
-        )
+  Column(modifier = Modifier.fillMaxWidth()) {
+    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
 
-        NavigationBar(modifier = modifier) {
-            tabs.forEach {
-                AppNavigationBarItem(
-                    item = it,
-                    isSelected = it == selectedTab
-                ) { onTabSelected(it) }
-            }
-        }
+    NavigationBar(modifier = modifier) {
+      tabs.forEach {
+        AppNavigationBarItem(item = it, isSelected = it == selectedTab) { onTabSelected(it) }
+      }
     }
+  }
 }
 
 @Composable
 private fun RowScope.AppNavigationBarItem(
-    modifier: Modifier = Modifier,
-    item: BottomTab,
-    isSelected: Boolean,
-    onTabSelected: () -> Unit,
+  modifier: Modifier = Modifier,
+  item: BottomTab,
+  isSelected: Boolean,
+  onTabSelected: () -> Unit,
+) {
+  val baseColor = MaterialTheme.colorScheme.onSurfaceVariant
+  val selectedColor = MaterialTheme.colorScheme.primary
 
-    ) {
-    val baseColor = MaterialTheme.colorScheme.onSurfaceVariant
-    val selectedColor = MaterialTheme.colorScheme.primary
+  val contentColor = remember(isSelected) { if (isSelected) selectedColor else baseColor }
+  val animatedContentColor by
+    animateColorAsState(targetValue = contentColor, animationSpec = tween(durationMillis = 250))
 
-    val contentColor = remember(isSelected) { if (isSelected) selectedColor else baseColor }
-    val animatedContentColor by animateColorAsState(
-        targetValue = contentColor,
-        animationSpec = tween(durationMillis = 250),
-    )
-
-    val indicatorColor =  remember(isSelected) { if (isSelected) selectedColor.copy(alpha = 0.16f) else Color.Transparent }
-    val animatedIndicatorColor by animateColorAsState(
-        targetValue = indicatorColor,
-        animationSpec = tween(durationMillis = 250)
-    )
-
-    Column(
-        modifier = modifier.weight(1f),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Column(
-            modifier = Modifier
-                .clip(RoundedCornerShape(24.dp))
-                .background(animatedIndicatorColor)
-                .clickable(onClick = onTabSelected)
-                .padding(horizontal = 20.dp, vertical = 5.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                painter = painterResource(item.iconResId),
-                contentDescription = null,
-                tint = animatedContentColor
-            )
-            Text(
-                text = stringResource(item.textResId),
-                style = MaterialTheme.typography.labelMedium,
-                color = animatedContentColor
-            )
-        }
+  val indicatorColor =
+    remember(isSelected) {
+      if (isSelected) selectedColor.copy(alpha = 0.16f) else Color.Transparent
     }
+  val animatedIndicatorColor by
+    animateColorAsState(targetValue = indicatorColor, animationSpec = tween(durationMillis = 250))
+
+  Column(modifier = modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+      modifier =
+        Modifier.clip(RoundedCornerShape(24.dp))
+          .background(animatedIndicatorColor)
+          .clickable(onClick = onTabSelected)
+          .padding(horizontal = 20.dp, vertical = 5.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+      Icon(
+        painter = painterResource(item.iconResId),
+        contentDescription = null,
+        tint = animatedContentColor,
+      )
+      Text(
+        text = stringResource(item.textResId),
+        style = MaterialTheme.typography.labelMedium,
+        color = animatedContentColor,
+      )
+    }
+  }
 }
 
 @Preview
 @Composable
 private fun BottomNavigationBarPreview() {
-    HowAreYouTheme {
-        BottomNavigationBar(
-            selectedTab = BottomTab.Statistic,
-            tabs = BottomTab.default,
-            onTabSelected = {}
-        )
-    }
+  HowAreYouTheme {
+    BottomNavigationBar(
+      selectedTab = BottomTab.Statistic,
+      tabs = BottomTab.default,
+      onTabSelected = {},
+    )
+  }
 }

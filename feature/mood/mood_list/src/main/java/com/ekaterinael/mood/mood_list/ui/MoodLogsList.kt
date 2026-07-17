@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ekaterinael.mood.mood_list.ui
 
 import androidx.compose.foundation.background
@@ -21,80 +36,66 @@ import java.util.Calendar
 
 @Composable
 fun MoodLogsList(
-    logs: List<MoodListItemUI>,
-    moods: List<MoodUI>,
-    onClickAddNewLog: (MoodUI) -> Unit = {},
-    onSelectLog: (logId: Long?) -> Unit = {}
+  logs: List<MoodListItemUI>,
+  moods: List<MoodUI>,
+  onClickAddNewLog: (MoodUI) -> Unit = {},
+  onSelectLog: (logId: Long?) -> Unit = {},
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(15.dp)
-    ) {
-        item {
-            MoodLogNewState(
-                moods = moods,
-                onSelectMood = onClickAddNewLog
-            )
-        }
+  LazyColumn(
+    modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+    contentPadding = PaddingValues(bottom = 16.dp),
+    verticalArrangement = Arrangement.spacedBy(15.dp),
+  ) {
+    item { MoodLogNewState(moods = moods, onSelectMood = onClickAddNewLog) }
 
-        items(logs, key = { it.id ?: it.date ?: it.description }) { moodLog ->
-            MoodLogItem(
-                modifier = Modifier.fillMaxWidth(),
-                moodLog = moodLog,
-                onSelect = {
-                    onSelectLog(moodLog.id)
-                }
-            )
-        }
+    items(logs, key = { it.id ?: it.date ?: it.description }) { moodLog ->
+      MoodLogItem(
+        modifier = Modifier.fillMaxWidth(),
+        moodLog = moodLog,
+        onSelect = { onSelectLog(moodLog.id) },
+      )
     }
+  }
 }
-
 
 @Preview
 @Composable
 private fun MoodLogItemPreview() {
-    HowAreYouTheme(darkTheme = true) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(10.dp)
-        ) {
-            MoodLogsList(
-                moods = MoodUI.all,
-                logs = listOf(
-                    MoodListItemUI(
-                        id = 1,
-                        date = Calendar.getInstance().time,
-                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = MoodUI.Great
-                    ),
-
-                    MoodListItemUI(
-                        id = 1,
-                        date = Calendar.getInstance().time,
-                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = MoodUI.Good
-                    ),
-
-                    MoodListItemUI(
-                        id = 1,
-                        date = Calendar.getInstance().time,
-                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = MoodUI.Awful
-                    ),
-
-                    MoodListItemUI(
-                        id = 1,
-                        date = Calendar.getInstance().time,
-                        description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
-                        mood = MoodUI.SoSo
-                    )
-                ),
-            )
-        }
+  HowAreYouTheme(darkTheme = true) {
+    Box(
+      modifier =
+        Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(10.dp)
+    ) {
+      MoodLogsList(
+        moods = MoodUI.all,
+        logs =
+          listOf(
+            MoodListItemUI(
+              id = 1,
+              date = Calendar.getInstance().time,
+              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              mood = MoodUI.Great,
+            ),
+            MoodListItemUI(
+              id = 1,
+              date = Calendar.getInstance().time,
+              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              mood = MoodUI.Good,
+            ),
+            MoodListItemUI(
+              id = 1,
+              date = Calendar.getInstance().time,
+              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              mood = MoodUI.Awful,
+            ),
+            MoodListItemUI(
+              id = 1,
+              date = Calendar.getInstance().time,
+              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              mood = MoodUI.SoSo,
+            ),
+          ),
+      )
     }
+  }
 }

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ekaterinael.ui.buttons
 
 import androidx.compose.foundation.border
@@ -17,33 +32,25 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-
 @Composable
-fun AppIconButton(
-    image: ImageVector,
-    innerPadding: Dp = 8.dp,
-    onClick: (() -> Unit)? = null
-) {
-    val isActive = onClick != null
-    val outlineColor = MaterialTheme.colorScheme.outline
-    val color = if (isActive) MaterialTheme.colorScheme.secondary else outlineColor
+fun AppIconButton(image: ImageVector, innerPadding: Dp = 8.dp, onClick: (() -> Unit)? = null) {
+  val isActive = onClick != null
+  val outlineColor = MaterialTheme.colorScheme.outline
+  val color = if (isActive) MaterialTheme.colorScheme.secondary else outlineColor
 
-    Box(
-        modifier = Modifier
-            .size(30.dp)
-            .clip(CircleShape)
-            .border(width = 1.dp, color = outlineColor, shape = CircleShape)
-            .let {
-                if (!isActive) return@let it
-                else it.clickable(enabled = true, onClick = onClick)
-            },
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
-            imageVector = image,
-            tint = color,
-            contentDescription = null
-        )
-    }
+  Box(
+    modifier =
+      Modifier.size(30.dp)
+        .clip(CircleShape)
+        .border(width = 1.dp, color = outlineColor, shape = CircleShape)
+        .let { if (!isActive) return@let it else it.clickable(enabled = true, onClick = onClick) },
+    contentAlignment = Alignment.Center,
+  ) {
+    Icon(
+      modifier = Modifier.fillMaxSize().padding(innerPadding),
+      imageVector = image,
+      tint = color,
+      contentDescription = null,
+    )
+  }
 }

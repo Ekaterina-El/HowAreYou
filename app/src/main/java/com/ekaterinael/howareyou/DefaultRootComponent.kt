@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ekaterinael.howareyou
 
 import android.os.Parcelable
@@ -20,120 +35,113 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.parcelize.Parcelize
 
-class DefaultRootComponent @AssistedInject constructor(
-    private val moodLogComponentFactory: DefaultMoodLogComponent.Factory,
-    private val moodStatisticComponentFactory: DefaultMoodStatisticComponent.Factory,
-    private val addEditMoodLogComponentFactory: DefaultAddEditMoodLogComponent.Factory,
-    @Assisted("componentContext") private val componentContext: ComponentContext
+class DefaultRootComponent
+@AssistedInject
+constructor(
+  private val moodLogComponentFactory: DefaultMoodLogComponent.Factory,
+  private val moodStatisticComponentFactory: DefaultMoodStatisticComponent.Factory,
+  private val addEditMoodLogComponentFactory: DefaultAddEditMoodLogComponent.Factory,
+  @Assisted("componentContext") private val componentContext: ComponentContext,
 ) : RootComponent, ComponentContext by componentContext {
 
-    private val navigation = StackNavigation<Config>()
+  private val navigation = StackNavigation<Config>()
 
-    override val childStack: Value<ChildStack<Config, RootComponent.Child>> = childStack(
-        source = navigation,
-        initialConfiguration = Config.MoodLogList,
-        handleBackButton = true,
-        childFactory = ::child,
+  override val childStack: Value<ChildStack<Config, RootComponent.Child>> =
+    childStack(
+      source = navigation,
+      initialConfiguration = Config.MoodLogList,
+      handleBackButton = true,
+      childFactory = ::child,
     )
-    override val bottomTabs: List<BottomTab> by lazy { BottomTab.default }
+  override val bottomTabs: List<BottomTab> by lazy { BottomTab.default }
 
-    override fun onBottomTabSelected(tab: BottomTab) {
-        when (tab) {
-            BottomTab.MoodLog -> {
-                navigation.bringToFront(Config.MoodLogList)
-            }
-
-            BottomTab.Statistic -> {
-                navigation.bringToFront(Config.MoodLogStatistic)
-            }
-        }
+  override fun onBottomTabSelected(tab: BottomTab) {
+    when (tab) {
+      BottomTab.MoodLog -> {
+        navigation.bringToFront(Config.MoodLogList)
+      }
+      BottomTab.Statistic -> {
+        navigation.bringToFront(Config.MoodLogStatistic)
+      }
     }
+  }
 
-    private fun child(
-        config: Config,
-        componentContext: ComponentContext
-    ): RootComponent.Child {
-        return when (config) {
-            Config.MoodLogList -> createMoodLogChild(componentContext)
-            Config.MoodLogStatistic -> createMoodLogStatisticChild(componentContext)
-
-            is Config.AddMoodLog -> createAddMoodLogChild(componentContext, config)
-            is Config.EditMoodLog -> createEditMoodLogChild(componentContext, config)
-        }
+  private fun child(config: Config, componentContext: ComponentContext): RootComponent.Child {
+    return when (config) {
+      Config.MoodLogList -> createMoodLogChild(componentContext)
+      Config.MoodLogStatistic -> createMoodLogStatisticChild(componentContext)
+      is Config.AddMoodLog -> createAddMoodLogChild(componentContext, config)
+      is Config.EditMoodLog -> createEditMoodLogChild(componentContext, config)
     }
+  }
 
-    private fun createMoodLogStatisticChild(componentContext: ComponentContext): RootComponent.Child.MoodStatistic {
-        val component = moodStatisticComponentFactory.create(componentContext = componentContext)
-        return RootComponent.Child.MoodStatistic(component)
-    }
+  private fun createMoodLogStatisticChild(
+    componentContext: ComponentContext
+  ): RootComponent.Child.MoodStatistic {
+    val component = moodStatisticComponentFactory.create(componentContext = componentContext)
+    return RootComponent.Child.MoodStatistic(component)
+  }
 
-    private fun createMoodLogChild(componentContext: ComponentContext): RootComponent.Child.MoodLog {
-        val component = moodLogComponentFactory.create(
-            componentContext = componentContext,
-            onOpenLogToEdit = { moodLogId ->
-                navigation.push(Config.EditMoodLog(moodId = moodLogId))
-            },
-            goToCreateNewLog = { selectedMood ->
-                navigation.push(
-                    Config.AddMoodLog(mood = selectedMood)
-                )
-            }
-        )
-        return RootComponent.Child.MoodLog(component)
-    }
+  private fun createMoodLogChild(componentContext: ComponentContext): RootComponent.Child.MoodLog {
+    val component =
+      moodLogComponentFactory.create(
+        componentContext = componentContext,
+        onOpenLogToEdit = { moodLogId -> navigation.push(Config.EditMoodLog(moodId = moodLogId)) },
+        goToCreateNewLog = { selectedMood ->
+          navigation.push(Config.AddMoodLog(mood = selectedMood))
+        },
+      )
+    return RootComponent.Child.MoodLog(component)
+  }
 
-    private fun createAddMoodLogChild(
-        componentContext: ComponentContext,
-        config: Config.AddMoodLog
-    ): RootComponent.Child.AddEditMoodLog {
-        return createAddEditMoodLogChild(
-            componentContext = componentContext,
-            moodLog = MoodLog(mood = config.mood)
-        )
-    }
+  private fun createAddMoodLogChild(
+    componentContext: ComponentContext,
+    config: Config.AddMoodLog,
+  ): RootComponent.Child.AddEditMoodLog {
+    return createAddEditMoodLogChild(
+      componentContext = componentContext,
+      moodLog = MoodLog(mood = config.mood),
+    )
+  }
 
-    private fun createEditMoodLogChild(
-        componentContext: ComponentContext,
-        config: Config.EditMoodLog
-    ): RootComponent.Child.AddEditMoodLog {
-        return createAddEditMoodLogChild(
-            componentContext = componentContext,
-            moodLog = MoodLog(id = config.moodId)
-        )
-    }
+  private fun createEditMoodLogChild(
+    componentContext: ComponentContext,
+    config: Config.EditMoodLog,
+  ): RootComponent.Child.AddEditMoodLog {
+    return createAddEditMoodLogChild(
+      componentContext = componentContext,
+      moodLog = MoodLog(id = config.moodId),
+    )
+  }
 
-    private fun createAddEditMoodLogChild(
-        componentContext: ComponentContext,
-        moodLog: MoodLog
-    ): RootComponent.Child.AddEditMoodLog {
-        val component = addEditMoodLogComponentFactory.create(
-            componentContext = componentContext,
-            moodLog = moodLog,
-            onGoBackCallback = { navigation.pop() }
-        )
+  private fun createAddEditMoodLogChild(
+    componentContext: ComponentContext,
+    moodLog: MoodLog,
+  ): RootComponent.Child.AddEditMoodLog {
+    val component =
+      addEditMoodLogComponentFactory.create(
+        componentContext = componentContext,
+        moodLog = moodLog,
+        onGoBackCallback = { navigation.pop() },
+      )
 
-        return RootComponent.Child.AddEditMoodLog(component)
-    }
+    return RootComponent.Child.AddEditMoodLog(component)
+  }
 
+  sealed interface Config : Parcelable {
+    @Parcelize data object MoodLogList : Config
 
-    sealed interface Config : Parcelable {
-        @Parcelize
-        data object MoodLogList : Config
+    @Parcelize data object MoodLogStatistic : Config
 
-        @Parcelize
-        data object MoodLogStatistic : Config
+    @Parcelize data class AddMoodLog(val mood: Mood) : Config
 
-        @Parcelize
-        data class AddMoodLog(val mood: Mood) : Config
+    @Parcelize data class EditMoodLog(val moodId: Long) : Config
+  }
 
-        @Parcelize
-        data class EditMoodLog(val moodId: Long) : Config
-    }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(
-            @Assisted("componentContext") componentContext: ComponentContext
-        ): DefaultRootComponent
-    }
+  @AssistedFactory
+  interface Factory {
+    fun create(
+      @Assisted("componentContext") componentContext: ComponentContext
+    ): DefaultRootComponent
+  }
 }

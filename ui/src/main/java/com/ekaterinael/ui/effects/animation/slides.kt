@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Ekaterina Elshina
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.ekaterinael.ui.effects.animation
 
 import androidx.compose.animation.core.tween
@@ -7,25 +22,19 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackA
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimator
 
 fun slideFromBottom(): StackAnimator {
-    return verticalSlide(multiplier = 1f)
+  return verticalSlide(multiplier = 1f)
 }
 
 fun verticalSlide(multiplier: Float): StackAnimator {
-    return stackAnimator(animationSpec = tween(300)) { factor, _, content ->
-        content(
-            Modifier.offsetYFactor(factor  * multiplier)
-        )
-    }
+  return stackAnimator(animationSpec = tween(300)) { factor, _, content ->
+    content(Modifier.offsetYFactor(factor * multiplier))
+  }
 }
 
-private fun Modifier.offsetYFactor(factor: Float): Modifier =
-    layout { measurable, constraints ->
-        val placeable = measurable.measure(constraints)
+private fun Modifier.offsetYFactor(factor: Float): Modifier = layout { measurable, constraints ->
+  val placeable = measurable.measure(constraints)
 
-        layout(placeable.width, placeable.height) {
-            placeable.placeRelative(
-                x = 0,
-                y = (placeable.width * factor).toInt()
-            )
-        }
-    }
+  layout(placeable.width, placeable.height) {
+    placeable.placeRelative(x = 0, y = (placeable.width * factor).toInt())
+  }
+}
