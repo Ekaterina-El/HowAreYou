@@ -35,33 +35,6 @@ object MockData {
   /** Mock mood log entries generated lazily on first access. */
   val mockLogs by lazy { generateMockLogs() }
 
-  private fun generateMockLogs(): List<MoodLogEntity> {
-    val currentDate = Calendar.getInstance()
-
-    val logs = mutableListOf<MoodLogEntity>()
-
-    descriptions.forEach {
-      currentDate.add(Calendar.DAY_OF_YEAR, -1)
-
-      val hour = (HOURS_RANGE).random()
-      val minute = (MINUTES_RANGE).random()
-      currentDate.set(Calendar.HOUR_OF_DAY, hour)
-      currentDate.set(Calendar.MINUTE, minute)
-      currentDate.set(Calendar.SECOND, 0)
-      currentDate.set(Calendar.MILLISECOND, 0)
-
-      logs.add(
-        MoodLogEntity(
-          id = null,
-          date = currentDate.time,
-          description = it,
-          mood = Random.nextInt(MIN_MOOD_SCORE, MAX_MOOD_SCORE),
-        )
-      )
-    }
-    return logs
-  }
-
   private val descriptions: List<String> by lazy {
     listOf(
       "Сегодня проснулся с хорошим настроением, быстро собрался и успел спокойно позавтракать. Есть " +
@@ -86,5 +59,32 @@ object MockData {
       "После прогулки стало заметно легче, настроение выровнялось, а мысли перестали крутиться " +
         "вокруг рабочих задач. Хорошо помогло просто сменить обстановку и подышать воздухом.",
     )
+  }
+
+  private fun generateMockLogs(): List<MoodLogEntity> {
+    val currentDate = Calendar.getInstance()
+
+    val logs = mutableListOf<MoodLogEntity>()
+
+    descriptions.forEach {
+      currentDate.add(Calendar.DAY_OF_YEAR, -1)
+
+      val hour = HOURS_RANGE.random()
+      val minute = MINUTES_RANGE.random()
+      currentDate.set(Calendar.HOUR_OF_DAY, hour)
+      currentDate.set(Calendar.MINUTE, minute)
+      currentDate.set(Calendar.SECOND, 0)
+      currentDate.set(Calendar.MILLISECOND, 0)
+
+      logs.add(
+        MoodLogEntity(
+          id = null,
+          date = currentDate.time,
+          description = it,
+          mood = Random.nextInt(MIN_MOOD_SCORE, MAX_MOOD_SCORE),
+        )
+      )
+    }
+    return logs
   }
 }

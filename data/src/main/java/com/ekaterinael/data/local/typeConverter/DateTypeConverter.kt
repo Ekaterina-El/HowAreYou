@@ -26,10 +26,7 @@ class DateTypeConverter {
    * @param value the timestamp in milliseconds, or `null`.
    * @return the corresponding date, or `null` if [value] is `null`.
    */
-  @TypeConverter
-  fun fromTimestamp(value: Long?): Date? {
-    return value?.let { Date(it) }
-  }
+  @TypeConverter fun fromTimestamp(value: Long?): Date? = value?.let { Date(it) }
 
   /**
    * Converts the specified [date] to a timestamp.
@@ -37,8 +34,5 @@ class DateTypeConverter {
    * @param date the date to convert, or `null`.
    * @return the date timestamp in milliseconds, or `null` if [date] is `null`.
    */
-  @TypeConverter
-  fun dateToTimestamp(date: Date?): Long? {
-    return date?.time
-  }
+  @TypeConverter fun dateToTimestamp(date: Date?) = date?.time
 }

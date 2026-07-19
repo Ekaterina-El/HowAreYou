@@ -26,9 +26,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackA
  *
  * @return a stack animator configured with a vertical slide transition.
  */
-fun slideFromBottom(): StackAnimator {
-  return verticalSlide(multiplier = 1f)
-}
+fun slideFromBottom() = verticalSlide(multiplier = 1f)
 
 /**
  * Creates a vertical stack slide animation.

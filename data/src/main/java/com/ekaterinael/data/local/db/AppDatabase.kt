@@ -39,6 +39,14 @@ abstract class AppDatabase : RoomDatabase() {
 
     @Volatile private var INSTANCE: AppDatabase? = null
 
+    private val databaseCallback =
+      object : Callback() {
+        override fun onCreate(connection: SQLiteConnection) {
+          super.onCreate(connection)
+          if (BuildConfig.DEBUG) mockLogs(connection)
+        }
+      }
+
     /**
      * Returns the application database instance.
      *
@@ -59,14 +67,6 @@ abstract class AppDatabase : RoomDatabase() {
               .also { INSTANCE = it }
         }
     }
-
-    private val databaseCallback =
-      object : Callback() {
-        override fun onCreate(connection: SQLiteConnection) {
-          super.onCreate(connection)
-          if (BuildConfig.DEBUG) mockLogs(connection)
-        }
-      }
 
     private fun mockLogs(connection: SQLiteConnection) {
       MockData.mockLogs.forEach {

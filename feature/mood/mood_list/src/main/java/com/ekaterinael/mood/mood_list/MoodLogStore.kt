@@ -44,9 +44,7 @@ interface MoodLogStore : Store<MoodLogStore.Intent, MoodLogStore.State, MoodLogS
      * @param locale the locale used for date formatting.
      * @return the formatted selected month.
      */
-    fun selectedMonthUserString(locale: Locale): String {
-      return selectedMonth.toShortUserString(locale = locale)
-    }
+    fun selectedMonthUserString(locale: Locale) = selectedMonth.toShortUserString(locale = locale)
   }
 
   /** Represents user actions handled by the mood log store. */

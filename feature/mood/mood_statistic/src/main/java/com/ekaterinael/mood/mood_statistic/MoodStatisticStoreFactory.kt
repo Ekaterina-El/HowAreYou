@@ -62,8 +62,6 @@ constructor(private val storeFactory: StoreFactory, private val mapper: MoodStat
      * @param msg the message to process.
      * @return the unchanged state.
      */
-    override fun State.reduce(msg: Message): State {
-      return this
-    }
+    override fun State.reduce(msg: Message) = this
   }
 }

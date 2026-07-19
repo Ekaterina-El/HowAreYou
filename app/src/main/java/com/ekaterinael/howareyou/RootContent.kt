@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.plus
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import com.ekaterinael.howareyou.navigation.BottomNavigationBar
@@ -53,10 +52,7 @@ fun RootContent(component: RootComponent) {
         stack = component.childStack,
         animation =
           stackAnimation { child ->
-            when (child.instance) {
-              is RootComponent.Child.AddEditMoodLog -> fade() + slideFromBottom()
-              else -> fade()
-            }
+            if (child.instance is RootComponent.Child.AddEditMoodLog) slideFromBottom() else fade()
           },
       ) { child ->
         when (val activeChild = child.instance) {
