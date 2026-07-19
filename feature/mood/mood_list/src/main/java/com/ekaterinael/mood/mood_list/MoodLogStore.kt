@@ -21,26 +21,67 @@ import com.ekaterinael.mood.core.MoodUI
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Defines the MVI store responsible for processing mood log intents, managing screen state, and
+ * publishing one-time labels.
+ */
 interface MoodLogStore : Store<MoodLogStore.Intent, MoodLogStore.State, MoodLogStore.Label> {
+  /**
+   * Represents the current state of the mood log screen.
+   *
+   * @property logs the mood log entries displayed on the screen.
+   * @property moods the available mood options.
+   * @property selectedMonth the month currently selected for displaying mood logs.
+   */
   data class State(
     val logs: List<MoodListItemUI> = emptyList(),
     val moods: List<MoodUI>,
     val selectedMonth: Date,
   ) {
+    /**
+     * Returns the selected month formatted for display using the specified locale.
+     *
+     * @param locale the locale used for date formatting.
+     * @return the formatted selected month.
+     */
     fun selectedMonthUserString(locale: Locale): String {
       return selectedMonth.toShortUserString(locale = locale)
     }
   }
 
+  /** Represents user actions handled by the mood log store. */
   sealed interface Intent {
+
+    /**
+     * Opens the selected mood log entry.
+     *
+     * @property logId the identifier of the mood log entry.
+     */
     data class OnClickByLog(val logId: Long) : Intent
 
+    /**
+     * Starts the creation of a new mood log entry.
+     *
+     * @property selectedMood the initially selected mood.
+     */
     data class OnClickAddNewLog(val selectedMood: MoodUI) : Intent
   }
 
+  /** Represents one-time events published by the mood log store. */
   sealed interface Label {
+
+    /**
+     * Requests navigation to the screen for editing a mood log entry.
+     *
+     * @property logId the identifier of the mood log entry to edit.
+     */
     data class OpenLogToEdit(val logId: Long) : Label
 
+    /**
+     * Requests navigation to the screen for creating a new mood log entry.
+     *
+     * @property selectedMood the initially selected mood.
+     */
     data class GoToCreateNewLog(val selectedMood: MoodUI) : Label
   }
 }

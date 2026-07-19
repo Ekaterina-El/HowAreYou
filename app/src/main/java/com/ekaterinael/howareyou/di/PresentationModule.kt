@@ -20,9 +20,15 @@ import com.arkivanov.mvikotlin.main.store.DefaultStoreFactory
 import dagger.Module
 import dagger.Provides
 
+/** Provides dependencies required by the presentation layer. */
 @Module
 interface PresentationModule {
   companion object {
+    /**
+     * Provides the [StoreFactory] used to create MVIKotlin stores.
+     *
+     * @return the default store factory implementation.
+     */
     @Provides fun provideStoreFactory(): StoreFactory = DefaultStoreFactory()
   }
 }

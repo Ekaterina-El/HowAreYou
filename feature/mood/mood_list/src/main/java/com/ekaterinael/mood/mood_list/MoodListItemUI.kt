@@ -18,6 +18,14 @@ package com.ekaterinael.mood.mood_list
 import com.ekaterinael.mood.core.MoodUI
 import java.util.Date
 
+/**
+ * Represents a mood log entry prepared for display in the mood list.
+ *
+ * @property id the unique identifier of the mood log, or `null` for a new entry.
+ * @property date the date and time associated with the mood log, or `null` if not specified.
+ * @property description the user-provided description of the mood.
+ * @property mood the mood prepared for display in the user interface.
+ */
 data class MoodListItemUI(
   val id: Long? = null,
   val date: Date?,

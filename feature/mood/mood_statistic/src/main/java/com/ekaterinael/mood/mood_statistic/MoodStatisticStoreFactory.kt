@@ -24,10 +24,16 @@ import com.ekaterinael.mood.mood_statistic.di.MoodStatisticScope
 import com.ekaterinael.mood.mood_statistic.mapper.MoodStatisticUIMapper
 import javax.inject.Inject
 
+/** Creates and configures [MoodStatisticStore] instances. */
 @MoodStatisticScope
 class MoodStatisticStoreFactory
 @Inject
 constructor(private val storeFactory: StoreFactory, private val mapper: MoodStatisticUIMapper) {
+  /**
+   * Creates a new [MoodStatisticStore] instance.
+   *
+   * @return the configured mood statistics store.
+   */
   fun create(): MoodStatisticStore =
     object :
       MoodStatisticStore,
@@ -38,13 +44,24 @@ constructor(private val storeFactory: StoreFactory, private val mapper: MoodStat
         reducer = ReducerImpl,
       ) {}
 
+  /** Represents internal actions handled by the store executor. */
   sealed interface Action
 
+  /** Represents state update messages handled by the reducer. */
   sealed interface Message
 
+  /** Executes internal mood statistics store actions. */
   private class ExecutorImpl : CoroutineExecutor<Nothing, Action, State, Message, Nothing>()
 
+  /** Reduces incoming messages into a new store state. */
   private object ReducerImpl : Reducer<State, Message> {
+
+    /**
+     * Returns the current state because no state changes are currently implemented.
+     *
+     * @param msg the message to process.
+     * @return the unchanged state.
+     */
     override fun State.reduce(msg: Message): State {
       return this
     }

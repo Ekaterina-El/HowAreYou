@@ -19,11 +19,23 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Formats this [Date] as a full, user-readable date string using the specified [locale].
+ *
+ * @param locale the locale used for date formatting.
+ * @return the formatted date string.
+ */
 fun Date.toFullUserString(locale: Locale): String {
   val formatter = SimpleDateFormat("EEEE, d MMMM H:mm", locale)
   return formatter.format(this)
 }
 
+/**
+ * Formats this [Date] as a short, user-readable date string using the specified [locale].
+ *
+ * @param locale the locale used for date formatting.
+ * @return the formatted date string.
+ */
 fun Date.toShortUserString(locale: Locale): String {
   val formatter = SimpleDateFormat("LLLL yyyy", locale)
   return formatter.format(this).capitalizeFirstLetter()

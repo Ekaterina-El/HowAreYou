@@ -21,6 +21,11 @@ import com.ekaterinael.mood.mood_list.MoodListItemUI
 import com.ekaterinael.mood.mood_list.di.MoodListScope
 import javax.inject.Inject
 
+/**
+ * Default implementation of [MoodListUiMapper].
+ *
+ * Converts domain-layer mood log entries into models used by the mood list UI.
+ */
 @MoodListScope
 class MoodListUiMapperImpl @Inject constructor() : MoodListUiMapper {
   override fun map(logs: List<MoodLog>): List<MoodListItemUI> =

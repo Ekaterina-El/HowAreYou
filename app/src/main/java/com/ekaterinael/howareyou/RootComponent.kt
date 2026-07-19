@@ -22,19 +22,53 @@ import com.ekaterinael.mood.mood_list.MoodLogComponent
 import com.ekaterinael.mood.mood_statistic.MoodStatisticComponent
 import com.ekaterinael.ui.navgiation.bottom.BottomTab
 
+/**
+ * Represents the root component of the application.
+ *
+ * Defines the main navigation state and exposes child components associated with the application's
+ * top-level screens.
+ */
 interface RootComponent {
+  /** The current stack of child components. */
   val childStack: Value<ChildStack<*, Child>>
 
+  /** The list of tabs displayed in the bottom navigation bar. */
   val bottomTabs: List<BottomTab>
 
+  /**
+   * Selects the specified bottom navigation [tab].
+   *
+   * @param tab the tab to navigate to.
+   */
   fun onBottomTabSelected(tab: BottomTab)
 
+  /**
+   * Represents a child component displayed by the root component.
+   *
+   * @property selectedTab the bottom navigation tab associated with this child.
+   * @property showBottomBar whether the bottom navigation bar should be visible.
+   */
   sealed class Child(val selectedTab: BottomTab, val showBottomBar: Boolean = true) {
+    /**
+     * Displays the mood log list.
+     *
+     * @property component the mood log component.
+     */
     class MoodLog(val component: MoodLogComponent) : Child(selectedTab = BottomTab.MoodLog)
 
+    /**
+     * Displays the screen for adding or editing a mood log entry.
+     *
+     * @property component the add or edit mood log component.
+     */
     class AddEditMoodLog(val component: AddEditMoodLogComponent) :
       Child(selectedTab = BottomTab.MoodLog, showBottomBar = false)
 
+    /**
+     * Displays mood statistics.
+     *
+     * @property component the mood statistics component.
+     */
     class MoodStatistic(val component: MoodStatisticComponent) :
       Child(selectedTab = BottomTab.Statistic)
   }

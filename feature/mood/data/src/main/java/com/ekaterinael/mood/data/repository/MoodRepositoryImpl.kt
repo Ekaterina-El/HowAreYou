@@ -22,6 +22,12 @@ import com.ekaterinael.mood.domain.repository.MoodRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Default implementation of [MoodRepository] that delegates mood log operations to the local data
+ * source.
+ *
+ * @param localDataSource the local source used to access and modify mood log data.
+ */
 @AppScope
 class MoodRepositoryImpl @Inject constructor(private val localDataSource: LocalMoodDataSource) :
   MoodRepository {

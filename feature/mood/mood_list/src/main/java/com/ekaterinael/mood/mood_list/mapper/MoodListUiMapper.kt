@@ -18,6 +18,14 @@ package com.ekaterinael.mood.mood_list.mapper
 import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.mood_list.MoodListItemUI
 
+/** Maps domain mood log entries to UI models displayed in the mood list. */
 interface MoodListUiMapper {
+
+  /**
+   * Converts the specified mood logs to mood list UI items.
+   *
+   * @param logs the mood log entries to convert.
+   * @return the corresponding list of UI models.
+   */
   fun map(logs: List<MoodLog>): List<MoodListItemUI>
 }

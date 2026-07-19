@@ -1,0 +1,135 @@
+build:
+  maxIssues: 0
+  excludeCorrectable: false
+
+config:
+  validation: true
+  warningsAsErrors: false
+  checkExhaustiveness: false
+
+processors:
+  active: true
+  exclude:
+    - 'DetektProgressListener'
+
+console-reports:
+  active: true
+  exclude:
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+    - 'FindingsReport'
+    - 'FileBasedFindingsReport'
+
+output-reports:
+  active: true
+
+comments:
+  active: true
+  AbsentOrWrongFileLicense:
+    active: true
+    licenseTemplateFile: 'license.template'
+    licenseTemplateIsRegex: true
+  CommentOverPrivateFunction:
+    active: false
+  CommentOverPrivateProperty:
+    active: false
+  DeprecatedBlockTag:
+    active: true
+  EndOfSentenceFormat:
+    active: true
+    endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
+  KDocReferencesNonPublicProperty:
+    active: true
+    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
+  OutdatedDocumentation:
+    active: true
+    matchTypeParameters: true
+    matchDeclarationsOrder: true
+    allowParamOnConstructorProperties: false
+  UndocumentedPublicClass:
+    active: true
+    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    searchInNestedClass: true
+    searchInInnerClass: false
+    searchInInnerObject: false
+    searchInInnerInterface: true
+    searchInProtectedClass: false
+    ignoreDefaultCompanionObject: true
+    ignoreAnnotated:
+      - 'Module'
+  UndocumentedPublicFunction:
+    active: true
+    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    searchProtectedFunction: false
+    ignoreAnnotated:
+      - 'Composable'
+      - 'Module'
+  UndocumentedPublicProperty:
+    active: true
+    excludes: [
+      '**/test/**',
+      '**/androidTest/**',
+      '**/commonTest/**',
+      '**/jvmTest/**',
+      '**/androidUnitTest/**',
+      '**/androidInstrumentedTest/**',
+      '**/jsTest/**',
+      '**/iosTest/**',
+      "**/theme/**" ]
+    searchProtectedProperty: false
+    ignoreAnnotated:
+      - 'Composable'
+
+naming:
+  active: false
+
+style:
+  active: true
+  UnusedPrivateMember:
+    active: true
+    allowedNames: ''
+    ignoreAnnotated:
+      - 'Preview'
+  ForbiddenComment:
+    active: false
+  MagicNumber:
+    active: true
+    excludes: [
+      '**/test/**',
+      '**/androidTest/**',
+      '**/commonTest/**',
+      '**/jvmTest/**',
+      '**/androidUnitTest/**',
+      '**/androidInstrumentedTest/**',
+      '**/jsTest/**',
+      '**/iosTest/**',
+      '**/*.kts',
+      '**/theme/**']
+    ignoreNumbers:
+        - '-1'
+        - '0'
+        - '1'
+        - '2'
+    ignoreAnnotated:
+      - 'Composable'
+    ignoreHashCodeFunction: true
+    ignorePropertyDeclaration: false
+    ignoreLocalVariableDeclaration: false
+    ignoreConstantDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreAnnotation: false
+    ignoreNamedArgument: true
+    ignoreEnums: false
+    ignoreRanges: false
+    ignoreExtensionFunctions: true
+
+complexity:
+  LongParameterList:
+    active: false
+
+
+exceptions:
+  active: true
+  TooGenericExceptionCaught:
+    active: false

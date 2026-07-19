@@ -29,6 +29,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Default implementation of [AddEditMoodLogComponent] responsible for managing the mood log editor
+ * state and handling user interactions.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 class DefaultAddEditMoodLogComponent
 @AssistedInject
@@ -66,8 +70,18 @@ constructor(
 
   override fun onClickSave() = store.accept(AddEditMoodLogStore.Intent.OnSave)
 
+  /** Factory for creating [DefaultAddEditMoodLogComponent] instances with assisted dependencies. */
   @AssistedFactory
   interface Factory {
+
+    /**
+     * Creates a new [DefaultAddEditMoodLogComponent].
+     *
+     * @param componentContext Decompose context used for lifecycle management.
+     * @param moodLog the mood log entry to create or edit.
+     * @param onGoBackCallback callback invoked when navigation back is requested.
+     * @return a new [DefaultAddEditMoodLogComponent] instance.
+     */
     fun create(
       @Assisted("componentContext") componentContext: ComponentContext,
       @Assisted("moodLog") moodLog: MoodLog,

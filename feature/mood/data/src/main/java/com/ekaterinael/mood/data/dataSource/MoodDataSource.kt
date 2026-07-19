@@ -18,14 +18,42 @@ package com.ekaterinael.mood.data.dataSource
 import com.ekaterinael.mood.domain.model.MoodLog
 import kotlinx.coroutines.flow.Flow
 
+/** Defines operations for accessing and modifying mood log data. */
 interface MoodDataSource {
+
+  /**
+   * Adds a new mood log entry.
+   *
+   * @param log the mood log entry to add.
+   */
   suspend fun add(log: MoodLog)
 
+  /**
+   * Updates an existing mood log entry.
+   *
+   * @param log the mood log entry to update.
+   */
   suspend fun update(log: MoodLog)
 
+  /**
+   * Removes a mood log entry by its identifier.
+   *
+   * @param id the identifier of the mood log entry to remove.
+   */
   suspend fun removeById(id: Long)
 
+  /**
+   * Returns a mood log entry by its identifier.
+   *
+   * @param id the identifier of the mood log entry.
+   * @return the matching mood log entry, or `null` if it does not exist.
+   */
   suspend fun getById(id: Long): MoodLog?
 
+  /**
+   * Observes all mood log entries.
+   *
+   * @return a [Flow] that emits the current list of mood log entries.
+   */
   fun getLogs(): Flow<List<MoodLog>>
 }

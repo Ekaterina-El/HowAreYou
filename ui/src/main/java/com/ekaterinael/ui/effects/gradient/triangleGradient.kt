@@ -20,6 +20,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 
+/**
+ * Draws a triangular gradient using separate colors for the top, left, and right vertices.
+ *
+ * @param colorTop the color applied to the top vertex.
+ * @param colorLeft the color applied to the left vertex.
+ * @param colorRight the color applied to the right vertex.
+ */
 fun DrawScope.triangleGradient(colorTop: Color, colorLeft: Color, colorRight: Color) {
   drawRect(
     brush =

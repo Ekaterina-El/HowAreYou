@@ -22,6 +22,7 @@ import com.ekaterinael.mood.domain.model.Mood.Companion.toMood
 import com.ekaterinael.mood.domain.model.MoodLog
 import javax.inject.Inject
 
+/** Maps mood log objects between the domain and database representations. */
 @AppScope
 class MoodLogMapper @Inject constructor() : Mapper<MoodLog, MoodLogEntity> {
   override fun fromDTO(input: MoodLog) =

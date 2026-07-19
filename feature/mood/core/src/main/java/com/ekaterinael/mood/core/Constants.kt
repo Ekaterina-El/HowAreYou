@@ -13,18 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.mood.mood_statistic.mapper
+package com.ekaterinael.mood.core
 
-import com.ekaterinael.mood.mood_statistic.MoodStatisticUI
-import com.ekaterinael.mood.mood_statistic.di.MoodStatisticScope
-import javax.inject.Inject
+/** Alpha applied to a mood log item while it is pressed. */
+const val PRESSED_MOOD_LOG_ITEM_ALPHA = 0.6f
 
-/**
- * Default implementation of [MoodStatisticUIMapper].
- *
- * Converts mood statistics data into a model used by the statistics UI.
- */
-@MoodStatisticScope
-class MoodStatisticUIMapperImpl @Inject constructor() : MoodStatisticUIMapper {
-  override fun map(data: String) = MoodStatisticUI(data = data)
-}
+/** Alpha applied to a mood log item when it is not selectable. */
+const val DESELECTED_MOOD_LOG_ITEM_ALPHA = 0.4f

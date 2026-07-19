@@ -18,10 +18,23 @@ package com.ekaterinael.mood.mood_list
 import com.ekaterinael.mood.core.MoodUI
 import kotlinx.coroutines.flow.StateFlow
 
+/** Defines the state and user actions available on the mood log screen. */
 interface MoodLogComponent {
+
+  /** Observable state of the mood log screen. */
   val model: StateFlow<MoodLogStore.State>
 
+  /**
+   * Opens the screen for creating a new mood log with the specified mood.
+   *
+   * @param selectedMood the initially selected mood.
+   */
   fun onClickAddNewLog(selectedMood: MoodUI)
 
+  /**
+   * Opens the specified mood log entry for editing.
+   *
+   * @param logId the identifier of the mood log entry, or `null` if unavailable.
+   */
   fun onClickByLog(logId: Long?)
 }

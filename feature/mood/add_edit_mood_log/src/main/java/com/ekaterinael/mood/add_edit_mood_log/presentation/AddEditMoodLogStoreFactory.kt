@@ -33,6 +33,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/** Creates and configures [AddEditMoodLogStore] instances. */
 class AddEditMoodLogStoreFactory
 @Inject
 constructor(
@@ -42,6 +43,12 @@ constructor(
 ) {
   private lateinit var moodLog: MoodLog
 
+  /**
+   * Creates a new [AddEditMoodLogStore] configured for the specified mood log.
+   *
+   * @param moodLog the mood log entry to create or edit.
+   * @return the configured mood log editor store.
+   */
   fun create(moodLog: MoodLog): AddEditMoodLogStore {
     this.moodLog = moodLog
     return object :
@@ -87,11 +94,20 @@ constructor(
     }
   }
 
+  /** Represents internal actions used to initialize the mood log editor state. */
   sealed interface Action {
+
+    /** Starts loading the mood log data. */
     data object StartLoading : Action
 
+    /**
+     * Switches the store to editing mode with the specified mood log.
+     *
+     * @property moodLog the mood log entry to edit.
+     */
     data class ToEditingMode(val moodLog: MoodLog) : Action
 
+    /** Indicates that an error occurred while loading the mood log data. */
     data object LoadingException : Action
   }
 
@@ -140,7 +156,7 @@ constructor(
       scope.launch {
         try {
           if (state !is AddEditMoodLogStore.State.Editing) {
-            throw IllegalStateException("Can change description only in editing mode")
+            error("Can change description only in editing mode")
           }
 
           val moodLog =
@@ -180,7 +196,7 @@ constructor(
         }
         is Message.OnChangeDescription -> {
           if (this !is AddEditMoodLogStore.State.Editing) {
-            throw IllegalStateException("Can change description only in editing mode")
+            error("Can change description only in editing mode")
           }
 
           copy(description = msg.description)

@@ -17,4 +17,9 @@ package com.ekaterinael.mood.mood_list.di
 
 import javax.inject.Singleton
 
+/**
+ * Defines the dependency injection scope for the mood log feature.
+ *
+ * Dependencies annotated with this scope are shared within the lifetime of the mood log component.
+ */
 @Retention(AnnotationRetention.RUNTIME) @Singleton annotation class MoodListScope

@@ -25,6 +25,12 @@ import com.ekaterinael.mood.mood_statistic.di.MoodStatisticModule
 import dagger.BindsInstance
 import dagger.Component
 
+/**
+ * Application-level dependency injection component.
+ *
+ * Provides dependencies shared across the application and injects them into supported Android
+ * components.
+ */
 @AppScope
 @Component(
   modules =
@@ -37,12 +43,29 @@ import dagger.Component
     ]
 )
 interface ApplicationComponent {
+  /**
+   * Injects application dependencies into the specified [activity].
+   *
+   * @param activity the activity receiving injected dependencies.
+   */
   fun inject(activity: MainActivity)
 
+  /** Builder for creating an [ApplicationComponent] instance. */
   @Component.Builder
   interface Builder {
+    /**
+     * Binds the application [context] to the dependency graph.
+     *
+     * @param context the application context.
+     * @return this builder instance.
+     */
     fun context(@BindsInstance context: Context): Builder
 
+    /**
+     * Creates the configured [ApplicationComponent].
+     *
+     * @return the application-level dependency injection component.
+     */
     fun build(): ApplicationComponent
   }
 }

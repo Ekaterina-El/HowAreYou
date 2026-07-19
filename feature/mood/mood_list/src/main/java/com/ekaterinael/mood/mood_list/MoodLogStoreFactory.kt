@@ -33,6 +33,7 @@ import java.util.Calendar
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
+/** Creates and configures [MoodLogStore] instances. */
 @MoodListScope
 class MoodLogStoreFactory
 @Inject
@@ -41,6 +42,11 @@ constructor(
   private val getLogsUseCase: GetLogsUseCase,
   private val mapper: MoodListUiMapper,
 ) {
+  /**
+   * Creates a new [MoodLogStore] instance.
+   *
+   * @return the configured mood log store.
+   */
   fun create(): MoodLogStore =
     object :
       MoodLogStore,

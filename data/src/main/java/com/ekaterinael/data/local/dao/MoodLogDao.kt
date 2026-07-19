@@ -20,12 +20,29 @@ import androidx.room.Query
 import com.ekaterinael.data.local.entity.MoodLogEntity
 import kotlinx.coroutines.flow.Flow
 
+/** Provides database access operations for mood log entries. */
 @Dao
 interface MoodLogDao : BaseDao<MoodLogEntity> {
+  /**
+   * Observes all mood log entries stored in the database.
+   *
+   * @return a flow that emits the current list of mood log entities.
+   */
   // TODO: add filters
   @Query("SELECT * FROM mood_log") fun getLog(): Flow<List<MoodLogEntity>>
 
+  /**
+   * Returns a mood log entry by its identifier.
+   *
+   * @param id the identifier of the mood log entry.
+   * @return the matching entity, or `null` if it does not exist.
+   */
   @Query("SELECT * FROM mood_log WHERE id = :id") suspend fun getById(id: Long): MoodLogEntity?
 
+  /**
+   * Removes a mood log entry by its identifier.
+   *
+   * @param id the identifier of the mood log entry to remove.
+   */
   @Query("DELETE FROM mood_log WHERE id = :id") suspend fun removeById(id: Long)
 }

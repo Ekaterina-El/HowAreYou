@@ -21,15 +21,29 @@ import androidx.compose.ui.layout.layout
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.StackAnimator
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimator
 
+/**
+ * Creates a stack animation that slides content upward from the bottom.
+ *
+ * @return a stack animator configured with a vertical slide transition.
+ */
 fun slideFromBottom(): StackAnimator {
   return verticalSlide(multiplier = 1f)
 }
 
+/**
+ * Creates a vertical stack slide animation.
+ *
+ * @param multiplier controls the slide direction and distance. Positive values slide from the
+ *   bottom, while negative values slide from the top.
+ * @return a stack animator configured with the vertical slide transition.
+ */
 fun verticalSlide(multiplier: Float): StackAnimator {
-  return stackAnimator(animationSpec = tween(300)) { factor, _, content ->
+  return stackAnimator(animationSpec = tween(DEFAULT_ANIMATION_DURATION)) { factor, _, content ->
     content(Modifier.offsetYFactor(factor * multiplier))
   }
 }
+
+private const val DEFAULT_ANIMATION_DURATION = 300
 
 private fun Modifier.offsetYFactor(factor: Float): Modifier = layout { measurable, constraints ->
   val placeable = measurable.measure(constraints)

@@ -35,6 +35,15 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Default implementation of [RootComponent] responsible for managing the application's root
+ * navigation and creating child components.
+ *
+ * @param moodLogComponentFactory factory for creating the mood log component.
+ * @param moodStatisticComponentFactory factory for creating the mood statistics component.
+ * @param addEditMoodLogComponentFactory factory for creating the mood log editor component.
+ * @param componentContext Decompose context used for lifecycle and navigation management.
+ */
 class DefaultRootComponent
 @AssistedInject
 constructor(
@@ -128,18 +137,41 @@ constructor(
     return RootComponent.Child.AddEditMoodLog(component)
   }
 
+  /** Defines the navigation configurations available in the root component. */
   sealed interface Config : Parcelable {
+    /** Displays the list of mood log entries. */
     @Parcelize data object MoodLogList : Config
 
+    /** Displays mood statistics. */
     @Parcelize data object MoodLogStatistic : Config
 
+    /**
+     * Opens the screen for creating a mood log entry.
+     *
+     * @property mood the initially selected mood.
+     */
     @Parcelize data class AddMoodLog(val mood: Mood) : Config
 
+    /**
+     * Opens the screen for editing an existing mood log entry.
+     *
+     * @property moodId the identifier of the mood log entry to edit.
+     */
     @Parcelize data class EditMoodLog(val moodId: Long) : Config
   }
 
+  /**
+   * Factory for creating [DefaultRootComponent] instances with an assisted [ComponentContext]
+   * parameter.
+   */
   @AssistedFactory
   interface Factory {
+    /**
+     * Creates a new [DefaultRootComponent].
+     *
+     * @param componentContext Decompose context used by the root component.
+     * @return a new root component instance.
+     */
     fun create(
       @Assisted("componentContext") componentContext: ComponentContext
     ): DefaultRootComponent

@@ -24,6 +24,14 @@ import com.ekaterinael.ui.theme.GreatMood
 import com.ekaterinael.ui.theme.SoSoMood
 import com.ekaterinael.ui.theme.UnknownMood
 
+/**
+ * Represents a mood state prepared for display in the user interface.
+ *
+ * @property mood the corresponding domain-layer mood value.
+ * @property color the color associated with the mood.
+ * @property imageResId the resource identifier of the mood image.
+ * @property titleResId the resource identifier of the localized mood title.
+ */
 sealed class MoodUI(val mood: Mood, val color: Color, val imageResId: Int, val titleResId: Int) {
   data object Great :
     MoodUI(
@@ -74,6 +82,11 @@ sealed class MoodUI(val mood: Mood, val color: Color, val imageResId: Int, val t
     )
 
   companion object {
+    /**
+     * All available mood states converted to their UI representations.
+     *
+     * The list is initialized lazily on first access.
+     */
     val all by lazy { Mood.all.map { it.toUI() } }
   }
 }

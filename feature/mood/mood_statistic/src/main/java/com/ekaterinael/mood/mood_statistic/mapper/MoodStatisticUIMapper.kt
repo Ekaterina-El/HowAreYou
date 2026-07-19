@@ -17,6 +17,14 @@ package com.ekaterinael.mood.mood_statistic.mapper
 
 import com.ekaterinael.mood.mood_statistic.MoodStatisticUI
 
+/** Maps mood statistics data to a UI model. */
 interface MoodStatisticUIMapper {
+
+  /**
+   * Converts the specified statistics data to its UI representation.
+   *
+   * @param data the source statistics data.
+   * @return the corresponding [MoodStatisticUI] model.
+   */
   fun map(data: String): MoodStatisticUI
 }

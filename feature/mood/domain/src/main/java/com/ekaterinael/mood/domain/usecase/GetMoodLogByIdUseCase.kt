@@ -17,6 +17,17 @@ package com.ekaterinael.mood.domain.usecase
 
 import com.ekaterinael.mood.domain.repository.MoodRepository
 
+/**
+ * Retrieves a mood log entry by its identifier.
+ *
+ * @param repository the repository used to access mood log data.
+ */
 class GetMoodLogByIdUseCase(private val repository: MoodRepository) {
+  /**
+   * Retrieves a mood log entry by its identifier.
+   *
+   * @param id the identifier of the mood log entry.
+   * @return the matching mood log entry, or `null` if it does not exist.
+   */
   suspend operator fun invoke(id: Long) = repository.getLogById(id)
 }

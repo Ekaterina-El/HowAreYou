@@ -18,8 +18,18 @@ package com.ekaterinael.mood.domain.usecase
 import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.domain.repository.MoodRepository
 
-/** Use case for adding a new mood log entry */
+/**
+ * Saves a mood log entry by creating a new entry or updating an existing one.
+ *
+ * @param repository the repository used to persist mood log data.
+ */
 class SaveMoodLogUseCase(private val repository: MoodRepository) {
+  /**
+   * Adds a new mood log entry when its identifier is `null`, or updates the existing entry when an
+   * identifier is present.
+   *
+   * @param moodLog the mood log entry to save.
+   */
   suspend operator fun invoke(moodLog: MoodLog) {
     if (moodLog.id == null) {
       repository.addNewLog(moodLog = moodLog)

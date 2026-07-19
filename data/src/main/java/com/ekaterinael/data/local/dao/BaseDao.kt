@@ -18,8 +18,23 @@ package com.ekaterinael.data.local.dao
 import androidx.room.Insert
 import androidx.room.Update
 
+/**
+ * Defines common database operations for Room entities.
+ *
+ * @param T the type of entity managed by this DAO.
+ */
 interface BaseDao<T> {
+  /**
+   * Inserts the specified [entity] into the database.
+   *
+   * @param entity the entity to insert.
+   */
   @Insert suspend fun add(entity: T)
 
+  /**
+   * Updates the specified [entity] in the database.
+   *
+   * @param entity the entity to update.
+   */
   @Update suspend fun update(entity: T)
 }

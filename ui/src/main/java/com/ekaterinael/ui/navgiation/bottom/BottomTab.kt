@@ -17,11 +17,21 @@ package com.ekaterinael.ui.navgiation.bottom
 
 import com.ekaterinael.ui.R
 
+/**
+ * Represents a top-level destination displayed in the bottom navigation bar.
+ *
+ * @property iconResId the drawable resource used as the tab icon.
+ * @property textResId the string resource used as the tab label.
+ */
 enum class BottomTab(val iconResId: Int, val textResId: Int) {
+  /** Opens the mood log screen. */
   MoodLog(iconResId = R.drawable.note, textResId = R.string.diary),
+
+  /** Opens the mood statistics screen. */
   Statistic(iconResId = R.drawable.bars, textResId = R.string.statistic);
 
   companion object {
+    /** The default list of tabs displayed in the bottom navigation bar. */
     val default by lazy { listOf(MoodLog, Statistic) }
   }
 }

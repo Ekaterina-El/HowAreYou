@@ -17,7 +17,12 @@ package com.ekaterinael.mood.domain.usecase
 
 import com.ekaterinael.mood.domain.repository.MoodRepository
 
-/** Use case for return a reactive stream of mood logs */
+/** Use case for return a reactive stream of mood logs. */
 class GetLogsUseCase(private val repository: MoodRepository) {
+  /**
+   * Observes all available mood log entries.
+   *
+   * @return a flow that emits the current list of mood logs.
+   */
   operator fun invoke() = repository.getLogs()
 }

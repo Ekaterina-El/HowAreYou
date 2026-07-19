@@ -18,14 +18,28 @@ package com.ekaterinael.mood.add_edit_mood_log.presentation
 import com.ekaterinael.mood.core.MoodUI
 import kotlinx.coroutines.flow.StateFlow
 
+/** Defines the state and user actions available on the mood log editor screen. */
 interface AddEditMoodLogComponent {
+  /** Observable state of the mood log editor screen. */
   val state: StateFlow<AddEditMoodLogStore.State>
 
+  /**
+   * Updates the mood log description.
+   *
+   * @param value the new description value.
+   */
   fun onChangeDescription(value: String)
 
+  /**
+   * Updates the selected mood.
+   *
+   * @param value the newly selected mood.
+   */
   fun onChangeMood(value: MoodUI)
 
+  /** Navigates back from the mood log editor. */
   fun onGoBack()
 
+  /** Saves the current mood log entry. */
   fun onClickSave()
 }

@@ -15,4 +15,9 @@
  */
 package com.ekaterinael.mood.mood_statistic
 
+/**
+ * Represents mood statistics data prepared for display in the user interface.
+ *
+ * @property data the formatted statistics content.
+ */
 data class MoodStatisticUI(val data: String)

@@ -51,8 +51,8 @@ fun MoodLogStateItem(
   mood: MoodUI,
   onClick: (MoodUI) -> Unit,
 ) {
-  val pressedAlpha = 0.6f
-  val deselectedAlpha = 0.4f
+  val pressedAlpha = PRESSED_MOOD_LOG_ITEM_ALPHA
+  val deselectedAlpha = DESELECTED_MOOD_LOG_ITEM_ALPHA
   val interactionSource = remember { MutableInteractionSource() }
   val isPressed by interactionSource.collectIsPressedAsState()
 

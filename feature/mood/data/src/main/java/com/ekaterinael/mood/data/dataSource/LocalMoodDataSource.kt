@@ -23,6 +23,13 @@ import com.ekaterinael.mood.domain.model.MoodLog
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
 
+/**
+ * Local implementation of [MoodDataSource] that manages mood log data stored in the application's
+ * database.
+ *
+ * @param mapper converts between domain [MoodLog] objects and database [MoodLogEntity] objects.
+ * @param dao provides access to stored mood log entries.
+ */
 @AppScope
 class LocalMoodDataSource
 @Inject

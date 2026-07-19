@@ -17,6 +17,11 @@ package com.ekaterinael.mood.core
 
 import com.ekaterinael.mood.domain.model.Mood
 
+/**
+ * Converts this domain-layer [Mood] value to its UI representation.
+ *
+ * @return the corresponding [MoodUI] value.
+ */
 fun Mood.toUI(): MoodUI {
   return when (this) {
     Mood.GREAT -> MoodUI.Great

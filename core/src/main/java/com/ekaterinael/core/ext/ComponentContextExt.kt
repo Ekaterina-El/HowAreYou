@@ -22,6 +22,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 
+/**
+ * Creates a [CoroutineScope] bound to the lifecycle of this [ComponentContext].
+ *
+ * The scope uses [Dispatchers.Main] and a [SupervisorJob], allowing child coroutines to fail
+ * independently. It is automatically canceled, when the component is destroyed.
+ *
+ * @return A lifecycle-aware coroutine scope for the component.
+ */
 fun ComponentContext.componentScope(): CoroutineScope =
   CoroutineScope(Dispatchers.Main.immediate + SupervisorJob()).apply {
     lifecycle.doOnDestroy { cancel() }

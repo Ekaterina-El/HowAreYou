@@ -22,7 +22,9 @@ import androidx.activity.enableEdgeToEdge
 import com.arkivanov.decompose.defaultComponentContext
 import javax.inject.Inject
 
+/** Hosts the application's root UI and initializes the root Decompose component. */
 class MainActivity : ComponentActivity() {
+  /** Factory used to create the application's root component. */
   @Inject lateinit var defaultRootComponentFactory: DefaultRootComponent.Factory
 
   override fun onCreate(savedInstanceState: Bundle?) {

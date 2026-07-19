@@ -17,4 +17,10 @@ package com.ekaterinael.core.di
 
 import javax.inject.Scope
 
+/**
+ * Defines the application-level dependency injection scope.
+ *
+ * Dependencies annotated with this scope are created once and shared throughout the application's
+ * lifecycle.
+ */
 @Retention(value = AnnotationRetention.RUNTIME) @Scope annotation class AppScope

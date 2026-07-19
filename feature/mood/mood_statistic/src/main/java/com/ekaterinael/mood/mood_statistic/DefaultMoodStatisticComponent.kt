@@ -24,6 +24,10 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 
+/**
+ * Default implementation of [MoodStatisticComponent] responsible for managing the mood statistics
+ * screen state and user interactions.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 class DefaultMoodStatisticComponent
 @AssistedInject
@@ -36,8 +40,18 @@ constructor(
 
   override val model: StateFlow<MoodStatisticStore.State> = store.stateFlow
 
+  /**
+   * Factory for creating [DefaultMoodStatisticComponent] instances with an assisted
+   * [ComponentContext].
+   */
   @AssistedFactory
   interface Factory {
+    /**
+     * Creates a new [DefaultMoodStatisticComponent].
+     *
+     * @param componentContext Decompose context used for lifecycle management.
+     * @return a new [DefaultMoodStatisticComponent] instance.
+     */
     fun create(
       @Assisted("componentContext") componentContext: ComponentContext
     ): DefaultMoodStatisticComponent

@@ -15,4 +15,10 @@
  */
 package com.ekaterinael.core.ext
 
+/**
+ * Returns this string with its first character converted to uppercase. If the string is empty, it
+ * is returned unchanged.
+ *
+ * @return this string with an uppercase first character.
+ */
 fun String.capitalizeFirstLetter() = this.replaceFirstChar { it.uppercase() }

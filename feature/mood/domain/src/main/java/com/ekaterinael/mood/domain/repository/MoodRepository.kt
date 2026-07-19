@@ -18,7 +18,7 @@ package com.ekaterinael.mood.domain.repository
 import com.ekaterinael.mood.domain.model.MoodLog
 import kotlinx.coroutines.flow.Flow
 
-/** Repository that manages mood logs data */
+/** Repository that manages mood logs data. */
 interface MoodRepository {
   /**
    * Adds a new mood log entry.
@@ -34,12 +34,12 @@ interface MoodRepository {
    */
   suspend fun editLog(moodLog: MoodLog)
 
-  /** Delete an existing log entry by ID */
+  /** Delete an existing log entry by ID. */
   suspend fun removeLog(id: Long)
 
-  /** Returns a reactive stream of mood logs */
+  /** Returns a reactive stream of mood logs. */
   fun getLogs(): Flow<List<MoodLog>>
 
-  /** Get a mood logs by ID */
+  /** Get a mood logs by ID. */
   suspend fun getLogById(id: Long): MoodLog?
 }

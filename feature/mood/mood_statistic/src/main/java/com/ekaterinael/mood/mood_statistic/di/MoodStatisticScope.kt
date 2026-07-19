@@ -17,4 +17,10 @@ package com.ekaterinael.mood.mood_statistic.di
 
 import javax.inject.Singleton
 
+/**
+ * Defines the dependency injection scope for the mood statistics feature.
+ *
+ * Dependencies annotated with this scope are shared within the lifetime of the mood statistics
+ * component.
+ */
 @Retention(AnnotationRetention.RUNTIME) @Singleton annotation class MoodStatisticScope

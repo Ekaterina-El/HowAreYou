@@ -31,6 +31,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Default implementation of [MoodLogComponent] responsible for managing the mood log screen state
+ * and user actions.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 @MoodListScope
 class DefaultMoodLogComponent
@@ -73,8 +77,18 @@ constructor(
     store.accept(MoodLogStore.Intent.OnClickByLog(logId))
   }
 
+  /** Factory for creating [DefaultMoodLogComponent] instances with assisted dependencies. */
   @[AssistedFactory MoodListScope]
   interface Factory {
+    /**
+     * Creates a new [DefaultMoodLogComponent].
+     *
+     * @param componentContext Decompose context used for lifecycle management.
+     * @param onOpenLogToEdit callback invoked with the identifier of the mood log to edit.
+     * @param goToCreateNewLog callback invoked with the initially selected mood when creating a
+     *   log.
+     * @return a new [DefaultMoodLogComponent] instance.
+     */
     fun create(
       @Assisted("componentContext") componentContext: ComponentContext,
       @Assisted("onOpenLogToEdit") onOpenLogToEdit: (moodId: Long) -> Unit,

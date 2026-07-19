@@ -17,7 +17,9 @@ package com.ekaterinael.mood.mood_statistic
 
 import kotlinx.coroutines.flow.StateFlow
 
+/** Defines the state and user actions available on the mood statistics screen. */
 interface MoodStatisticComponent {
+  /** Observable state of the mood statistics screen. */
   val model: StateFlow<MoodStatisticStore.State>
 
   // todo: add filters

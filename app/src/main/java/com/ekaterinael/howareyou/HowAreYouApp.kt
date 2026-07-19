@@ -19,12 +19,16 @@ import android.app.Application
 import com.ekaterinael.howareyou.di.ApplicationComponent
 import com.ekaterinael.howareyou.di.DaggerApplicationComponent
 
+/**
+ * Application entry point responsible for initializing and exposing the application-level
+ * dependency injection component.
+ */
 class HowAreYouApp : Application() {
+  /** The application-wide dependency injection component. */
   lateinit var applicationComponent: ApplicationComponent
 
   override fun onCreate() {
     super.onCreate()
-
     applicationComponent = DaggerApplicationComponent.builder().context(applicationContext).build()
   }
 }

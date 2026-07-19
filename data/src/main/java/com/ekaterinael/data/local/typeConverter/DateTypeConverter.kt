@@ -18,12 +18,25 @@ package com.ekaterinael.data.local.typeConverter
 import androidx.room.TypeConverter
 import java.util.Date
 
+/** Converts between [Date] objects and timestamp values supported by Room. */
 class DateTypeConverter {
+  /**
+   * Converts the specified timestamp to a [Date].
+   *
+   * @param value the timestamp in milliseconds, or `null`.
+   * @return the corresponding date, or `null` if [value] is `null`.
+   */
   @TypeConverter
   fun fromTimestamp(value: Long?): Date? {
     return value?.let { Date(it) }
   }
 
+  /**
+   * Converts the specified [date] to a timestamp.
+   *
+   * @param date the date to convert, or `null`.
+   * @return the date timestamp in milliseconds, or `null` if [date] is `null`.
+   */
   @TypeConverter
   fun dateToTimestamp(date: Date?): Long? {
     return date?.time

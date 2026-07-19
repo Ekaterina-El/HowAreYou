@@ -27,9 +27,11 @@ import com.ekaterinael.data.local.dao.MoodLogDao
 import com.ekaterinael.data.local.entity.MoodLogEntity
 import com.ekaterinael.data.local.typeConverter.DateTypeConverter
 
+/** Application database that provides access to the available Room DAOs. */
 @Database(entities = [MoodLogEntity::class], version = 1, exportSchema = true)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
+  /** Provides access to mood log database operations. */
   abstract val moodLogDao: MoodLogDao
 
   companion object {
@@ -37,27 +39,25 @@ abstract class AppDatabase : RoomDatabase() {
 
     @Volatile private var INSTANCE: AppDatabase? = null
 
+    /**
+     * Returns the application database instance.
+     *
+     * @param context the context used to initialize the database.
+     * @return the shared [AppDatabase] instance.
+     */
     fun getInstance(context: Context): AppDatabase {
-      INSTANCE?.run {
-        return this
-      }
-
-      synchronized(this) {
-        INSTANCE?.run {
-          return this
+      return INSTANCE
+        ?: synchronized(this) {
+          INSTANCE
+            ?: Room.databaseBuilder(
+                context = context,
+                name = APP_DATABASE_NAME,
+                klass = AppDatabase::class.java,
+              )
+              .addCallback(databaseCallback)
+              .build()
+              .also { INSTANCE = it }
         }
-        val instance =
-          Room.databaseBuilder(
-              context = context,
-              name = APP_DATABASE_NAME,
-              klass = AppDatabase::class.java,
-            )
-            .addCallback(databaseCallback)
-            .build()
-
-        INSTANCE = instance
-        return instance
-      }
     }
 
     private val databaseCallback =

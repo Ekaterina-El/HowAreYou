@@ -17,6 +17,12 @@ package com.ekaterinael.mood.mood_statistic
 
 import com.arkivanov.mvikotlin.core.store.Store
 
+/** Defines the MVI store responsible for managing the mood statistics screen state. */
 interface MoodStatisticStore : Store<Nothing, MoodStatisticStore.State, Nothing> {
+  /**
+   * Represents the current state of the mood statistics screen.
+   *
+   * @property data the mood statistics data prepared for display.
+   */
   data class State(val data: MoodStatisticUI)
 }
