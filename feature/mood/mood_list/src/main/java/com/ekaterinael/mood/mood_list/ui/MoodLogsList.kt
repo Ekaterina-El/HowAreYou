@@ -66,6 +66,7 @@ private fun MoodLogItemPreview() {
       modifier =
         Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(10.dp)
     ) {
+      val mockText = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день"
       MoodLogsList(
         moods = MoodUI.all,
         logs =
@@ -73,25 +74,25 @@ private fun MoodLogItemPreview() {
             MoodListItemUI(
               id = 1,
               date = Calendar.getInstance().time,
-              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              description = mockText,
               mood = MoodUI.Great,
             ),
             MoodListItemUI(
               id = 1,
               date = Calendar.getInstance().time,
-              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              description = mockText,
               mood = MoodUI.Good,
             ),
             MoodListItemUI(
               id = 1,
               date = Calendar.getInstance().time,
-              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              description = mockText,
               mood = MoodUI.Awful,
             ),
             MoodListItemUI(
               id = 1,
               date = Calendar.getInstance().time,
-              description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+              description = mockText,
               mood = MoodUI.SoSo,
             ),
           ),
