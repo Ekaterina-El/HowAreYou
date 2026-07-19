@@ -17,4 +17,19 @@ if [ "$RESULT" -ne 0 ]; then
 fi
 
 echo "Spotless check passed."
+
+echo "Running Detekt check..."
+./gradlew detektAll
+RESULT=$?
+
+if [ "$RESULT" -ne 0 ]; then
+  echo ""
+  echo "Detekt found problems with code."
+  echo "Commit has been cancelled."
+  echo ""
+  exit "$RESULT"
+fi
+
+echo "Detekt check passed."
+
 exit 0
