@@ -15,10 +15,11 @@
  */
 package com.ekaterinael.howareyou
 
-import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetpack.stack.animation.stackAnimation
@@ -30,7 +31,6 @@ import com.ekaterinael.ui.effects.animation.slideFromBottom
 import com.ekaterinael.ui.navgiation.bottom.BottomNavigationBar
 import com.ekaterinael.ui.theme.HowAreYouTheme
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RootContent(component: RootComponent) {
   val childStack by component.childStack.subscribeAsState()
@@ -47,7 +47,7 @@ fun RootContent(component: RootComponent) {
           )
         }
       }
-    ) {
+    ) { paddingValues ->
       Children(
         stack = component.childStack,
         animation =
@@ -56,9 +56,17 @@ fun RootContent(component: RootComponent) {
           },
       ) { child ->
         when (val activeChild = child.instance) {
-          is RootComponent.Child.AddEditMoodLog -> AddEditMoodLog(activeChild.component)
-          is RootComponent.Child.MoodLog -> MoodLogScreen(activeChild.component)
-          is RootComponent.Child.MoodStatistic -> MoodStatistic(activeChild.component)
+          is RootComponent.Child.AddEditMoodLog -> AddEditMoodLog(component = activeChild.component)
+          is RootComponent.Child.MoodLog ->
+            MoodLogScreen(
+              modifier = Modifier.padding(paddingValues),
+              component = activeChild.component,
+            )
+          is RootComponent.Child.MoodStatistic ->
+            MoodStatistic(
+              modifier = Modifier.padding(paddingValues),
+              component = activeChild.component,
+            )
         }
       }
     }

@@ -29,7 +29,7 @@ interface MoodLogDao : BaseDao<MoodLogEntity> {
    * @return a flow that emits the current list of mood log entities.
    */
   // TODO: add filters
-  @Query("SELECT * FROM mood_log") fun getLog(): Flow<List<MoodLogEntity>>
+  @Query("SELECT * FROM mood_log ORDER BY date DESC") fun getLog(): Flow<List<MoodLogEntity>>
 
   /**
    * Returns a mood log entry by its identifier.
