@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="mood_log_empty_month_title">Упс…</string>
-    <string name="mood_log_empty_month_description">В этом месяце пока нет записей</string>
-    <string name="mood_log_end_of_list">Это все записи за месяц</string>
+    <string name="mood_log_empty_month_title">Oops…</string>
+    <string name="mood_log_empty_month_description">No entries for this month yet</string>
+    <string name="mood_log_end_of_list">That\'s all entries for the month</string>
 </resources>
