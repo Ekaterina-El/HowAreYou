@@ -19,6 +19,7 @@ import com.ekaterinael.core.di.AppScope
 import com.ekaterinael.mood.data.dataSource.LocalMoodDataSource
 import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.domain.repository.MoodRepository
+import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
@@ -39,5 +40,5 @@ class MoodRepositoryImpl @Inject constructor(private val localDataSource: LocalM
 
   override suspend fun getLogById(id: Long): MoodLog? = localDataSource.getById(id = id)
 
-  override fun getLogs(): Flow<List<MoodLog>> = localDataSource.getLogs()
+  override fun getLogs(month: Date): Flow<List<MoodLog>> = localDataSource.getLogs(month)
 }

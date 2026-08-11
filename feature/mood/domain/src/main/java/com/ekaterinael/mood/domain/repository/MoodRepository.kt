@@ -16,6 +16,7 @@
 package com.ekaterinael.mood.domain.repository
 
 import com.ekaterinael.mood.domain.model.MoodLog
+import java.util.Date
 import kotlinx.coroutines.flow.Flow
 
 /** Repository that manages mood logs data. */
@@ -37,8 +38,13 @@ interface MoodRepository {
   /** Delete an existing log entry by ID. */
   suspend fun removeLog(id: Long)
 
-  /** Returns a reactive stream of mood logs. */
-  fun getLogs(): Flow<List<MoodLog>>
+  /**
+   * Returns a reactive stream of mood logs created within the specified month.
+   *
+   * @param month a date within the month to observe.
+   * @return a flow that emits the current list of mood logs within the month.
+   */
+  fun getLogs(month: Date): Flow<List<MoodLog>>
 
   /** Get a mood logs by ID. */
   suspend fun getLogById(id: Long): MoodLog?

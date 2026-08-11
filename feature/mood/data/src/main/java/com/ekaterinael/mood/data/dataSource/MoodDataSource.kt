@@ -16,6 +16,7 @@
 package com.ekaterinael.mood.data.dataSource
 
 import com.ekaterinael.mood.domain.model.MoodLog
+import java.util.Date
 import kotlinx.coroutines.flow.Flow
 
 /** Defines operations for accessing and modifying mood log data. */
@@ -51,9 +52,10 @@ interface MoodDataSource {
   suspend fun getById(id: Long): MoodLog?
 
   /**
-   * Observes all mood log entries.
+   * Observes mood log entries created within the specified month.
    *
-   * @return a [Flow] that emits the current list of mood log entries.
+   * @param month a date within the month to observe.
+   * @return a [Flow] that emits the current list of mood log entries within the month.
    */
-  fun getLogs(): Flow<List<MoodLog>>
+  fun getLogs(month: Date): Flow<List<MoodLog>>
 }

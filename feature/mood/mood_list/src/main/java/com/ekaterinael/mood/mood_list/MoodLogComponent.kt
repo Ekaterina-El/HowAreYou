@@ -37,4 +37,10 @@ interface MoodLogComponent {
    * @param logId the identifier of the mood log entry, or `null` if unavailable.
    */
   fun onClickByLog(logId: Long?)
+
+  /** Switches the displayed mood logs to the previous month. */
+  fun onClickPreviousMonth()
+
+  /** Switches the displayed mood logs to the next month. */
+  fun onClickNextMonth()
 }

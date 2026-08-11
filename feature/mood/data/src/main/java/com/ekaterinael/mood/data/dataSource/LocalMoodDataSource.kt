@@ -20,7 +20,10 @@ import com.ekaterinael.data.local.dao.MoodLogDao
 import com.ekaterinael.data.local.entity.MoodLogEntity
 import com.ekaterinael.data.mapper.Mapper
 import com.ekaterinael.mood.domain.model.MoodLog
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 /**
@@ -43,5 +46,28 @@ constructor(private val mapper: Mapper<MoodLog, MoodLogEntity>, private val dao:
 
   override suspend fun getById(id: Long): MoodLog? = dao.getById(id = id)?.let { mapper.toDTO(it) }
 
-  override fun getLogs() = dao.getLog().map(mapper::toDTO)
+  override fun getLogs(month: Date): Flow<List<MoodLog>> {
+    val calendar =
+      Calendar.getInstance().apply {
+        time = month
+        set(Calendar.DAY_OF_MONTH, FIRST_DAY_OF_MONTH)
+        set(Calendar.HOUR_OF_DAY, START_OF_DAY_HOUR)
+        set(Calendar.MINUTE, START_OF_DAY_MINUTE)
+        set(Calendar.SECOND, START_OF_DAY_SECOND)
+        set(Calendar.MILLISECOND, START_OF_DAY_MILLISECOND)
+      }
+    val start = calendar.time
+    calendar.add(Calendar.MONTH, MONTHS_TO_ADD)
+    val end = calendar.time
+    return dao.getLogsByMonth(start, end).map(mapper::toDTO)
+  }
+
+  companion object {
+    private const val FIRST_DAY_OF_MONTH = 1
+    private const val START_OF_DAY_HOUR = 0
+    private const val START_OF_DAY_MINUTE = 0
+    private const val START_OF_DAY_SECOND = 0
+    private const val START_OF_DAY_MILLISECOND = 0
+    private const val MONTHS_TO_ADD = 1
+  }
 }

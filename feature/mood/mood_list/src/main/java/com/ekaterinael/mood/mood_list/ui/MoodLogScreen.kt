@@ -35,7 +35,8 @@ fun MoodLogScreen(modifier: Modifier = Modifier, component: MoodLogComponent) {
     TopBarWithSearch(
       title = rememberShortUserStringFormatedDate(model.selectedMonth),
       modifier = Modifier.padding(top = 20.dp, bottom = 14.dp),
-      onClickForward = {},
+      onClickBack = component::onClickPreviousMonth,
+      onClickForward = if (model.isNextMonthAvailable) component::onClickNextMonth else null,
       onClickSearch = {},
     )
     MoodLogsList(

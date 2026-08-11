@@ -16,13 +16,15 @@
 package com.ekaterinael.mood.domain.usecase
 
 import com.ekaterinael.mood.domain.repository.MoodRepository
+import java.util.Date
 
 /** Use case for return a reactive stream of mood logs. */
 class GetLogsUseCase(private val repository: MoodRepository) {
   /**
-   * Observes all available mood log entries.
+   * Observes mood log entries created within the specified month.
    *
-   * @return a flow that emits the current list of mood logs.
+   * @param month a date within the month to observe.
+   * @return a flow that emits the current list of mood logs within the month.
    */
-  operator fun invoke() = repository.getLogs()
+  operator fun invoke(month: Date) = repository.getLogs(month)
 }
