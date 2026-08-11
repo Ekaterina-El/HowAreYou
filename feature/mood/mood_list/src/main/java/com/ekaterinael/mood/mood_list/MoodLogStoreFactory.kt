@@ -79,9 +79,13 @@ constructor(
   private sealed interface Message {
     data class MoodLogUpdated(val logs: List<MoodListItemUI>) : Message
 
-    data class MonthChanged(val month: Date, val isNextMonthAvailable: Boolean) : Message
+    data class MonthChanged(
+      val month: Date,
+      val isNextMonthAvailable: Boolean,
+      val showAddNewLogWidget: Boolean,
+    ) : Message
 
-    data class TodayLogStatusChanged(val hasLogForToday: Boolean) : Message
+    data class AddNewLogWidgetVisibilityChanged(val showAddNewLogWidget: Boolean) : Message
   }
 
   private class BootstrapperImpl : CoroutineBootstrapper<Action>() {
@@ -90,12 +94,13 @@ constructor(
 
   private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Message, Label>() {
     private var logsJob: Job? = null
+    private var hasLogForToday = false
 
     override fun executeAction(action: Action, getState: () -> State) {
       when (action) {
         Action.Init -> {
           subscribeToLogs(getState().selectedMonth)
-          subscribeToTodayLogStatus()
+          subscribeToTodayLogStatus(getState)
         }
       }
     }
@@ -113,7 +118,13 @@ constructor(
     }
 
     private fun changeMonth(newMonth: Date) {
-      dispatch(Message.MonthChanged(newMonth, isNextMonthAvailable(newMonth)))
+      dispatch(
+        Message.MonthChanged(
+          month = newMonth,
+          isNextMonthAvailable = isNextMonthAvailable(newMonth),
+          showAddNewLogWidget = shouldShowAddNewLogWidget(newMonth),
+        )
+      )
       subscribeToLogs(newMonth)
     }
 
@@ -128,13 +139,18 @@ constructor(
         }
     }
 
-    private fun subscribeToTodayLogStatus() {
+    private fun subscribeToTodayLogStatus(getState: () -> State) {
       scope.launch {
         hasLogForDayUseCase(Date()).collect { hasLog ->
-          dispatch(Message.TodayLogStatusChanged(hasLog))
+          hasLogForToday = hasLog
+          val showAddNewLogWidget = shouldShowAddNewLogWidget(getState().selectedMonth)
+          dispatch(Message.AddNewLogWidgetVisibilityChanged(showAddNewLogWidget))
         }
       }
     }
+
+    private fun shouldShowAddNewLogWidget(month: Date): Boolean =
+      !hasLogForToday && month.isSameMonthAs(Date())
   }
 
   private object ReducerImpl : Reducer<State, Message> {
@@ -146,8 +162,10 @@ constructor(
             selectedMonth = msg.month,
             logs = emptyList(),
             isNextMonthAvailable = msg.isNextMonthAvailable,
+            showAddNewLogWidget = msg.showAddNewLogWidget,
           )
-        is Message.TodayLogStatusChanged -> copy(showAddNewLogWidget = !msg.hasLogForToday)
+        is Message.AddNewLogWidgetVisibilityChanged ->
+          copy(showAddNewLogWidget = msg.showAddNewLogWidget)
       }
     }
   }
