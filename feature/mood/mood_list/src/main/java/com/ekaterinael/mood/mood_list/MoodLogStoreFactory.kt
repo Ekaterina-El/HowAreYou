@@ -160,7 +160,6 @@ constructor(
         is Message.MonthChanged ->
           copy(
             selectedMonth = msg.month,
-            logs = emptyList(),
             isNextMonthAvailable = msg.isNextMonthAvailable,
             showAddNewLogWidget = msg.showAddNewLogWidget,
           )

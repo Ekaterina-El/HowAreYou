@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.ui.navgiation
+package com.ekaterinael.ui.navgiation.top
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -26,50 +26,70 @@ import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekaterinael.ui.buttons.AppIconButton
 import com.ekaterinael.ui.theme.HowAreYouTheme
+import java.util.Calendar
+import java.util.Date
 
 @Composable
 fun TopBarWithSearch(
-  title: String,
+  selectedMonth: Date,
   modifier: Modifier = Modifier,
   onClickBack: (() -> Unit)? = null,
   onClickForward: (() -> Unit)? = null,
   onClickSearch: (() -> Unit)? = null,
 ) {
+  var isMonthTitleAnimating by remember { mutableStateOf(false) }
+
   Row(
     modifier = Modifier.fillMaxWidth().then(modifier),
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    AppIconButton(image = Icons.Default.ArrowBackIosNew, onClick = onClickBack)
-    Spacer(Modifier.width(5.dp))
-    Text(
-      modifier = Modifier.weight(1f),
-      text = title,
-      style = MaterialTheme.typography.titleLarge,
-      color = MaterialTheme.colorScheme.primary,
-      textAlign = TextAlign.Center,
+    AppIconButton(
+      image = Icons.Default.ArrowBackIosNew,
+      onClick = onClickBack.takeUnless { isMonthTitleAnimating },
     )
     Spacer(Modifier.width(5.dp))
-    AppIconButton(image = Icons.AutoMirrored.Default.ArrowForwardIos, onClick = onClickForward)
-    Spacer(Modifier.width(12.dp))
-    AppIconButton(image = Icons.Outlined.Search, innerPadding = 6.dp, onClick = onClickSearch)
+    MonthTitle(
+      modifier = Modifier.weight(1f),
+      selectedMonth = selectedMonth,
+      onAnimatingChanged = { isMonthTitleAnimating = it },
+    )
+    Spacer(Modifier.width(5.dp))
+    AppIconButton(
+      image = Icons.AutoMirrored.Default.ArrowForwardIos,
+      onClick = onClickForward.takeUnless { isMonthTitleAnimating },
+    )
+
+    // TODO: add search feature
+    if (HAS_SEARCH_FEATURE) {
+      Spacer(Modifier.width(12.dp))
+      AppIconButton(image = Icons.Outlined.Search, innerPadding = 6.dp, onClick = onClickSearch)
+    }
   }
 }
+
+private const val HAS_SEARCH_FEATURE = false
 
 @Preview
 @Composable
 private fun TopBarWithSearchPreview() {
   HowAreYouTheme {
     Box(Modifier.background(MaterialTheme.colorScheme.background)) {
-      TopBarWithSearch(title = "Январь 2026", onClickSearch = {}, onClickForward = {})
+      TopBarWithSearch(
+        selectedMonth = Calendar.getInstance().time,
+        onClickSearch = {},
+        onClickForward = {},
+      )
     }
   }
 }
