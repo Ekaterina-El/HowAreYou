@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="how_are_you">Как вы себя чувствуете сегодня?</string>
+    <string name="how_are_you">How are you feeling today?</string>
 
-    <string name="great_mood">Супер</string>
-    <string name="good_mood">Хорошо</string>
-    <string name="so_so_mood">Так себе</string>
-    <string name="bad_mood">Плохо</string>
-    <string name="awful_mood">Ужасно</string>
-    <string name="unknown_mood">Неизвестно</string>
+    <string name="great_mood">Great</string>
+    <string name="good_mood">Good</string>
+    <string name="so_so_mood">So-so</string>
+    <string name="bad_mood">Bad</string>
+    <string name="awful_mood">Awful</string>
+    <string name="unknown_mood">Unknown</string>
 
-    <string name="save">Сохранить</string>
+    <string name="save">Save</string>
 </resources>

@@ -21,16 +21,20 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import com.ekaterinael.core.ext.isSameMonthAs
+import com.ekaterinael.core.ext.plusMonths
 import com.ekaterinael.mood.core.model.MoodUI
-import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.domain.usecase.GetLogsUseCase
+import com.ekaterinael.mood.domain.usecase.HasLogForDayUseCase
 import com.ekaterinael.mood.mood_list.MoodLogStore.Intent
 import com.ekaterinael.mood.mood_list.MoodLogStore.Label
 import com.ekaterinael.mood.mood_list.MoodLogStore.State
 import com.ekaterinael.mood.mood_list.di.MoodListScope
 import com.ekaterinael.mood.mood_list.mapper.MoodListUiMapper
 import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /** Creates and configures [MoodLogStore] instances. */
@@ -40,6 +44,7 @@ class MoodLogStoreFactory
 constructor(
   private val storeFactory: StoreFactory,
   private val getLogsUseCase: GetLogsUseCase,
+  private val hasLogForDayUseCase: HasLogForDayUseCase,
   private val mapper: MoodListUiMapper,
 ) {
   /**
@@ -47,40 +52,56 @@ constructor(
    *
    * @return the configured mood log store.
    */
-  fun create(): MoodLogStore =
-    object :
+  fun create(): MoodLogStore {
+    val initialMonth = Calendar.getInstance().time
+    return object :
       MoodLogStore,
       Store<Intent, State, Label> by storeFactory.create(
         name = MoodLogStore::class.simpleName,
-        initialState = State(moods = MoodUI.all, selectedMonth = Calendar.getInstance().time),
+        initialState =
+          State(
+            moods = MoodUI.all,
+            selectedMonth = initialMonth,
+            isNextMonthAvailable = isNextMonthAvailable(initialMonth),
+          ),
         bootstrapper = BootstrapperImpl(),
         executorFactory = ::ExecutorImpl,
         reducer = ReducerImpl,
       ) {}
+  }
+
+  private fun isNextMonthAvailable(month: Date): Boolean = !month.isSameMonthAs(Date())
 
   private sealed interface Action {
-    data class MoodLogUpdated(val logs: List<MoodListItemUI>) : Action
+    data object Init : Action
   }
 
   private sealed interface Message {
     data class MoodLogUpdated(val logs: List<MoodListItemUI>) : Message
+
+    data class MonthChanged(
+      val month: Date,
+      val isNextMonthAvailable: Boolean,
+      val showAddNewLogWidget: Boolean,
+    ) : Message
+
+    data class AddNewLogWidgetVisibilityChanged(val showAddNewLogWidget: Boolean) : Message
   }
 
-  private inner class BootstrapperImpl : CoroutineBootstrapper<Action>() {
-    override fun invoke() {
-      scope.launch { getLogsUseCase().collect { onNewListOfLogs(it) } }
-    }
-
-    private fun onNewListOfLogs(logs: List<MoodLog>) {
-      Log.d("MoodLogStoreFactory", "New List of logs in MoodLogStoreFactory")
-      dispatch(Action.MoodLogUpdated(logs = mapper.map(logs)))
-    }
+  private class BootstrapperImpl : CoroutineBootstrapper<Action>() {
+    override fun invoke() = dispatch(Action.Init)
   }
 
-  private class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Message, Label>() {
+  private inner class ExecutorImpl : CoroutineExecutor<Intent, Action, State, Message, Label>() {
+    private var logsJob: Job? = null
+    private var hasLogForToday = false
+
     override fun executeAction(action: Action, getState: () -> State) {
       when (action) {
-        is Action.MoodLogUpdated -> dispatch(Message.MoodLogUpdated(action.logs))
+        Action.Init -> {
+          subscribeToLogs(getState().selectedMonth)
+          subscribeToTodayLogStatus(getState)
+        }
       }
     }
 
@@ -88,14 +109,62 @@ constructor(
       when (intent) {
         is Intent.OnClickAddNewLog -> publish(Label.GoToCreateNewLog(intent.selectedMood))
         is Intent.OnClickByLog -> publish(Label.OpenLogToEdit(intent.logId))
+        Intent.OnClickPreviousMonth -> changeMonth(getState().selectedMonth.plusMonths(-1))
+        Intent.OnClickNextMonth ->
+          if (getState().isNextMonthAvailable) {
+            changeMonth(getState().selectedMonth.plusMonths(1))
+          }
       }
     }
+
+    private fun changeMonth(newMonth: Date) {
+      dispatch(
+        Message.MonthChanged(
+          month = newMonth,
+          isNextMonthAvailable = isNextMonthAvailable(newMonth),
+          showAddNewLogWidget = shouldShowAddNewLogWidget(newMonth),
+        )
+      )
+      subscribeToLogs(newMonth)
+    }
+
+    private fun subscribeToLogs(month: Date) {
+      Log.d("MoodLogStoreFactory", "Subscribing to logs for month $month")
+      logsJob?.cancel()
+      logsJob =
+        scope.launch {
+          getLogsUseCase(month).collect { logs ->
+            dispatch(Message.MoodLogUpdated(mapper.map(logs)))
+          }
+        }
+    }
+
+    private fun subscribeToTodayLogStatus(getState: () -> State) {
+      scope.launch {
+        hasLogForDayUseCase(Date()).collect { hasLog ->
+          hasLogForToday = hasLog
+          val showAddNewLogWidget = shouldShowAddNewLogWidget(getState().selectedMonth)
+          dispatch(Message.AddNewLogWidgetVisibilityChanged(showAddNewLogWidget))
+        }
+      }
+    }
+
+    private fun shouldShowAddNewLogWidget(month: Date): Boolean =
+      !hasLogForToday && month.isSameMonthAs(Date())
   }
 
   private object ReducerImpl : Reducer<State, Message> {
     override fun State.reduce(msg: Message): State {
       return when (msg) {
         is Message.MoodLogUpdated -> copy(logs = msg.logs)
+        is Message.MonthChanged ->
+          copy(
+            selectedMonth = msg.month,
+            isNextMonthAvailable = msg.isNextMonthAvailable,
+            showAddNewLogWidget = msg.showAddNewLogWidget,
+          )
+        is Message.AddNewLogWidgetVisibilityChanged ->
+          copy(showAddNewLogWidget = msg.showAddNewLogWidget)
       }
     }
   }

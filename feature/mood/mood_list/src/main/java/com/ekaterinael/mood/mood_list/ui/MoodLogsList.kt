@@ -15,6 +15,11 @@
  */
 package com.ekaterinael.mood.mood_list.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +43,7 @@ import java.util.Calendar
 fun MoodLogsList(
   logs: List<MoodListItemUI>,
   moods: List<MoodUI>,
+  showAddNewLogWidget: Boolean,
   onClickAddNewLog: (MoodUI) -> Unit = {},
   onSelectLog: (logId: Long?) -> Unit = {},
 ) {
@@ -46,15 +52,30 @@ fun MoodLogsList(
     contentPadding = PaddingValues(bottom = 16.dp),
     verticalArrangement = Arrangement.spacedBy(15.dp),
   ) {
-    item { MoodLogNewState(moods = moods, onSelectMood = onClickAddNewLog) }
+    val isEmpty = logs.isEmpty()
+    item {
+      AnimatedVisibility(
+        visible = showAddNewLogWidget,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically(),
+      ) {
+        MoodLogNewState(moods = moods, onSelectMood = onClickAddNewLog)
+      }
+    }
+
+    if (isEmpty) {
+      item { MoodLogEmptyState(modifier = Modifier.fillMaxWidth()) }
+    }
 
     items(logs, key = { it.id ?: it.date ?: it.description }) { moodLog ->
       MoodLogItem(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().animateItem(),
         moodLog = moodLog,
         onSelect = { onSelectLog(moodLog.id) },
       )
     }
+
+    if (!isEmpty) item { MoodLogListEnd(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) }
   }
 }
 
@@ -69,6 +90,7 @@ private fun MoodLogItemPreview() {
       val mockText = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день"
       MoodLogsList(
         moods = MoodUI.all,
+        showAddNewLogWidget = true,
         logs =
           listOf(
             MoodListItemUI(
@@ -97,6 +119,19 @@ private fun MoodLogItemPreview() {
             ),
           ),
       )
+    }
+  }
+}
+
+@Preview
+@Composable
+private fun MoodLogsListEmptyPreview() {
+  HowAreYouTheme(darkTheme = true) {
+    Box(
+      modifier =
+        Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(10.dp)
+    ) {
+      MoodLogsList(moods = MoodUI.all, showAddNewLogWidget = true, logs = emptyList())
     }
   }
 }

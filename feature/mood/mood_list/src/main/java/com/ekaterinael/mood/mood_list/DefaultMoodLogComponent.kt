@@ -75,6 +75,10 @@ constructor(
     store.accept(MoodLogStore.Intent.OnClickByLog(logId))
   }
 
+  override fun onClickPreviousMonth() = store.accept(MoodLogStore.Intent.OnClickPreviousMonth)
+
+  override fun onClickNextMonth() = store.accept(MoodLogStore.Intent.OnClickNextMonth)
+
   /** Factory for creating [DefaultMoodLogComponent] instances with assisted dependencies. */
   @AssistedFactory
   interface Factory {

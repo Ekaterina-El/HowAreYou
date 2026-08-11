@@ -18,13 +18,13 @@ package com.ekaterinael.mood.domain.usecase
 import com.ekaterinael.mood.domain.repository.MoodRepository
 import java.util.Date
 
-/** Use case for return a reactive stream of mood logs. */
-class GetLogsUseCase(private val repository: MoodRepository) {
+/** Use case for observing whether a mood log exists for a given day. */
+class HasLogForDayUseCase(private val repository: MoodRepository) {
   /**
-   * Observes mood log entries created within the specified month.
+   * Observes whether a mood log exists for the specified day.
    *
-   * @param month a date within the month to observe.
-   * @return a flow that emits the current list of mood logs within the month.
+   * @param day a date within the day to check.
+   * @return a flow that emits `true` while a mood log entry exists for that day.
    */
-  operator fun invoke(month: Date) = repository.getLogs(month)
+  operator fun invoke(day: Date) = repository.hasLogForDay(day)
 }

@@ -24,8 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ekaterinael.mood.mood_list.MoodLogComponent
-import com.ekaterinael.ui.helper.rememberShortUserStringFormatedDate
-import com.ekaterinael.ui.navgiation.TopBarWithSearch
+import com.ekaterinael.ui.navgiation.top.TopBarWithSearch
 
 @Composable
 fun MoodLogScreen(modifier: Modifier = Modifier, component: MoodLogComponent) {
@@ -33,14 +32,17 @@ fun MoodLogScreen(modifier: Modifier = Modifier, component: MoodLogComponent) {
 
   Column(modifier = modifier.fillMaxSize().padding(horizontal = 12.dp)) {
     TopBarWithSearch(
-      title = rememberShortUserStringFormatedDate(model.selectedMonth),
+      selectedMonth = model.selectedMonth,
       modifier = Modifier.padding(top = 20.dp, bottom = 14.dp),
-      onClickForward = {},
+      onClickBack = component::onClickPreviousMonth,
+      onClickForward = if (model.isNextMonthAvailable) component::onClickNextMonth else null,
       onClickSearch = {},
     )
+
     MoodLogsList(
       logs = model.logs,
       moods = model.moods,
+      showAddNewLogWidget = model.showAddNewLogWidget,
       onClickAddNewLog = component::onClickAddNewLog,
       onSelectLog = component::onClickByLog,
     )

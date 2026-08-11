@@ -18,18 +18,31 @@ package com.ekaterinael.data.local.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.ekaterinael.data.local.entity.MoodLogEntity
+import java.util.Date
 import kotlinx.coroutines.flow.Flow
 
 /** Provides database access operations for mood log entries. */
 @Dao
 interface MoodLogDao : BaseDao<MoodLogEntity> {
   /**
-   * Observes all mood log entries stored in the database.
+   * Observes mood log entries created within the specified date range.
    *
-   * @return a flow that emits the current list of mood log entities.
+   * @param start the inclusive lower bound of the range.
+   * @param end the exclusive upper bound of the range.
+   * @return a flow that emits the current list of mood log entities within the range.
    */
-  // TODO: add filters
-  @Query("SELECT * FROM mood_log ORDER BY date DESC") fun getLog(): Flow<List<MoodLogEntity>>
+  @Query("SELECT * FROM mood_log WHERE date >= :start AND date < :end ORDER BY date DESC")
+  fun getLogsByMonth(start: Date, end: Date): Flow<List<MoodLogEntity>>
+
+  /**
+   * Observes whether at least one mood log entry exists within the specified date range.
+   *
+   * @param start the inclusive lower bound of the range.
+   * @param end the exclusive upper bound of the range.
+   * @return a flow that emits `true` while a mood log entry exists within the range.
+   */
+  @Query("SELECT EXISTS(SELECT 1 FROM mood_log WHERE date >= :start AND date < :end)")
+  fun hasLogInRange(start: Date, end: Date): Flow<Boolean>
 
   /**
    * Returns a mood log entry by its identifier.
