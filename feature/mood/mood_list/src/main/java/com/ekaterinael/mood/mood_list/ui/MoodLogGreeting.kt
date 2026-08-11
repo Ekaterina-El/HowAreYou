@@ -15,25 +15,20 @@
  */
 package com.ekaterinael.mood.mood_list.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekaterinael.ui.theme.HowAreYouTheme
-import com.ekaterinael.ui.theme.lightOrange
 
 @Composable
-fun MoodLogGreeting(name: String, modifier: Modifier = Modifier) {
+fun MoodLogGreeting(name: String, photoUrl: String?, modifier: Modifier = Modifier) {
   Row(modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
     Text(
       modifier = Modifier.weight(1f),
@@ -41,12 +36,12 @@ fun MoodLogGreeting(name: String, modifier: Modifier = Modifier) {
       style = MaterialTheme.typography.headlineSmall,
       color = MaterialTheme.colorScheme.onSurface,
     )
-    Box(modifier = Modifier.size(44.dp).clip(CircleShape).background(lightOrange))
+    ProfilePhoto(photoUrl = photoUrl, modifier = Modifier.size(44.dp))
   }
 }
 
 @Preview
 @Composable
 private fun MoodLogGreetingPreview() {
-  HowAreYouTheme { MoodLogGreeting(name = "Jose Maria") }
+  HowAreYouTheme { MoodLogGreeting(name = "Jose Maria", photoUrl = null) }
 }

@@ -25,7 +25,7 @@ import com.ekaterinael.ui.R
  */
 enum class BottomTab(val iconResId: Int, val textResId: Int) {
   /** Opens the mood log screen. */
-  MoodLog(iconResId = R.drawable.home, textResId = R.string.home),
+  MoodLog(iconResId = R.drawable.home, textResId = R.string.journey),
 
   /** Opens the mood statistics screen. */
   Statistic(iconResId = R.drawable.chart, textResId = R.string.statistic);

@@ -24,6 +24,9 @@ plugins {
 android { namespace = "com.ekaterinael.mood.mood_list" }
 
 dependencies {
+  // Coil
+  implementation(libs.coil.compose)
+
   // Project
   implementation(project(":core"))
   implementation(project(":feature:mood:core"))
