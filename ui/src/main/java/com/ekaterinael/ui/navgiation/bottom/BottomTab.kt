@@ -25,10 +25,10 @@ import com.ekaterinael.ui.R
  */
 enum class BottomTab(val iconResId: Int, val textResId: Int) {
   /** Opens the mood log screen. */
-  MoodLog(iconResId = R.drawable.note, textResId = R.string.diary),
+  MoodLog(iconResId = R.drawable.home, textResId = R.string.home),
 
   /** Opens the mood statistics screen. */
-  Statistic(iconResId = R.drawable.bars, textResId = R.string.statistic);
+  Statistic(iconResId = R.drawable.chart, textResId = R.string.statistic);
 
   companion object {
     /** The default list of tabs displayed in the bottom navigation bar. */

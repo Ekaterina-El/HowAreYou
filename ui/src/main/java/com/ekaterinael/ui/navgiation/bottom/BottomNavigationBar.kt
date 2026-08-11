@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -91,6 +92,7 @@ private fun RowScope.AppNavigationBarItem(
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       Icon(
+        modifier = modifier.size(20.dp),
         painter = painterResource(item.iconResId),
         contentDescription = null,
         tint = animatedContentColor,
