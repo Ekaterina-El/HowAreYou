@@ -13,21 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-  alias(libs.plugins.android.library.convention)
-  alias(libs.plugins.android.dagger.convention)
-  alias(libs.plugins.decompose.convention)
-  alias(libs.plugins.jetpack.compose.convention)
-  alias(libs.plugins.mvi.convention)
-}
+package com.ekaterinael.profile.domain.usecase
 
-android { namespace = "com.ekaterinael.mood.mood_list" }
+import com.ekaterinael.profile.domain.repository.ProfileRepository
 
-dependencies {
-  // Project
-  implementation(project(":core"))
-  implementation(project(":feature:mood:core"))
-  implementation(project(":feature:mood:domain"))
-  implementation(project(":feature:profile:domain"))
-  implementation(project(":ui"))
+/** Use case for observing the current user's profile. */
+class GetProfileUseCase(private val repository: ProfileRepository) {
+  /**
+   * Observes the current user's profile.
+   *
+   * @return a flow that emits the current profile, or `null` if it hasn't been set up yet.
+   */
+  operator fun invoke() = repository.getProfile()
 }

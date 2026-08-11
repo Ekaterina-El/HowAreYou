@@ -31,9 +31,11 @@ fun MoodLogScreen(modifier: Modifier = Modifier, component: MoodLogComponent) {
   val model by component.model.collectAsStateWithLifecycle()
 
   Column(modifier = modifier.fillMaxSize().padding(horizontal = 12.dp)) {
+    MoodLogGreeting(name = model.userFirstName, modifier = Modifier.padding(top = 20.dp))
+
     TopBarWithSearch(
       selectedMonth = model.selectedMonth,
-      modifier = Modifier.padding(top = 20.dp, bottom = 14.dp),
+      modifier = Modifier.padding(top = 14.dp, bottom = 14.dp),
       onClickBack = component::onClickPreviousMonth,
       onClickForward = if (model.isNextMonthAvailable) component::onClickNextMonth else null,
       onClickSearch = {},

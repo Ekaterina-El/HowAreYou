@@ -56,6 +56,7 @@ fun TopBarWithSearch(
   ) {
     AppIconButton(
       image = Icons.Default.ArrowBackIosNew,
+      isActive = onClickBack != null,
       onClick = onClickBack.takeUnless { isMonthTitleAnimating },
     )
     Spacer(Modifier.width(5.dp))
@@ -67,6 +68,7 @@ fun TopBarWithSearch(
     Spacer(Modifier.width(5.dp))
     AppIconButton(
       image = Icons.AutoMirrored.Default.ArrowForwardIos,
+      isActive = onClickForward != null,
       onClick = onClickForward.takeUnless { isMonthTitleAnimating },
     )
 

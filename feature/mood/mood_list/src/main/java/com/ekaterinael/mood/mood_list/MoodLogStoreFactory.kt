@@ -31,6 +31,7 @@ import com.ekaterinael.mood.mood_list.MoodLogStore.Label
 import com.ekaterinael.mood.mood_list.MoodLogStore.State
 import com.ekaterinael.mood.mood_list.di.MoodListScope
 import com.ekaterinael.mood.mood_list.mapper.MoodListUiMapper
+import com.ekaterinael.profile.domain.usecase.GetProfileUseCase
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
@@ -45,6 +46,7 @@ constructor(
   private val storeFactory: StoreFactory,
   private val getLogsUseCase: GetLogsUseCase,
   private val hasLogForDayUseCase: HasLogForDayUseCase,
+  private val getProfileUseCase: GetProfileUseCase,
   private val mapper: MoodListUiMapper,
 ) {
   /**
@@ -86,6 +88,8 @@ constructor(
     ) : Message
 
     data class AddNewLogWidgetVisibilityChanged(val showAddNewLogWidget: Boolean) : Message
+
+    data class ProfileUpdated(val userFirstName: String, val userPhotoUrl: String?) : Message
   }
 
   private class BootstrapperImpl : CoroutineBootstrapper<Action>() {
@@ -101,6 +105,7 @@ constructor(
         Action.Init -> {
           subscribeToLogs(getState().selectedMonth)
           subscribeToTodayLogStatus(getState)
+          subscribeToProfile()
         }
       }
     }
@@ -151,6 +156,19 @@ constructor(
 
     private fun shouldShowAddNewLogWidget(month: Date): Boolean =
       !hasLogForToday && month.isSameMonthAs(Date())
+
+    private fun subscribeToProfile() {
+      scope.launch {
+        getProfileUseCase().collect { profile ->
+          dispatch(
+            Message.ProfileUpdated(
+              userFirstName = profile?.firstName.orEmpty(),
+              userPhotoUrl = profile?.photoUrl,
+            )
+          )
+        }
+      }
+    }
   }
 
   private object ReducerImpl : Reducer<State, Message> {
@@ -165,6 +183,8 @@ constructor(
           )
         is Message.AddNewLogWidgetVisibilityChanged ->
           copy(showAddNewLogWidget = msg.showAddNewLogWidget)
+        is Message.ProfileUpdated ->
+          copy(userFirstName = msg.userFirstName, userPhotoUrl = msg.userPhotoUrl)
       }
     }
   }

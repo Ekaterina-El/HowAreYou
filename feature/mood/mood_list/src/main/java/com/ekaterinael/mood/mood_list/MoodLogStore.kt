@@ -34,6 +34,8 @@ interface MoodLogStore : Store<MoodLogStore.Intent, MoodLogStore.State, MoodLogS
    * @property showAddNewLogWidget whether the widget for adding a new mood log should be shown.
    *   Defaults to `false` so it stays hidden until the database confirms there is no log for today
    *   yet, instead of flashing on screen before disappearing.
+   * @property userFirstName the current user's first name, shown in the screen's greeting.
+   * @property userPhotoUrl the URL of the current user's profile photo, or `null` if not set.
    */
   data class State(
     val logs: List<MoodListItemUI> = emptyList(),
@@ -41,6 +43,8 @@ interface MoodLogStore : Store<MoodLogStore.Intent, MoodLogStore.State, MoodLogS
     val selectedMonth: Date,
     val isNextMonthAvailable: Boolean = false,
     val showAddNewLogWidget: Boolean = false,
+    val userFirstName: String = "",
+    val userPhotoUrl: String? = null,
   )
 
   /** Represents user actions handled by the mood log store. */

@@ -110,7 +110,8 @@ private fun MoodLogItemPreview() {
           MoodListItemUI(
             id = 1,
             date = Calendar.getInstance().time,
-            description = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день",
+            description =
+              "After a walk it got noticeably easier, my mood evened out, and my thoughts stopped circling around work tasks",
             mood = MoodUI.Great,
           ),
       )

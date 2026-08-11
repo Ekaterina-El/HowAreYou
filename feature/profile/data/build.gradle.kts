@@ -16,18 +16,16 @@
 plugins {
   alias(libs.plugins.android.library.convention)
   alias(libs.plugins.android.dagger.convention)
-  alias(libs.plugins.decompose.convention)
-  alias(libs.plugins.jetpack.compose.convention)
-  alias(libs.plugins.mvi.convention)
 }
 
-android { namespace = "com.ekaterinael.mood.mood_list" }
+android { namespace = "com.ekaterinael.profile.data" }
 
 dependencies {
+  // Coroutines
+  implementation(libs.kotlinx.coroutine.android)
+
   // Project
   implementation(project(":core"))
-  implementation(project(":feature:mood:core"))
-  implementation(project(":feature:mood:domain"))
-  implementation(project(":feature:profile:domain"))
-  implementation(project(":ui"))
+  implementation(project(":data"))
+  api(project(":feature:profile:domain"))
 }

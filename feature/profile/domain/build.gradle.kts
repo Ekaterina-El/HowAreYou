@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 plugins {
-  alias(libs.plugins.android.library.convention)
-  alias(libs.plugins.android.dagger.convention)
-  alias(libs.plugins.decompose.convention)
-  alias(libs.plugins.jetpack.compose.convention)
-  alias(libs.plugins.mvi.convention)
+  id("java-library")
+  alias(libs.plugins.jetbrains.kotlin.jvm)
 }
 
-android { namespace = "com.ekaterinael.mood.mood_list" }
-
-dependencies {
-  // Project
-  implementation(project(":core"))
-  implementation(project(":feature:mood:core"))
-  implementation(project(":feature:mood:domain"))
-  implementation(project(":feature:profile:domain"))
-  implementation(project(":ui"))
+java {
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
 }
+
+kotlin { compilerOptions { jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11 } }
+
+dependencies { implementation(libs.kotlinx.coroutines.core) }

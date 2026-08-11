@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-  alias(libs.plugins.android.library.convention)
-  alias(libs.plugins.android.dagger.convention)
-  alias(libs.plugins.decompose.convention)
-  alias(libs.plugins.jetpack.compose.convention)
-  alias(libs.plugins.mvi.convention)
-}
+package com.ekaterinael.profile.domain.repository
 
-android { namespace = "com.ekaterinael.mood.mood_list" }
+import com.ekaterinael.profile.domain.model.Profile
+import kotlinx.coroutines.flow.Flow
 
-dependencies {
-  // Project
-  implementation(project(":core"))
-  implementation(project(":feature:mood:core"))
-  implementation(project(":feature:mood:domain"))
-  implementation(project(":feature:profile:domain"))
-  implementation(project(":ui"))
+/** Repository that manages the current user's profile data. */
+interface ProfileRepository {
+  /**
+   * Returns a reactive stream of the current user's profile.
+   *
+   * @return a flow that emits the current profile, or `null` if it hasn't been set up yet.
+   */
+  fun getProfile(): Flow<Profile?>
 }

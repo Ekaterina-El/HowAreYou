@@ -53,7 +53,7 @@ fun BottomNavigationBar(
   Column(modifier = Modifier.fillMaxWidth()) {
     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f))
 
-    NavigationBar(modifier = modifier) {
+    NavigationBar(modifier = modifier, containerColor = MaterialTheme.colorScheme.background) {
       tabs.forEach {
         AppNavigationBarItem(item = it, isSelected = it == selectedTab) { onTabSelected(it) }
       }

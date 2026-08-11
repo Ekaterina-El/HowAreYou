@@ -25,6 +25,7 @@ import com.ekaterinael.mood.mood_list.di.MoodListModule
 import com.ekaterinael.mood.mood_list.di.MoodListScope
 import com.ekaterinael.mood.mood_statistic.di.MoodStatisticModule
 import com.ekaterinael.mood.mood_statistic.di.MoodStatisticScope
+import com.ekaterinael.profile.data.di.ProfileDataModule
 import dagger.BindsInstance
 import dagger.Component
 
@@ -46,6 +47,7 @@ import dagger.Component
       MoodListModule::class,
       MoodStatisticModule::class,
       MoodDataModule::class,
+      ProfileDataModule::class,
     ]
 )
 interface ApplicationComponent {

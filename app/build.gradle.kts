@@ -70,6 +70,7 @@ dependencies {
   implementation(project(":feature:mood:data"))
   implementation(project(":feature:mood:core"))
   implementation(project(":feature:mood:domain"))
+  implementation(project(":feature:profile:data"))
 
   androidTestImplementation(platform(libs.androidx.compose.bom))
   debugImplementation(libs.androidx.compose.ui.tooling)

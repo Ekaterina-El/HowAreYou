@@ -17,9 +17,20 @@ package com.ekaterinael.data.local.db
 
 import android.icu.util.Calendar
 import com.ekaterinael.data.local.entity.MoodLogEntity
+import com.ekaterinael.data.local.entity.UserProfileEntity
 import kotlin.random.Random
 
 object MockData {
+  /** Mock user profile seeded on first launch. */
+  val mockProfile by lazy {
+    UserProfileEntity(
+      id = UserProfileEntity.PROFILE_ID,
+      firstName = "Ekaterina",
+      lastName = "El",
+      photoUrl = null,
+    )
+  }
+
   private const val MIN_HOURS = 17
   private const val MAX_HOURS = 23
   private val HOURS_RANGE = MIN_HOURS..MAX_HOURS
@@ -37,27 +48,28 @@ object MockData {
 
   private val descriptions: List<String> by lazy {
     listOf(
-      "Сегодня проснулся с хорошим настроением, быстро собрался и успел спокойно позавтракать. Есть " +
-        "ощущение, что день начался правильно и получится многое сделать без лишней спешки.",
-      "День прошёл довольно ровно, без сильных переживаний и неприятных событий. " +
-        "Вечером получилось немного отдохнуть, навести порядок дома " +
-        "и почувствовать, что всё под контролем.",
-      "Сегодня не было ярких эмоций, но это скорее плюс. После прогулки стало легче собраться с " +
-        "мыслями, появилась ясность и желание спокойно закончить начатые дела.",
-      "Было много мыслей о сроках и задачах, из-за этого сложно было сосредоточиться на чём-то " +
-        "одном. Постарался разложить дела по приоритетам, но напряжение всё равно осталось.",
-      "К вечеру почувствовал сильную усталость и небольшую грусть без конкретной причины. Кажется, " +
-        "накопилось много мелких переживаний, которые сегодня стали особенно заметны.",
-      "Удалось продуктивно поработать и обсудить важные вопросы без лишнего напряжения. Особенно " +
-        "порадовало, что получилось спокойно объяснить свои идеи и получить поддержку.",
-      "Обычный день без заметных подъёмов и спадов. Сделал базовые дела, немного отвлёкся от " +
-        "телефона и провёл вечер в спокойном темпе, без ощущения перегруза.",
-      "Сегодня получилось закрыть задачу, которая долго висела и вызывала раздражение. После этого " +
-        "появилось чувство облегчения, уверенности и желание двигаться дальше.",
-      "День был немного беспокойным, потому что приходилось держать в голове слишком много планов " +
-        "одновременно. Хочется замедлиться и выбрать только самое важное на завтра.",
-      "После прогулки стало заметно легче, настроение выровнялось, а мысли перестали крутиться " +
-        "вокруг рабочих задач. Хорошо помогло просто сменить обстановку и подышать воздухом.",
+      "Woke up in a good mood today, got ready quickly and had time for a calm breakfast. It " +
+        "feels like the day started off right and I'll be able to get a lot done without rushing.",
+      "The day went by fairly evenly, without any strong feelings or unpleasant events. In the " +
+        "evening I managed to rest a bit, tidy up around the house, and feel like everything's " +
+        "under control.",
+      "There weren't any bright emotions today, but that's more of a plus. After a walk it got " +
+        "easier to gather my thoughts, and clarity and a wish to calmly finish things came along.",
+      "There were a lot of thoughts about deadlines and tasks, which made it hard to focus on " +
+        "any one thing. I tried to sort things by priority, but the tension stuck around anyway.",
+      "By evening I felt pretty tired and a bit sad for no particular reason. It seems like a " +
+        "lot of small worries have piled up and became especially noticeable today.",
+      "Managed to have a productive day and discuss important things without unnecessary " +
+        "tension. It was especially nice to calmly explain my ideas and get some support.",
+      "An ordinary day with no notable ups or downs. Got the basic things done, put the phone " +
+        "down for a bit, and spent the evening at a calm pace without feeling overloaded.",
+      "Managed to close out a task today that had been hanging over me and causing irritation. " +
+        "Afterward came a feeling of relief, confidence, and a wish to keep moving forward.",
+      "The day was a bit restless because I had to keep too many plans in my head at once. I " +
+        "want to slow down and pick just the most important thing for tomorrow.",
+      "After a walk it got noticeably easier, my mood evened out, and my thoughts stopped " +
+        "circling around work tasks. Just changing my surroundings and getting some fresh air " +
+        "really helped.",
     )
   }
 

@@ -23,20 +23,34 @@ import androidx.room.TypeConverters
 import androidx.sqlite.SQLiteConnection
 import com.ekaterinael.data.BuildConfig
 import com.ekaterinael.data.local.dao.MoodLogDao
+import com.ekaterinael.data.local.dao.UserProfileDao
 import com.ekaterinael.data.local.entity.MoodLogEntity
+import com.ekaterinael.data.local.entity.UserProfileEntity
 import com.ekaterinael.data.local.typeConverter.DateTypeConverter
 
 /** Application database that provides access to the available Room DAOs. */
-@Database(entities = [MoodLogEntity::class], version = 1, exportSchema = true)
+@Database(
+  entities = [MoodLogEntity::class, UserProfileEntity::class],
+  version = 1,
+  exportSchema = true,
+)
 @TypeConverters(DateTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
   /** Provides access to mood log database operations. */
   abstract val moodLogDao: MoodLogDao
 
+  /** Provides access to user profile database operations. */
+  abstract val userProfileDao: UserProfileDao
+
   companion object {
     private const val APP_DATABASE_NAME = "mood_log_db"
     private const val DESCRIPTION_INDEX = 2
     private const val MOOD_INDEX = 3
+
+    private const val PROFILE_ID_INDEX = 1
+    private const val PROFILE_FIRST_NAME_INDEX = 2
+    private const val PROFILE_LAST_NAME_INDEX = 3
+    private const val PROFILE_PHOTO_URL_INDEX = 4
 
     @Volatile private var INSTANCE: AppDatabase? = null
 
@@ -44,7 +58,10 @@ abstract class AppDatabase : RoomDatabase() {
       object : Callback() {
         override fun onCreate(connection: SQLiteConnection) {
           super.onCreate(connection)
-          if (BuildConfig.DEBUG) mockLogs(connection)
+          if (BuildConfig.DEBUG) {
+            mockLogs(connection)
+            mockProfile(connection)
+          }
         }
       }
 
@@ -80,6 +97,24 @@ abstract class AppDatabase : RoomDatabase() {
           statement.step()
         }
       }
+    }
+
+    private fun mockProfile(connection: SQLiteConnection) {
+      val profile = MockData.mockProfile
+      connection
+        .prepare("INSERT INTO user_profile(id, firstName, lastName, photoUrl) VALUES (?, ?, ?, ?)")
+        .use { statement ->
+          statement.bindLong(PROFILE_ID_INDEX, profile.id)
+          statement.bindText(PROFILE_FIRST_NAME_INDEX, profile.firstName)
+          statement.bindText(PROFILE_LAST_NAME_INDEX, profile.lastName)
+          val photoUrl = profile.photoUrl
+          if (photoUrl != null) {
+            statement.bindText(PROFILE_PHOTO_URL_INDEX, photoUrl)
+          } else {
+            statement.bindNull(PROFILE_PHOTO_URL_INDEX)
+          }
+          statement.step()
+        }
     }
   }
 }

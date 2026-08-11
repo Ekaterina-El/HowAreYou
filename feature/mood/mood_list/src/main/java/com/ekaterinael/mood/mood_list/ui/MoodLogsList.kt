@@ -87,7 +87,8 @@ private fun MoodLogItemPreview() {
       modifier =
         Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(10.dp)
     ) {
-      val mockText = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день"
+      val mockText =
+        "After a walk it got noticeably easier, my mood evened out, and my thoughts stopped circling around work tasks."
       MoodLogsList(
         moods = MoodUI.all,
         showAddNewLogWidget = true,

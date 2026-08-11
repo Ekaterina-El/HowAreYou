@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -34,12 +33,12 @@ fun Container(
   content: @Composable ColumnScope.() -> Unit,
 ) {
   val shape = MaterialTheme.shapes.large
-  val shadowColor = Color.Black.copy(alpha = 0.4f)
+  val shadowColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f)
   Column(
     modifier =
       Modifier.fillMaxWidth()
         .shadow(
-          elevation = 3.dp,
+          elevation = 1.dp,
           shape = shape,
           clip = false,
           ambientColor = shadowColor,

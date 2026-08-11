@@ -26,10 +26,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,7 +36,6 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekaterinael.mood.core.DESELECTED_MOOD_LOG_ITEM_ALPHA
@@ -66,7 +62,6 @@ fun MoodLogStateItem(
     )
 
   val moodColor = remember { mood.color }
-  val colorWithAlpha by remember(mood) { derivedStateOf { moodColor.copy(alpha = alpha) } }
 
   Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
     Box(
@@ -95,12 +90,6 @@ fun MoodLogStateItem(
     }
 
     Spacer(Modifier.height(5.dp))
-    Text(
-      modifier = Modifier.alpha(alpha),
-      text = stringResource(mood.titleResId).lowercase(),
-      style = MaterialTheme.typography.labelLarge,
-      color = colorWithAlpha,
-    )
   }
 }
 

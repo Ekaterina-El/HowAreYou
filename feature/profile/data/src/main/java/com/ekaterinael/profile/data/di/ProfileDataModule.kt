@@ -13,27 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.data.di
+package com.ekaterinael.profile.data.di
 
-import android.content.Context
 import com.ekaterinael.core.di.AppScope
-import com.ekaterinael.data.local.dao.MoodLogDao
-import com.ekaterinael.data.local.dao.UserProfileDao
-import com.ekaterinael.data.local.db.AppDatabase
+import com.ekaterinael.profile.data.repository.ProfileRepositoryImpl
+import com.ekaterinael.profile.domain.repository.ProfileRepository
+import com.ekaterinael.profile.domain.usecase.GetProfileUseCase
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-interface RoomModule {
+interface ProfileDataModule {
+  @[Binds AppScope]
+  fun bindProfileRepository(impl: ProfileRepositoryImpl): ProfileRepository
+
   companion object {
     @[Provides AppScope]
-    fun providesMoodLogDao(db: AppDatabase): MoodLogDao = db.moodLogDao
-
-    @[Provides AppScope]
-    fun providesUserProfileDao(db: AppDatabase): UserProfileDao = db.userProfileDao
-
-    @[Provides AppScope]
-    fun providesAppDatabase(context: Context): AppDatabase =
-      AppDatabase.getInstance(context = context)
+    fun provideGetProfileUseCase(repository: ProfileRepository) = GetProfileUseCase(repository)
   }
 }

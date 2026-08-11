@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.ekaterinael.ui.R
 
-private val Nunito = FontFamily(Font(R.font.nunito_regular))
+private val sfProDisplayRegular = FontFamily(Font(R.font.sf_pro_display_regular))
 
 val Typography =
   Typography(
@@ -37,16 +37,20 @@ val Typography =
       ),
     bodyMedium =
       TextStyle(
-        fontFamily = Nunito,
+        fontFamily = sfProDisplayRegular,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
       ),
     titleLarge =
-      TextStyle(fontFamily = Nunito, fontWeight = FontWeight.ExtraBold, fontSize = 18.sp),
+      TextStyle(
+        fontFamily = sfProDisplayRegular,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 18.sp,
+      ),
     titleMedium =
       TextStyle(
-        fontFamily = Nunito,
+        fontFamily = sfProDisplayRegular,
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 24.sp,
@@ -54,7 +58,7 @@ val Typography =
       ),
     labelSmall =
       TextStyle(
-        fontFamily = Nunito,
+        fontFamily = sfProDisplayRegular,
         fontWeight = FontWeight.Light,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -62,14 +66,14 @@ val Typography =
       ),
     headlineSmall =
       TextStyle(
-        fontFamily = Nunito,
+        fontFamily = sfProDisplayRegular,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 32.sp,
       ),
     displaySmall =
       TextStyle(
-        fontFamily = Nunito,
+        fontFamily = sfProDisplayRegular,
         fontWeight = FontWeight.Bold,
         fontSize = 36.sp,
         lineHeight = 44.sp,

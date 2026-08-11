@@ -15,6 +15,7 @@
  */
 package com.ekaterinael.ui.buttons
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,28 +29,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AppIconButton(image: ImageVector, innerPadding: Dp = 8.dp, onClick: (() -> Unit)? = null) {
-  val isActive = onClick != null
-  val outlineColor = MaterialTheme.colorScheme.outline
-  val color = if (isActive) MaterialTheme.colorScheme.secondary else outlineColor
+fun AppIconButton(
+  image: ImageVector,
+  innerPadding: Dp = 8.dp,
+  onClick: (() -> Unit)? = null,
+  isActive: Boolean = onClick != null,
+) {
+  val strokeColor = MaterialTheme.colorScheme.onSurface
+  val backgroundColor = if (isActive) MaterialTheme.colorScheme.primary else Color.Transparent
+  val borderModifier =
+    if (isActive) {
+      Modifier
+    } else {
+      Modifier.border(width = 1.dp, color = strokeColor, shape = CircleShape)
+    }
 
   Box(
     modifier =
-      Modifier.size(30.dp)
-        .clip(CircleShape)
-        .border(width = 1.dp, color = outlineColor, shape = CircleShape)
-        .let { if (!isActive) return@let it else it.clickable(enabled = true, onClick = onClick) },
+      Modifier.size(30.dp).clip(CircleShape).background(backgroundColor).then(borderModifier).let {
+        if (onClick == null) it else it.clickable(enabled = true, onClick = onClick)
+      },
     contentAlignment = Alignment.Center,
   ) {
     Icon(
       modifier = Modifier.fillMaxSize().padding(innerPadding),
       imageVector = image,
-      tint = color,
+      tint = strokeColor,
       contentDescription = null,
     )
   }

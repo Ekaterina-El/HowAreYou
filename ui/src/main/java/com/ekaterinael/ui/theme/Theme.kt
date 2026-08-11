@@ -34,12 +34,13 @@ private val DarkColorScheme =
 
 private val LightColorScheme =
   lightColorScheme(
-    background = WarmIvoryBackground,
+    background = OldPaperBackground,
     onBackground = GraphiteText,
     surfaceContainer = SoftIvorySurface,
     onSurface = GraphiteText,
-    secondaryContainer = WarmWhiteContainer,
-    primary = DeepTealPrimary,
+    onSurfaceVariant = GraphiteText,
+    secondaryContainer = PaperCardBackground,
+    primary = AccentYellow,
   )
 
 @Composable

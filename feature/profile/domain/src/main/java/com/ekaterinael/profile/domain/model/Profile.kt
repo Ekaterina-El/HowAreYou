@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-plugins {
-  alias(libs.plugins.android.library.convention)
-  alias(libs.plugins.android.dagger.convention)
-  alias(libs.plugins.decompose.convention)
-  alias(libs.plugins.jetpack.compose.convention)
-  alias(libs.plugins.mvi.convention)
-}
+package com.ekaterinael.profile.domain.model
 
-android { namespace = "com.ekaterinael.mood.mood_list" }
-
-dependencies {
-  // Project
-  implementation(project(":core"))
-  implementation(project(":feature:mood:core"))
-  implementation(project(":feature:mood:domain"))
-  implementation(project(":feature:profile:domain"))
-  implementation(project(":ui"))
-}
+/**
+ * Represents the current user's profile.
+ *
+ * @property firstName the user's first name.
+ * @property lastName the user's last name.
+ * @property photoUrl the URL of the user's profile photo, or `null` if not set.
+ */
+data class Profile(val firstName: String, val lastName: String, val photoUrl: String?)

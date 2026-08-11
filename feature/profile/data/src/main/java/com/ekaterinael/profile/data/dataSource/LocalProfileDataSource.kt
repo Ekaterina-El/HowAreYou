@@ -13,27 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.data.di
+package com.ekaterinael.profile.data.dataSource
 
-import android.content.Context
 import com.ekaterinael.core.di.AppScope
-import com.ekaterinael.data.local.dao.MoodLogDao
 import com.ekaterinael.data.local.dao.UserProfileDao
-import com.ekaterinael.data.local.db.AppDatabase
-import dagger.Module
-import dagger.Provides
+import com.ekaterinael.profile.domain.model.Profile
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-@Module
-interface RoomModule {
-  companion object {
-    @[Provides AppScope]
-    fun providesMoodLogDao(db: AppDatabase): MoodLogDao = db.moodLogDao
-
-    @[Provides AppScope]
-    fun providesUserProfileDao(db: AppDatabase): UserProfileDao = db.userProfileDao
-
-    @[Provides AppScope]
-    fun providesAppDatabase(context: Context): AppDatabase =
-      AppDatabase.getInstance(context = context)
-  }
+/**
+ * Local implementation of [ProfileDataSource] that reads profile data stored in the application's
+ * database.
+ *
+ * @param dao provides access to the stored profile.
+ */
+@AppScope
+class LocalProfileDataSource @Inject constructor(private val dao: UserProfileDao) :
+  ProfileDataSource {
+  override fun getProfile(): Flow<Profile?> =
+    dao.getProfile().map { entity ->
+      entity?.let {
+        Profile(firstName = it.firstName, lastName = it.lastName, photoUrl = it.photoUrl)
+      }
+    }
 }
