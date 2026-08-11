@@ -13,22 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.mood.mood_list
+package com.ekaterinael.mood.core.ext
 
 import com.ekaterinael.mood.core.model.MoodUI
-import java.util.Date
+import com.ekaterinael.mood.domain.model.Mood
 
 /**
- * Represents a mood log entry prepared for display in the mood list.
+ * Converts this domain-layer [Mood] value to its UI representation.
  *
- * @property id the unique identifier of the mood log, or `null` for a new entry.
- * @property date the date and time associated with the mood log, or `null` if not specified.
- * @property description the user-provided description of the mood.
- * @property mood the mood prepared for display in the user interface.
+ * @return the corresponding [MoodUI] value.
  */
-data class MoodListItemUI(
-  val id: Long? = null,
-  val date: Date?,
-  val description: String,
-  val mood: MoodUI,
-)
+fun Mood.toUI(): MoodUI {
+  return when (this) {
+    Mood.GREAT -> MoodUI.Great
+    Mood.GOOD -> MoodUI.Good
+    Mood.SO_SO -> MoodUI.SoSo
+    Mood.BAD -> MoodUI.Bad
+    Mood.AWFUL -> MoodUI.Awful
+    Mood.UNKNOWN -> MoodUI.Unknown
+  }
+}

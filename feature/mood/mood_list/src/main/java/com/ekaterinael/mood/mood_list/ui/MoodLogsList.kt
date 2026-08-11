@@ -29,7 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.model.MoodUI
 import com.ekaterinael.mood.mood_list.MoodListItemUI
 import com.ekaterinael.ui.theme.HowAreYouTheme
 import java.util.Calendar

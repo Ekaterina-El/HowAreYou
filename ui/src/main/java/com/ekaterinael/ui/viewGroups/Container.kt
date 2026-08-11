@@ -15,10 +15,10 @@
  */
 package com.ekaterinael.ui.viewGroups
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -46,10 +46,7 @@ fun Container(
           spotColor = shadowColor,
         )
         .clip(shape)
-        .then(
-          onSelect?.let { action -> Modifier.selectable(selected = true, onClick = action) }
-            ?: Modifier
-        )
+        .then(onSelect?.let { action -> Modifier.clickable(onClick = action) } ?: Modifier)
         .then(modifier),
     content = { content() },
   )

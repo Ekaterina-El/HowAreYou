@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.mood.mood_list
+package com.ekaterinael.ui.helper
 
-import com.ekaterinael.mood.core.model.MoodUI
+import androidx.compose.runtime.Composable
+import com.ekaterinael.core.ext.toFullUserString
 import java.util.Date
 
-/**
- * Represents a mood log entry prepared for display in the mood list.
- *
- * @property id the unique identifier of the mood log, or `null` for a new entry.
- * @property date the date and time associated with the mood log, or `null` if not specified.
- * @property description the user-provided description of the mood.
- * @property mood the mood prepared for display in the user interface.
- */
-data class MoodListItemUI(
-  val id: Long? = null,
-  val date: Date?,
-  val description: String,
-  val mood: MoodUI,
-)
+@Composable
+fun rememberFullUserStringFormatedDate(date: Date?): String =
+  rememberStringFormatedDate(date) { date, locale -> date.toFullUserString(locale) }

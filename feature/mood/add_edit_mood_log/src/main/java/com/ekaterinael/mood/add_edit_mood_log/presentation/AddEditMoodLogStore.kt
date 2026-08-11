@@ -16,7 +16,7 @@
 package com.ekaterinael.mood.add_edit_mood_log.presentation
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.model.MoodUI
 import java.util.Date
 
 /**

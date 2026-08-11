@@ -19,9 +19,12 @@ import android.content.Context
 import com.ekaterinael.core.di.AppScope
 import com.ekaterinael.data.di.RoomModule
 import com.ekaterinael.howareyou.MainActivity
+import com.ekaterinael.mood.add_edit_mood_log.presentation.di.AddEditMoodLogScope
 import com.ekaterinael.mood.data.di.MoodDataModule
 import com.ekaterinael.mood.mood_list.di.MoodListModule
+import com.ekaterinael.mood.mood_list.di.MoodListScope
 import com.ekaterinael.mood.mood_statistic.di.MoodStatisticModule
+import com.ekaterinael.mood.mood_statistic.di.MoodStatisticScope
 import dagger.BindsInstance
 import dagger.Component
 
@@ -32,6 +35,9 @@ import dagger.Component
  * components.
  */
 @AppScope
+@MoodListScope
+@MoodStatisticScope
+@AddEditMoodLogScope
 @Component(
   modules =
     [

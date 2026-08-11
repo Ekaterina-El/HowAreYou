@@ -35,9 +35,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ekaterinael.mood.add_edit_mood_log.R
-import com.ekaterinael.mood.core.MoodSelector
-import com.ekaterinael.mood.core.MoodUI
 import com.ekaterinael.mood.core.R as CoreR
+import com.ekaterinael.mood.core.model.MoodUI
+import com.ekaterinael.mood.core.ui.MoodSelector
 import com.ekaterinael.ui.buttons.AppButton
 import com.ekaterinael.ui.navgiation.GoBackButton
 import com.ekaterinael.ui.theme.HowAreYouTheme

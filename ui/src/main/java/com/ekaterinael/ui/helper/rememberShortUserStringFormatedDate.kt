@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.mood.core
+package com.ekaterinael.ui.helper
 
-import com.ekaterinael.mood.domain.model.Mood
+import androidx.compose.runtime.Composable
+import com.ekaterinael.core.ext.toShortUserString
+import java.util.Date
 
-/**
- * Converts this domain-layer [Mood] value to its UI representation.
- *
- * @return the corresponding [MoodUI] value.
- */
-fun Mood.toUI(): MoodUI {
-  return when (this) {
-    Mood.GREAT -> MoodUI.Great
-    Mood.GOOD -> MoodUI.Good
-    Mood.SO_SO -> MoodUI.SoSo
-    Mood.BAD -> MoodUI.Bag
-    Mood.AWFUL -> MoodUI.Awful
-    Mood.UNKNOWN -> MoodUI.Unknown
-  }
-}
+@Composable
+fun rememberShortUserStringFormatedDate(date: Date?): String =
+  rememberStringFormatedDate(date) { date, locale -> date.toShortUserString(locale) }

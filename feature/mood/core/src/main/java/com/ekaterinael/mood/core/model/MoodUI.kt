@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.mood.core
+package com.ekaterinael.mood.core.model
 
 import androidx.compose.ui.graphics.Color
+import com.ekaterinael.mood.core.R
+import com.ekaterinael.mood.core.ext.toUI
 import com.ekaterinael.mood.domain.model.Mood
 import com.ekaterinael.ui.theme.AwfulMood
 import com.ekaterinael.ui.theme.BadMood
@@ -57,7 +59,7 @@ sealed class MoodUI(val mood: Mood, val color: Color, val imageResId: Int, val t
       titleResId = R.string.so_so_mood,
     )
 
-  data object Bag :
+  data object Bad :
     MoodUI(
       mood = Mood.BAD,
       color = BadMood,

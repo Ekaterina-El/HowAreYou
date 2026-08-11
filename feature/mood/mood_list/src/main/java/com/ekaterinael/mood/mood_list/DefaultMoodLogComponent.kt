@@ -21,9 +21,8 @@ import com.arkivanov.mvikotlin.core.instancekeeper.getStore
 import com.arkivanov.mvikotlin.extensions.coroutines.labels
 import com.arkivanov.mvikotlin.extensions.coroutines.stateFlow
 import com.ekaterinael.core.ext.componentScope
-import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.model.MoodUI
 import com.ekaterinael.mood.domain.model.Mood
-import com.ekaterinael.mood.mood_list.di.MoodListScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -36,7 +35,6 @@ import kotlinx.coroutines.launch
  * and user actions.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-@MoodListScope
 class DefaultMoodLogComponent
 @AssistedInject
 constructor(
@@ -78,7 +76,7 @@ constructor(
   }
 
   /** Factory for creating [DefaultMoodLogComponent] instances with assisted dependencies. */
-  @[AssistedFactory MoodListScope]
+  @AssistedFactory
   interface Factory {
     /**
      * Creates a new [DefaultMoodLogComponent].

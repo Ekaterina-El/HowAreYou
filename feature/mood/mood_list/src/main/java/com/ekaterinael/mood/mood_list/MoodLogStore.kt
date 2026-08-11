@@ -16,10 +16,8 @@
 package com.ekaterinael.mood.mood_list
 
 import com.arkivanov.mvikotlin.core.store.Store
-import com.ekaterinael.core.ext.toShortUserString
-import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.model.MoodUI
 import java.util.Date
-import java.util.Locale
 
 /**
  * Defines the MVI store responsible for processing mood log intents, managing screen state, and
@@ -37,15 +35,7 @@ interface MoodLogStore : Store<MoodLogStore.Intent, MoodLogStore.State, MoodLogS
     val logs: List<MoodListItemUI> = emptyList(),
     val moods: List<MoodUI>,
     val selectedMonth: Date,
-  ) {
-    /**
-     * Returns the selected month formatted for display using the specified locale.
-     *
-     * @param locale the locale used for date formatting.
-     * @return the formatted selected month.
-     */
-    fun selectedMonthUserString(locale: Locale) = selectedMonth.toShortUserString(locale = locale)
-  }
+  )
 
   /** Represents user actions handled by the mood log store. */
   sealed interface Intent {

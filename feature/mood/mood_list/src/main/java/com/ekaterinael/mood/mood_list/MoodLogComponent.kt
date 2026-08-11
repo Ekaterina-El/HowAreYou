@@ -15,7 +15,7 @@
  */
 package com.ekaterinael.mood.mood_list
 
-import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.model.MoodUI
 import kotlinx.coroutines.flow.StateFlow
 
 /** Defines the state and user actions available on the mood log screen. */

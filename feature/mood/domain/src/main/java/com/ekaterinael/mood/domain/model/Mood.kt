@@ -24,7 +24,7 @@ enum class Mood(val scope: Int) {
   /** Excellent condition: high energy, positive mood. */
   GREAT(scope = 5),
 
-  /** In good condition: everything is gerally fine, and my mood is stable. */
+  /** In good condition: everything is generally fine, and my mood is stable. */
   GOOD(scope = 4),
 
   /** Neutral state: without any strong emotions. */
@@ -33,7 +33,7 @@ enum class Mood(val scope: Int) {
   /** Feeling under the weather: low mood, possible accompanied by fatigue or stress. */
   BAD(scope = 2),
 
-  /** Very poot condition: severe discomfort, low spirits. */
+  /** Very poor condition: severe discomfort, low spirits. */
   AWFUL(scope = 1),
 
   /**

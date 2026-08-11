@@ -32,8 +32,8 @@ fun AppButton(
   modifier: Modifier = Modifier,
   text: String,
   onClick: () -> Unit,
-  containerColor: Color = Color.White,
-  textColor: Color = Color.Black,
+  containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
+  textColor: Color = MaterialTheme.colorScheme.onSurface,
 ) {
   Button(
     modifier = modifier.fillMaxWidth().heightIn(min = 64.dp),

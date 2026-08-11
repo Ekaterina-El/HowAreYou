@@ -21,8 +21,9 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.ekaterinael.mood.core.MoodUI
-import com.ekaterinael.mood.core.toUI
+import com.ekaterinael.mood.add_edit_mood_log.presentation.di.AddEditMoodLogScope
+import com.ekaterinael.mood.core.ext.toUI
+import com.ekaterinael.mood.core.model.MoodUI
 import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.domain.usecase.GetMoodLogByIdUseCase
 import com.ekaterinael.mood.domain.usecase.SaveMoodLogUseCase
@@ -34,6 +35,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /** Creates and configures [AddEditMoodLogStore] instances. */
+@AddEditMoodLogScope
 class AddEditMoodLogStoreFactory
 @Inject
 constructor(

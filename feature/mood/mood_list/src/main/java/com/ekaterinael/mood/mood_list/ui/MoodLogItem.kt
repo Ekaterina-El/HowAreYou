@@ -38,9 +38,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.model.MoodUI
 import com.ekaterinael.mood.mood_list.MoodListItemUI
-import com.ekaterinael.ui.helper.rememberFormatedDate
+import com.ekaterinael.ui.helper.rememberFullUserStringFormatedDate
 import com.ekaterinael.ui.theme.HowAreYouTheme
 import com.ekaterinael.ui.viewGroups.Container
 import java.util.Calendar
@@ -50,7 +50,7 @@ fun MoodLogItem(modifier: Modifier = Modifier, moodLog: MoodListItemUI, onSelect
   Column(modifier = modifier) {
     Text(
       modifier = Modifier.padding(start = 12.dp, bottom = 5.dp),
-      text = rememberFormatedDate(moodLog.date),
+      text = rememberFullUserStringFormatedDate(moodLog.date),
       style = MaterialTheme.typography.labelSmall,
       color = MaterialTheme.colorScheme.onBackground,
     )

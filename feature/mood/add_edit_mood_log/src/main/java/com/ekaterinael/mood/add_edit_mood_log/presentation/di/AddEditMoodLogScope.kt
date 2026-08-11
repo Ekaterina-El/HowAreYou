@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.ekaterinael.mood.mood_list
+package com.ekaterinael.mood.add_edit_mood_log.presentation.di
 
-import com.ekaterinael.mood.core.model.MoodUI
-import java.util.Date
+import javax.inject.Scope
 
 /**
- * Represents a mood log entry prepared for display in the mood list.
+ * Defines the dependency injection scope for the mood add/edit feature.
  *
- * @property id the unique identifier of the mood log, or `null` for a new entry.
- * @property date the date and time associated with the mood log, or `null` if not specified.
- * @property description the user-provided description of the mood.
- * @property mood the mood prepared for display in the user interface.
+ * Dependencies annotated with this scope are shared within the lifetime of the mood add/edit
+ * component.
  */
-data class MoodListItemUI(
-  val id: Long? = null,
-  val date: Date?,
-  val description: String,
-  val mood: MoodUI,
-)
+@Retention(AnnotationRetention.RUNTIME) @Scope annotation class AddEditMoodLogScope

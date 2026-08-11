@@ -21,7 +21,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.SQLiteConnection
-import androidx.sqlite.execSQL
 import com.ekaterinael.data.BuildConfig
 import com.ekaterinael.data.local.dao.MoodLogDao
 import com.ekaterinael.data.local.entity.MoodLogEntity
@@ -36,6 +35,8 @@ abstract class AppDatabase : RoomDatabase() {
 
   companion object {
     private const val APP_DATABASE_NAME = "mood_log_db"
+    private const val DESCRIPTION_INDEX = 2
+    private const val MOOD_INDEX = 3
 
     @Volatile private var INSTANCE: AppDatabase? = null
 
@@ -69,15 +70,15 @@ abstract class AppDatabase : RoomDatabase() {
     }
 
     private fun mockLogs(connection: SQLiteConnection) {
-      MockData.mockLogs.forEach {
-        connection.execSQL(
-          "INSERT INTO mood_log(date, description, mood) " +
-            "VALUES(" +
-            "${it.date?.time}, " +
-            "'${it.description}', " +
-            "${it.mood}" +
-            ");"
-        )
+      MockData.mockLogs.forEach { log ->
+        connection.prepare("INSERT INTO mood_log(date, description, mood) VALUES (?, ?, ?)").use {
+          statement ->
+          val date = log.date?.time
+          if (date != null) statement.bindLong(1, date) else statement.bindNull(1)
+          statement.bindText(DESCRIPTION_INDEX, log.description)
+          statement.bindLong(MOOD_INDEX, log.mood.toLong())
+          statement.step()
+        }
       }
     }
   }

@@ -81,7 +81,7 @@ object MockData {
           id = null,
           date = currentDate.time,
           description = it,
-          mood = Random.nextInt(MIN_MOOD_SCORE, MAX_MOOD_SCORE),
+          mood = Random.nextInt(MIN_MOOD_SCORE, MAX_MOOD_SCORE + 1),
         )
       )
     }

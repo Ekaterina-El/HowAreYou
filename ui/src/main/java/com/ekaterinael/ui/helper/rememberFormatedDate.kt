@@ -16,14 +16,18 @@
 package com.ekaterinael.ui.helper
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisallowComposableCalls
 import androidx.compose.runtime.remember
-import com.ekaterinael.core.ext.toFullUserString
 import java.util.Date
+import java.util.Locale
 
 @Composable
-fun rememberFormatedDate(date: Date?): String {
+fun rememberStringFormatedDate(
+  date: Date?,
+  calculation: @DisallowComposableCalls (Date, Locale) -> String,
+): String {
   if (date == null) return ""
   val locale = getLocale()
 
-  return remember(date, locale) { date.toFullUserString(locale) }
+  return remember(date, locale) { calculation(date, locale) }
 }

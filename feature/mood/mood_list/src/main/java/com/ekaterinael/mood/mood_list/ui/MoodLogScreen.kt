@@ -19,21 +19,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ekaterinael.mood.mood_list.MoodLogComponent
-import com.ekaterinael.ui.helper.getLocale
+import com.ekaterinael.ui.helper.rememberShortUserStringFormatedDate
 import com.ekaterinael.ui.navgiation.TopBarWithSearch
 
 @Composable
 fun MoodLogScreen(modifier: Modifier = Modifier, component: MoodLogComponent) {
-  val model by component.model.collectAsState()
+  val model by component.model.collectAsStateWithLifecycle()
 
   Column(modifier = modifier.fillMaxSize().padding(horizontal = 12.dp)) {
     TopBarWithSearch(
-      title = model.selectedMonthUserString(getLocale()),
+      title = rememberShortUserStringFormatedDate(model.selectedMonth),
       modifier = Modifier.padding(top = 20.dp, bottom = 14.dp),
       onClickForward = {},
       onClickSearch = {},

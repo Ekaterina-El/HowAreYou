@@ -21,7 +21,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
-import com.ekaterinael.mood.core.MoodUI
+import com.ekaterinael.mood.core.model.MoodUI
 import com.ekaterinael.mood.domain.model.MoodLog
 import com.ekaterinael.mood.domain.usecase.GetLogsUseCase
 import com.ekaterinael.mood.mood_list.MoodLogStore.Intent
