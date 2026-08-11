@@ -31,12 +31,16 @@ interface MoodLogStore : Store<MoodLogStore.Intent, MoodLogStore.State, MoodLogS
    * @property moods the available mood options.
    * @property selectedMonth the month currently selected for displaying mood logs.
    * @property isNextMonthAvailable whether switching to the next month is currently allowed.
+   * @property showAddNewLogWidget whether the widget for adding a new mood log should be shown.
+   *   Defaults to `false` so it stays hidden until the database confirms there is no log for today
+   *   yet, instead of flashing on screen before disappearing.
    */
   data class State(
     val logs: List<MoodListItemUI> = emptyList(),
     val moods: List<MoodUI>,
     val selectedMonth: Date,
     val isNextMonthAvailable: Boolean = false,
+    val showAddNewLogWidget: Boolean = false,
   )
 
   /** Represents user actions handled by the mood log store. */

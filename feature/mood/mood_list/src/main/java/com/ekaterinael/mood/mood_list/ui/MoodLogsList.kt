@@ -15,6 +15,11 @@
  */
 package com.ekaterinael.mood.mood_list.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +43,7 @@ import java.util.Calendar
 fun MoodLogsList(
   logs: List<MoodListItemUI>,
   moods: List<MoodUI>,
+  showAddNewLogWidget: Boolean,
   onClickAddNewLog: (MoodUI) -> Unit = {},
   onSelectLog: (logId: Long?) -> Unit = {},
 ) {
@@ -46,11 +52,19 @@ fun MoodLogsList(
     contentPadding = PaddingValues(bottom = 16.dp),
     verticalArrangement = Arrangement.spacedBy(15.dp),
   ) {
-    item { MoodLogNewState(moods = moods, onSelectMood = onClickAddNewLog) }
+    item {
+      AnimatedVisibility(
+        visible = showAddNewLogWidget,
+        enter = fadeIn() + expandVertically(),
+        exit = fadeOut() + shrinkVertically(),
+      ) {
+        MoodLogNewState(moods = moods, onSelectMood = onClickAddNewLog)
+      }
+    }
 
     items(logs, key = { it.id ?: it.date ?: it.description }) { moodLog ->
       MoodLogItem(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().animateItem(),
         moodLog = moodLog,
         onSelect = { onSelectLog(moodLog.id) },
       )
@@ -69,6 +83,7 @@ private fun MoodLogItemPreview() {
       val mockText = "Поездка в аквопарк в Екатеринбурге выдалась в хороший солнечный день"
       MoodLogsList(
         moods = MoodUI.all,
+        showAddNewLogWidget = true,
         logs =
           listOf(
             MoodListItemUI(

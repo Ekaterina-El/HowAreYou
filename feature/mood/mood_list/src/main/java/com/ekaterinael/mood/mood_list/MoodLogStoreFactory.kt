@@ -25,6 +25,7 @@ import com.ekaterinael.core.ext.isSameMonthAs
 import com.ekaterinael.core.ext.plusMonths
 import com.ekaterinael.mood.core.model.MoodUI
 import com.ekaterinael.mood.domain.usecase.GetLogsUseCase
+import com.ekaterinael.mood.domain.usecase.HasLogForDayUseCase
 import com.ekaterinael.mood.mood_list.MoodLogStore.Intent
 import com.ekaterinael.mood.mood_list.MoodLogStore.Label
 import com.ekaterinael.mood.mood_list.MoodLogStore.State
@@ -43,6 +44,7 @@ class MoodLogStoreFactory
 constructor(
   private val storeFactory: StoreFactory,
   private val getLogsUseCase: GetLogsUseCase,
+  private val hasLogForDayUseCase: HasLogForDayUseCase,
   private val mapper: MoodListUiMapper,
 ) {
   /**
@@ -78,6 +80,8 @@ constructor(
     data class MoodLogUpdated(val logs: List<MoodListItemUI>) : Message
 
     data class MonthChanged(val month: Date, val isNextMonthAvailable: Boolean) : Message
+
+    data class TodayLogStatusChanged(val hasLogForToday: Boolean) : Message
   }
 
   private class BootstrapperImpl : CoroutineBootstrapper<Action>() {
@@ -89,7 +93,10 @@ constructor(
 
     override fun executeAction(action: Action, getState: () -> State) {
       when (action) {
-        Action.Init -> subscribeToLogs(getState().selectedMonth)
+        Action.Init -> {
+          subscribeToLogs(getState().selectedMonth)
+          subscribeToTodayLogStatus()
+        }
       }
     }
 
@@ -120,6 +127,14 @@ constructor(
           }
         }
     }
+
+    private fun subscribeToTodayLogStatus() {
+      scope.launch {
+        hasLogForDayUseCase(Date()).collect { hasLog ->
+          dispatch(Message.TodayLogStatusChanged(hasLog))
+        }
+      }
+    }
   }
 
   private object ReducerImpl : Reducer<State, Message> {
@@ -132,6 +147,7 @@ constructor(
             logs = emptyList(),
             isNextMonthAvailable = msg.isNextMonthAvailable,
           )
+        is Message.TodayLogStatusChanged -> copy(showAddNewLogWidget = !msg.hasLogForToday)
       }
     }
   }

@@ -41,4 +41,6 @@ class MoodRepositoryImpl @Inject constructor(private val localDataSource: LocalM
   override suspend fun getLogById(id: Long): MoodLog? = localDataSource.getById(id = id)
 
   override fun getLogs(month: Date): Flow<List<MoodLog>> = localDataSource.getLogs(month)
+
+  override fun hasLogForDay(day: Date): Flow<Boolean> = localDataSource.hasLogForDay(day)
 }

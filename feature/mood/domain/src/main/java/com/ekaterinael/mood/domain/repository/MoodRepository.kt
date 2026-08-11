@@ -46,6 +46,14 @@ interface MoodRepository {
    */
   fun getLogs(month: Date): Flow<List<MoodLog>>
 
+  /**
+   * Returns a reactive stream indicating whether a mood log exists for the specified day.
+   *
+   * @param day a date within the day to check.
+   * @return a flow that emits `true` while a mood log entry exists for that day.
+   */
+  fun hasLogForDay(day: Date): Flow<Boolean>
+
   /** Get a mood logs by ID. */
   suspend fun getLogById(id: Long): MoodLog?
 }

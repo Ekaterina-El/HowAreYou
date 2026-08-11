@@ -39,9 +39,11 @@ fun MoodLogScreen(modifier: Modifier = Modifier, component: MoodLogComponent) {
       onClickForward = if (model.isNextMonthAvailable) component::onClickNextMonth else null,
       onClickSearch = {},
     )
+
     MoodLogsList(
       logs = model.logs,
       moods = model.moods,
+      showAddNewLogWidget = model.showAddNewLogWidget,
       onClickAddNewLog = component::onClickAddNewLog,
       onSelectLog = component::onClickByLog,
     )

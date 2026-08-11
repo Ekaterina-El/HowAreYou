@@ -58,4 +58,12 @@ interface MoodDataSource {
    * @return a [Flow] that emits the current list of mood log entries within the month.
    */
   fun getLogs(month: Date): Flow<List<MoodLog>>
+
+  /**
+   * Observes whether a mood log exists for the specified day.
+   *
+   * @param day a date within the day to check.
+   * @return a [Flow] that emits `true` while a mood log entry exists for that day.
+   */
+  fun hasLogForDay(day: Date): Flow<Boolean>
 }

@@ -35,6 +35,16 @@ interface MoodLogDao : BaseDao<MoodLogEntity> {
   fun getLogsByMonth(start: Date, end: Date): Flow<List<MoodLogEntity>>
 
   /**
+   * Observes whether at least one mood log entry exists within the specified date range.
+   *
+   * @param start the inclusive lower bound of the range.
+   * @param end the exclusive upper bound of the range.
+   * @return a flow that emits `true` while a mood log entry exists within the range.
+   */
+  @Query("SELECT EXISTS(SELECT 1 FROM mood_log WHERE date >= :start AND date < :end)")
+  fun hasLogInRange(start: Date, end: Date): Flow<Boolean>
+
+  /**
    * Returns a mood log entry by its identifier.
    *
    * @param id the identifier of the mood log entry.
