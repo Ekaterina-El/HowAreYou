@@ -52,6 +52,7 @@ fun MoodLogsList(
     contentPadding = PaddingValues(bottom = 16.dp),
     verticalArrangement = Arrangement.spacedBy(15.dp),
   ) {
+    val isEmpty = logs.isEmpty()
     item {
       AnimatedVisibility(
         visible = showAddNewLogWidget,
@@ -62,6 +63,10 @@ fun MoodLogsList(
       }
     }
 
+    if (isEmpty) {
+      item { MoodLogEmptyState(modifier = Modifier.fillMaxWidth()) }
+    }
+
     items(logs, key = { it.id ?: it.date ?: it.description }) { moodLog ->
       MoodLogItem(
         modifier = Modifier.fillMaxWidth().animateItem(),
@@ -69,6 +74,8 @@ fun MoodLogsList(
         onSelect = { onSelectLog(moodLog.id) },
       )
     }
+
+    if (!isEmpty) item { MoodLogListEnd(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) }
   }
 }
 
@@ -112,6 +119,19 @@ private fun MoodLogItemPreview() {
             ),
           ),
       )
+    }
+  }
+}
+
+@Preview
+@Composable
+private fun MoodLogsListEmptyPreview() {
+  HowAreYouTheme(darkTheme = true) {
+    Box(
+      modifier =
+        Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(10.dp)
+    ) {
+      MoodLogsList(moods = MoodUI.all, showAddNewLogWidget = true, logs = emptyList())
     }
   }
 }
